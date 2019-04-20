@@ -7,10 +7,12 @@ import java.util.List;
 public class Schedule {
     private List<Train> trains;
 
-    public void addTrain(Train train){
+    public void addTrain(){
 
+        Train train = new Train();
         trains.add(train);
         WriterData.saveData(train);
+
     }
 
 

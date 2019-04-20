@@ -20,9 +20,9 @@ public class LogicCashier {
 //
 //    public Ticket sellTicket(Train train, Customer customer) {
 //        Ticket ticket = null;
-//        if (train.getFreeSeats().size() <= Seat.DEFAULT_NUMBER_OF_SEATS_IN_CARRIAGE * Train.DEFAULT_NUMBER_OF_CARRIAGE
+//        if (train.getFreeSeatContainers().size() <= SeatContainer.DEFAULT_NUMBER_OF_SEATS_IN_CARRIAGE * Train.DEFAULT_NUMBER_OF_CARRIAGE
 //                && customer.getAmountOfMoney() >= train.getCostTicket()) {
-//            Seat seat = new Seat();
+//            SeatContainer seat = new SeatContainer();
 //            ticket = new Ticket(seat);
 //            customer.setAmountOfMoney(customer.getAmountOfMoney() - train.getCostTicket());
 //            customer.getTickets().add(ticket);

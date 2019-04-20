@@ -1,6 +1,5 @@
 package model.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Train {
@@ -9,23 +8,22 @@ public class Train {
 
     private String numberOfTrain;
     private List<Station> stationsInTransit;
-    private List<Seat> freeSeats;
-    private double costTicket;
+    private SeatContainer seatContainers;
 
     public Train() {
-        freeSeats = new ArrayList<Seat>();
+        //freeSeatContainers = new ArrayList<SeatContainer>();
     }
 
     public List<Station> getStationsInTransit() {
         return stationsInTransit;
     }
 
-    public List<Seat> getFreeSeats() {
-        return freeSeats;
+    public SeatContainer getSeatContainers() {
+        return seatContainers;
     }
 
-    public double getCostTicket() {
-        return costTicket;
+    public void setSeatContainers(SeatContainer seatContainers) {
+        this.seatContainers = seatContainers;
     }
 
     public String getNumberOfTrain() {
@@ -38,9 +36,5 @@ public class Train {
 
     public void setStationsInTransit(List<Station> stationsInTransit) {
         this.stationsInTransit = stationsInTransit;
-    }
-
-    public void setCostTicket(double costTicket) {
-        this.costTicket = costTicket;
     }
 }
