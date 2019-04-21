@@ -74,11 +74,11 @@ public class Train implements Serializable {
 
     @Override
     public String toString() {
-        return "\nTrain{" +
+        return "Train{" +
                 "trainNumber=" + trainNumber +
                 ", carriagesNumber=" + carriagesNumber +
                 ", stationsInTransit=" + stationsInTransit +
                 ", seatContainer=" + seatContainer +
-                '}';
+                "}";
     }
 }
