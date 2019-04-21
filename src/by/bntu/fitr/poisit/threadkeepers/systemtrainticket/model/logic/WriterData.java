@@ -1,4 +1,4 @@
-package model.logic;
+package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

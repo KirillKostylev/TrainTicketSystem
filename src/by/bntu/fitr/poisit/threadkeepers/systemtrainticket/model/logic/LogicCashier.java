@@ -1,6 +1,6 @@
-package model.logic;
+package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic;
 
-//import by.bntu.fitr.poisit.threadkeepers.model.logic.domain.*;
+//import by.bntu.fitr.poisit.threadkeepers.by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.domain.*;
 
 public class LogicCashier {
 //    public List<Train> findTrain(Schedule trains, Customer customer) {
@@ -20,7 +20,7 @@ public class LogicCashier {
 //
 //    public Ticket sellTicket(Train train, Customer customer) {
 //        Ticket ticket = null;
-//        if (train.getFreeSeatContainers().size() <= SeatContainer.DEFAULT_NUMBER_OF_SEATS_IN_CARRIAGE * Train.DEFAULT_NUMBER_OF_CARRIAGE
+//        if (train.getFreeSeatContainers().size() <= SeatContainer.DEFAULT_NUMBER_OF_SEATS_IN_CARRIAGE * Train.DEFAULT_SEAT_NUMBER_IN_CARRIAGE
 //                && customer.getAmountOfMoney() >= train.getCostTicket()) {
 //            SeatContainer seat = new SeatContainer();
 //            ticket = new Ticket(seat);

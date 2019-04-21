@@ -1,9 +1,15 @@
-package model.entity;
+package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
 public class Station {
     private String nameStation;
     private String arriveTime;
     private String departTime;
+
+    public Station(String nameStation, String arriveTime, String departTime) {
+        this.nameStation = nameStation;
+        this.arriveTime = arriveTime;
+        this.departTime = departTime;
+    }
 
     public String getNameStation() {
         return nameStation;

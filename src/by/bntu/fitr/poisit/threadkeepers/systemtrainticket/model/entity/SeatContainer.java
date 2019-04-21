@@ -1,4 +1,4 @@
-package model.entity;
+package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +10,33 @@ public class SeatContainer {
     private List<ArrayList<Seat>> seatList;
 
     public SeatContainer() {
-        seatList = new ArrayList<ArrayList<Seat>>();
+        seatList = new ArrayList<>(DEFAULT_SIZE);
+    }
+
+    public SeatContainer(int carriageNumber) {
+        if (carriageNumber < 0) {
+            seatList = new ArrayList<>(DEFAULT_SIZE);
+        } else {
+            seatList = new ArrayList<>(carriageNumber);
+        }
     }
 
     public SeatContainer(List<ArrayList<Seat>> seatList) {
         if (seatList == null) {
-            seatList = new ArrayList<ArrayList<Seat>>();
+            seatList = new ArrayList<>();
         }
         this.seatList = seatList;
+    }
+
+    public void addCarriageInContainer(int carriageIndex, int seatsNumberInCarriage) {
+        seatList.add(carriageIndex, new ArrayList<>());
+        for (int i = 0; i < seatsNumberInCarriage; i++) {
+            addSeatInCarriage(carriageIndex, i, new Seat(carriageIndex, i, null));
+        }
+    }
+
+    private void addSeatInCarriage(int carriageIndex, int seatIndex, Seat seat) {
+        seatList.get(carriageIndex).add(seatIndex, seat);
     }
 
     public int getCarriageCount() {
@@ -37,7 +56,7 @@ public class SeatContainer {
     }
 
     public void setElement(int i, int j, Seat seat) {
-        seatList.get(i).set(j,seat);
+        seatList.get(i).set(j, seat);
     }
 
     @Override

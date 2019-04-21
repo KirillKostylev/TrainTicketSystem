@@ -1,4 +1,4 @@
-package controller;
+package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
