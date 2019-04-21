@@ -21,7 +21,7 @@ public class Train implements Serializable {
         } else {
             this.carriagesNumber = carriagesNumber;
         }
-        seatContainer = new SeatContainer(carriagesNumber);
+        seatContainer = new SeatContainer();
         fillSeatContainer();
     }
 

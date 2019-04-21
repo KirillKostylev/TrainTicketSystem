@@ -13,11 +13,6 @@ public class SeatContainer implements Serializable {
         seatList = new ArrayList<>();
     }
 
-    public SeatContainer(int carriageNumber) {
-            seatList = new ArrayList<>(carriageNumber);
-
-    }
-
     public SeatContainer(List<List<Seat>> seatList) {
         if (seatList == null) {
             seatList = new ArrayList<>();

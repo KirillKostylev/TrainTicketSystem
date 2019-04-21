@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class TrainTest {
     @Test
     public void fillSeatContainer() {
-        SeatContainer seatList = new SeatContainer(2);
-        seatList.getSeatList().add(0,new ArrayList<>(2));
-        seatList.getSeatList().add(1,new ArrayList<>(2));
+        SeatContainer seatList = new SeatContainer();
+        seatList.getSeatList().add(0,new ArrayList<>());
+        seatList.getSeatList().add(1,new ArrayList<>());
         seatList.getSeatList().get(0).add(0,new Seat(0,0,null));
         seatList.getSeatList().get(0).add(1,new Seat(0,1,null));
         seatList.getSeatList().get(1).add(0,new Seat(1,0,null));

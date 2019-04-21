@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class WriterSchedule {
-    public static final String NAME_FILE = "info.txt";
 
     public static void saveData(Schedule schedule, String fileName) {
 
