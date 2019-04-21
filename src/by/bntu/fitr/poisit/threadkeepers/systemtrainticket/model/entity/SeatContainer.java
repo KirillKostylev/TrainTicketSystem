@@ -2,6 +2,7 @@ package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SeatContainer {
 
@@ -64,5 +65,18 @@ public class SeatContainer {
         return "SeatContainer{" +
                 "seatList=" + seatList +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SeatContainer that = (SeatContainer) o;
+        return Objects.equals(seatList, that.seatList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(seatList);
     }
 }

@@ -3,7 +3,7 @@ package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 import java.util.List;
 
 public class Train {
-    public final static int DEFAULT_SEAT_NUMBER_IN_CARRIAGE = 5;
+    public final static int DEFAULT_SEAT_NUMBER_IN_CARRIAGE = 2;
     public final static int DEFAULT_CARRIAGES_NUMBER = 5;
 
 
