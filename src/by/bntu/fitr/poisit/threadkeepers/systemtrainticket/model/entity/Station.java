@@ -1,6 +1,8 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
-public class Station {
+import java.io.Serializable;
+
+public class Station implements Serializable {
     private String nameStation;
     private String arriveTime;
     private String departTime;
@@ -35,4 +37,12 @@ public class Station {
         this.departTime = departTime;
     }
 
+    @Override
+    public String toString() {
+        return "Station{" +
+                "nameStation='" + nameStation + '\'' +
+                ", arriveTime='" + arriveTime + '\'' +
+                ", departTime='" + departTime + '\'' +
+                '}';
+    }
 }

@@ -16,19 +16,9 @@ public class TrainTest {
         seatList.getSeatList().get(1).add(0,new Seat(1,0,null));
         seatList.getSeatList().get(1).add(1,new Seat(1,1,null));
 
-
-
-
-
-
-
 //        SeatContainer seatList1 = new SeatContainer(2);
         ArrayList<Station> stationList1 = new ArrayList<>();
         Train train = new Train(1, 2,stationList1);
-//        stationList1.add(0, new Station("brest", "12.10.2019 10:15", "12.10.2019 10:30"));
-//        stationList1.add(1, new Station("ivatsevichi", "12.10.2019 12:30", "12.10.2019 12:40"));
-//        stationList1.add(1, new Station("minsk", "12.10.2019 14:30", "12.10.2019 14:40"));
         Assert.assertEquals(seatList, train.getSeatContainer());
     }
-
 }

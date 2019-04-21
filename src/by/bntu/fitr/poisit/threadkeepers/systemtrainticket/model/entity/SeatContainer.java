@@ -1,28 +1,24 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SeatContainer {
+public class SeatContainer implements Serializable {
 
-    public static final int DEFAULT_SIZE = 5;
-
-    private List<ArrayList<Seat>> seatList;
+    private List<List<Seat>> seatList;
 
     public SeatContainer() {
-        seatList = new ArrayList<>(DEFAULT_SIZE);
+        seatList = new ArrayList<>();
     }
 
     public SeatContainer(int carriageNumber) {
-        if (carriageNumber < 0) {
-            seatList = new ArrayList<>(DEFAULT_SIZE);
-        } else {
             seatList = new ArrayList<>(carriageNumber);
-        }
+
     }
 
-    public SeatContainer(List<ArrayList<Seat>> seatList) {
+    public SeatContainer(List<List<Seat>> seatList) {
         if (seatList == null) {
             seatList = new ArrayList<>();
         }
@@ -44,7 +40,7 @@ public class SeatContainer {
         return seatList.size();
     }
 
-    public List<ArrayList<Seat>> getSeatList() {
+    public List<List<Seat>> getSeatList() {
         return seatList;
     }
 
@@ -61,13 +57,6 @@ public class SeatContainer {
     }
 
     @Override
-    public String toString() {
-        return "SeatContainer{" +
-                "seatList=" + seatList +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -78,5 +67,12 @@ public class SeatContainer {
     @Override
     public int hashCode() {
         return Objects.hash(seatList);
+    }
+
+    @Override
+    public String toString() {
+        return "SeatContainer{" +
+                "seatList=" + seatList +
+                '}';
     }
 }

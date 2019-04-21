@@ -1,9 +1,10 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Seat {
+public class Seat implements Serializable {
     private int carriageNumber;
     private int seatNumber;
     private List<Station> busyStations;
@@ -51,5 +52,14 @@ public class Seat {
     @Override
     public int hashCode() {
         return Objects.hash(carriageNumber, seatNumber, busyStations);
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "carriageNumber=" + carriageNumber +
+                ", seatNumber=" + seatNumber +
+                ", busyStations=" + busyStations +
+                '}';
     }
 }

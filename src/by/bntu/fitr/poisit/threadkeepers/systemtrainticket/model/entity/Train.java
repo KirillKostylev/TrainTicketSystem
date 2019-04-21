@@ -1,8 +1,9 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Train {
+public class Train implements Serializable {
     public final static int DEFAULT_SEAT_NUMBER_IN_CARRIAGE = 2;
     public final static int DEFAULT_CARRIAGES_NUMBER = 5;
 
@@ -69,5 +70,15 @@ public class Train {
 
     public void setCarriagesNumber(int carriagesNumber) {
         this.carriagesNumber = carriagesNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "\nTrain{" +
+                "trainNumber=" + trainNumber +
+                ", carriagesNumber=" + carriagesNumber +
+                ", stationsInTransit=" + stationsInTransit +
+                ", seatContainer=" + seatContainer +
+                '}';
     }
 }

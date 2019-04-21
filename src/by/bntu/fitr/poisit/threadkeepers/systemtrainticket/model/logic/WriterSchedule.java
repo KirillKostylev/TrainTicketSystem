@@ -1,17 +1,21 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic;
 
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity.Schedule;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class WriterData {
+public class WriterSchedule {
     public static final String NAME_FILE = "info.txt";
 
-    public static void saveData(Object o) {
+    public static void saveData(Schedule schedule, String fileName) {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(
-                new FileOutputStream(NAME_FILE))) {
-            oos.writeObject(o);
+                new FileOutputStream(fileName))) {
+            oos.writeObject(schedule);
+            oos.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
