@@ -25,15 +25,6 @@ public class Train implements Serializable {
         fillSeatContainer();
     }
 
-//    public void fillSeatContainer(int carriageCount) {
-//        for (int i = 0; i < carriageCount; i++) {
-//            seatContainer.getSeatList().add(i, new ArrayList<>());
-//            for (int j = 0; j < DEFAULT_SEAT_NUMBER_IN_CARRIAGE; j++) {
-//                seatContainer.getSeatList().get(i).add(j, new Seat(i, j, null));
-//            }
-//        }
-//    }
-
     private void fillSeatContainer() {
         for (int i = 0; i < carriagesNumber; i++) {
             seatContainer.addCarriageInContainer(i, DEFAULT_SEAT_NUMBER_IN_CARRIAGE);
@@ -74,7 +65,7 @@ public class Train implements Serializable {
 
     @Override
     public String toString() {
-        return "Train{" +
+        return "\nTrain{" +
                 "trainNumber=" + trainNumber +
                 ", carriagesNumber=" + carriagesNumber +
                 ", stationsInTransit=" + stationsInTransit +

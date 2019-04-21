@@ -2,31 +2,36 @@ package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic;
 
 //import by.bntu.fitr.poisit.threadkeepers.by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.domain.*;
 
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity.Schedule;
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity.Station;
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity.Train;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class LogicCashier {
-//    public List<Train> findTrain(Schedule trains, Customer customer) {
-//        Train[] listOfTrains = trains.getTrains();
-//        ArrayList<Train> suitableTrains = new ArrayList<>();
-//        if (listOfTrains.length > 0) {
-//            for (Train train : listOfTrains) {
-//                int indexOfDepartureStation = train.getStationsInTransit().indexOf(customer.getDesiredDepartureStation());
-//                int indexOfArriveStation = train.getStationsInTransit().indexOf(customer.getDesiredArriveStation());
-//                if (indexOfDepartureStation >= 0 && indexOfArriveStation > indexOfDepartureStation) {
-//                    suitableTrains.add(train);
-//                }
-//            }
-//        }
-//        return suitableTrains;
-//    }
-//
-//    public Ticket sellTicket(Train train, Customer customer) {
-//        Ticket ticket = null;
-//        if (train.getFreeSeatContainers().size() <= SeatContainer.DEFAULT_NUMBER_OF_SEATS_IN_CARRIAGE * Train.DEFAULT_SEAT_NUMBER_IN_CARRIAGE
-//                && customer.getAmountOfMoney() >= train.getCostTicket()) {
-//            SeatContainer seat = new SeatContainer();
-//            ticket = new Ticket(seat);
-//            customer.setAmountOfMoney(customer.getAmountOfMoney() - train.getCostTicket());
-//            customer.getTickets().add(ticket);
-//        }
-//        return ticket;
-//    }
+
+    public static void buyTicket() {
+    }
+
+    public static List<Train> findTrain(Schedule schedule, String departureStation, String arriveStation) {
+        List<Train> suitableTrains = new ArrayList<>();
+        for (Train train : schedule.getTrains()) {
+            List<String> stationsList = getListOfStationNames(train.getStationsInTransit());
+            if (stationsList.contains(departureStation) && stationsList.contains(arriveStation) &&
+                    stationsList.indexOf(departureStation) < stationsList.indexOf(arriveStation)) {
+                //checking the correct direction of the train
+                suitableTrains.add(train);
+            }
+        }
+        return suitableTrains;
+    }
+
+    private static List<String> getListOfStationNames(List<Station> listStations) {
+        List<String> listStationNames = new ArrayList<String>();
+        for (Station listStation : listStations) {
+            listStationNames.add(listStation.getNameStation());
+        }
+        return listStationNames;
+    }
 }

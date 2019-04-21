@@ -1,0 +1,42 @@
+package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic;
+
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity.Schedule;
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity.Station;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+public class LogicCashierTest {
+
+    @Test
+    public void findTrain() {
+        String fileName = "scheduleInfo.txt";
+
+        Schedule schedule = new Schedule();
+        List<Station> stations = new ArrayList<>();
+        stations.add(new Station("Brest", "12.10.2019 18:00", "12.10.2019 18:05"));
+        stations.add(new Station("Baranovichi", "12.10.2019 20:00", "12.10.2019 20:05"));
+        stations.add(new Station("Minsk", "12.10.2019 22:00", "12.10.2019 22:05"));
+        schedule.addNewTrain(151, 2, stations);
+
+        List<Station> stations2 = new ArrayList<>();
+        stations2.add(new Station("Minsk", "17.08.2019 05:40", "17.08.2019 06:00"));
+        stations2.add(new Station("Baranovichi", "17.08.2019 07:40", "17.08.2019 7:50"));
+        stations2.add(new Station("Ivatsevichi", "17.08.2019 08:35", "17.08.2019 08:45"));
+        stations2.add(new Station("Brest", "17.08.2019 09:00", "17.08.2019 09:20"));
+        schedule.addNewTrain(412, 2, stations2);
+
+        List<Station> stations3 = new ArrayList<>();
+        stations3.add(new Station("Brest", "17.08.2019 05:40", "17.08.2019 06:00"));
+        stations3.add(new Station("Ivatsevichi", "17.08.2019 07:40", "17.08.2019 7:50"));
+        stations3.add(new Station("Baranovichi", "17.08.2019 08:35", "17.08.2019 08:45"));
+        stations3.add(new Station("Minsk", "17.08.2019 09:00", "17.08.2019 09:20"));
+        schedule.addNewTrain(9841, 2, stations3);
+
+
+        System.out.println(LogicCashier.findTrain(schedule,  "Brest","Baranovichi"));
+    }
+}
