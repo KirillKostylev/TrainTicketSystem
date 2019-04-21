@@ -12,20 +12,11 @@ public class TrainTest {
         seatList.getSeatList().add(0,new ArrayList<>(2));
         seatList.getSeatList().add(1,new ArrayList<>(2));
         seatList.getSeatList().get(0).add(0,new Seat(0,0,null));
-        seatList.getSeatList().get(0).add(0,new Seat(0,1,null));
-        seatList.getSeatList().get(0).add(1,new Seat(1,0,null));
-        seatList.getSeatList().get(0).add(1,new Seat(1,1,null));
+        seatList.getSeatList().get(0).add(1,new Seat(0,1,null));
+        seatList.getSeatList().get(1).add(0,new Seat(1,0,null));
+        seatList.getSeatList().get(1).add(1,new Seat(1,1,null));
 
-//        ArrayList<Station> stationList = new ArrayList<>();
-//        stationList.add(0, new Station("brest", "12.10.2019 10:15", "12.10.2019 10:30"));
-//        stationList.add(1, new Station("ivatsevichi", "12.10.2019 12:30", "12.10.2019 12:40"));
-//        stationList.add(1, new Station("minsk", "12.10.2019 14:30", "12.10.2019 14:40"));
-//        for (int i = 0; i < 2; i++) {
-//            seatList.getSeatList().add(i, new ArrayList<Seat>(5));
-//            for (int j = 0; j < 5; j++) {
-//                seatList.setElement(i,j,new Seat(i,j,null));
-//            }
-//        }
+
 
 
 
