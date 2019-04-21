@@ -8,28 +8,25 @@ public class Schedule implements Serializable {
     public static final int DEFAULT_SIZE = 3;
 
     private List<Train> trains;
-    private int trainNumber;
+    private static int numberOfTrains;
 
     public Schedule() {
         trains = new ArrayList<>();
+        numberOfTrains = 0;
     }
 
     public void addNewTrain(int trainNumber, int carriagesNumber, List<Station> listStation) {
         Train train = new Train(trainNumber, carriagesNumber, listStation);
         trains.add(train);
-        trainNumber++;
+        numberOfTrains++;
     }
 
     public void setTrains(List<Train> trains) {
         this.trains = trains;
     }
 
-    public int getTrainNumber() {
-        return trainNumber;
-    }
-
-    public void setTrainNumber(int trainNumber) {
-        this.trainNumber = trainNumber;
+    public int getNumberOfTrains() {
+        return numberOfTrains;
     }
 
     public List<Train> getTrains() {
@@ -40,7 +37,7 @@ public class Schedule implements Serializable {
     public String toString() {
         return "Schedule{" +
                 "trains=" + trains +
-                ", trainNumber=" + trainNumber +
+                ", numberOfTrains=" + numberOfTrains +
                 '}';
     }
 }
