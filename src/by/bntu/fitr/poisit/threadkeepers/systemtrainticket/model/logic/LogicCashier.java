@@ -18,7 +18,7 @@ public class LogicCashier {
     public static List<Train> findTrain(Schedule schedule, String departureStation, String arriveStation) {
         List<Train> suitableTrains = new ArrayList<>();
         for (Train train : schedule.getTrains()) {
-            List<String> stationsList = getListOfStationNames(train.getStationsInTransit());
+            List<String> stationsList = getListFromStationsFields(train.getStationsInTransit(), "name");
             if (stationsList.contains(departureStation) && stationsList.contains(arriveStation) &&
                     stationsList.indexOf(departureStation) < stationsList.indexOf(arriveStation)) {
                 //checking the correct direction of the train
@@ -28,11 +28,19 @@ public class LogicCashier {
         return suitableTrains;
     }
 
-    private static List<String> getListOfStationNames(List<Station> listStations) {
-        List<String> listStationNames = new ArrayList<String>();
+
+
+    // field = "name" - getting list of stations names
+    // field = "date" - getting list of stations departure date
+    private static List<String> getListFromStationsFields(List<Station> listStations, String field) {
+        List<String> listFromStationsFields = new ArrayList<>();
         for (Station listStation : listStations) {
-            listStationNames.add(listStation.getNameStation());
+            if (field.equals("name")) {
+                listFromStationsFields.add(listStation.getNameStation());
+            } else  if(field.equals("date")){
+                listFromStationsFields.add(listStation.getDepartTime());
+            }
         }
-        return listStationNames;
+        return listFromStationsFields;
     }
 }

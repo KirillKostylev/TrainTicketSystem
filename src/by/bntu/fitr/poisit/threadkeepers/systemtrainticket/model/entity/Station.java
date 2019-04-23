@@ -7,10 +7,10 @@ public class Station implements Serializable {
     private String arriveTime;
     private String departTime;
 
-    public Station(String nameStation, String arriveTime, String departTime) {
+    public Station(String nameStation, String arriveDate, String departDate) {
         this.nameStation = nameStation;
-        this.arriveTime = arriveTime;
-        this.departTime = departTime;
+        this.arriveTime = arriveDate;
+        this.departTime = departDate;
     }
 
     public String getNameStation() {
