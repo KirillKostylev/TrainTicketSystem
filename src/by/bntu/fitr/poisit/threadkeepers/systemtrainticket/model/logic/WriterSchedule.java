@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 public class WriterSchedule {
 
     public static void saveData(Schedule schedule, String fileName) {
-
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream(fileName))) {
             oos.writeObject(schedule);

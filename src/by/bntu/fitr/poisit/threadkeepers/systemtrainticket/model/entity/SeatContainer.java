@@ -1,5 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +45,8 @@ public class SeatContainer implements Serializable {
         return seatList.get(0).size();
     }
 
-    public Seat getElement(int i, int j) {
-        return seatList.get(i).get(j);
-    }
-
-    public void setElement(int i, int j, Seat seat) {
-        seatList.get(i).set(j, seat);
+    public Seat getSeat(int carriageNumber, int seatNumber) {
+        return seatList.get(carriageNumber).get(seatNumber);
     }
 
     @Override

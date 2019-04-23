@@ -1,25 +1,41 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.Checker;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 public class Seat implements Serializable {
+    public static final String WRONG_CARRIAGE_NUMBER = "Wrong Carriage number!";
+    public static final String WRONG_SEAT_NUMBER = "Wrong Seat Number";
+
+    private static int carriageCounter = 1;
+    private static int seatCounter = 1;
     private int carriageNumber;
     private int seatNumber;
     private List<Station> busyStations;
 
-    public Seat(int carriageNumber, int seatNumber, List<Station> busyStations) {
-        this.carriageNumber = carriageNumber;
-        this.seatNumber = seatNumber;
+    public Seat(List<Station> busyStations) {
+        if(seatCounter > 30) {
+            carriageCounter++;
+            seatCounter = 0;
+        }
+        carriageNumber = carriageCounter;
+        seatNumber = seatCounter;
         this.busyStations = busyStations;
+        seatCounter++;
     }
 
     public int getCarriageNumber() {
         return carriageNumber;
     }
 
-    public void setCarriageNumber(int carriageNumber) {
+    public void setCarriageNumber(int carriageNumber) throws NonPositiveException {
+        if (carriageNumber <= 0) {
+            throw new NonPositiveException(WRONG_CARRIAGE_NUMBER);
+        }
         this.carriageNumber = carriageNumber;
     }
 
@@ -27,7 +43,8 @@ public class Seat implements Serializable {
         return seatNumber;
     }
 
-    public void setSeatNumber(int seatNumber) {
+    public void setSeatNumber(int seatNumber) throws NonPositiveException {
+        Checker.checkForPositiveWithException(seatNumber);
         this.seatNumber = seatNumber;
     }
 
@@ -37,6 +54,11 @@ public class Seat implements Serializable {
 
     public void setBusyStations(List<Station> busyStations) {
         this.busyStations = busyStations;
+    }
+
+    public static void clearCounters() {
+        seatCounter = 1;
+        carriageCounter = 1;
     }
 
     @Override

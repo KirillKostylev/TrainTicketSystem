@@ -1,5 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,13 @@ public class Schedule implements Serializable {
         numberOfTrains = 0;
     }
 
-    public void addNewTrain(int trainNumber, int carriagesNumber, List<Station> listStation) {
+    public void addNewTrain(int trainNumber, int carriagesNumber, List<Station> listStation) throws NonPositiveException {
+        if (trainNumber < 0) {
+            throw new NonPositiveException("Train" + Train.WRONG_TRAIN_NUMBER);
+        }
+        if (carriagesNumber < 0 || carriagesNumber > 20){
+            throw new NonPositiveException("Carriages" + Train.WRONG_CARRIAGES_AMOUNT);
+        }
         Train train = new Train(trainNumber, carriagesNumber, listStation);
         trains.add(train);
         numberOfTrains++;

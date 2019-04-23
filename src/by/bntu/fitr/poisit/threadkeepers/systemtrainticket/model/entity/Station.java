@@ -1,5 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.WrongTitleException;
+
 import java.io.Serializable;
 
 public class Station implements Serializable {
