@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class ReadSchedule {
+public class ReaderSchedule {
     public static Schedule readData(String fileName) {
         Schedule schedule = null;
         try (ObjectInputStream ois = new ObjectInputStream(

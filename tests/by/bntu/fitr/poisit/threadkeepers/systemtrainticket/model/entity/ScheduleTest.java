@@ -1,6 +1,6 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.ReadSchedule;
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.ReaderSchedule;
 import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.WriterSchedule;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class ScheduleTest {
 
         WriterSchedule.saveData(schedule, fileName);
 
-        Schedule newSchedule = ReadSchedule.readData(fileName);
+        Schedule newSchedule = ReaderSchedule.readData(fileName);
 
         Assert.assertEquals(schedule, newSchedule);
     }

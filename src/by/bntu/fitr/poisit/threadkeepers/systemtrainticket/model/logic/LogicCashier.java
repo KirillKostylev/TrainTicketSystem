@@ -14,6 +14,7 @@ public class LogicCashier {
     public static void buyTicket() {
     }
 
+    // todo ДОБАВИТЬ ПОИСК ПО ДАТЕ
     public static List<Train> findTrain(Schedule schedule, String departureStation, String arriveStation) {
         List<Train> suitableTrains = new ArrayList<>();
         for (Train train : schedule.getTrains()) {
