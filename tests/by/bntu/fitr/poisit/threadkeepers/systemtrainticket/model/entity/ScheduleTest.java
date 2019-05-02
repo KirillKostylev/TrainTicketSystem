@@ -1,40 +1,60 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.ReaderSchedule;
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.WriterSchedule;
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
+import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.ActionWithData;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ScheduleTest {
+    private static Schedule schedule;
+    private static Schedule newSchedule;
 
-    @Test
-    public void addTrain() {
+    @BeforeClass
+    public static void addTrain() throws NonPositiveException {
 
         String fileName = "scheduleInfo.txt";
 
-        Schedule schedule = new Schedule();
-        List<Station> stations = new ArrayList<>();
-        stations.add(new Station("Brest", "12.10.2019 18:00", "12.10.2019 18:05"));
-        stations.add(new Station("Baranovichi", "12.10.2019 20:00", "12.10.2019 20:05"));
-        stations.add(new Station("Minsk", "12.10.2019 22:00", "12.10.2019 22:05"));
+        schedule = new Schedule();
+        List<Station> stations = new ArrayList<>(Arrays.asList(
+                new Station("Brest", "12.10.2019 18:00", "12.10.2019 18:05"),
+                new Station("Baranovichi", "12.10.2019 20:00", "12.10.2019 20:05"),
+                new Station("Minsk", "12.10.2019 22:00", "12.10.2019 22:05")));
+        Train train1 = new Train(151,2,-1);
+        schedule.addRoute(stations, train1);
 
-        schedule.addNewTrain(151, 2, stations);
+        List<Station> stations2 = new ArrayList<>(Arrays.asList(
+                new Station("Minsk", "17.08.2019 05:40", "17.08.2019 06:00"),
+                new Station("Baranovichi", "17.08.2019 07:40", "17.08.2019 7:50"),
+                new Station("Ivatsevichi", "17.08.2019 08:35", "17.08.2019 08:45"),
+                new Station("Brest", "17.08.2019 09:00", "17.08.2019 09:20")));
+        Train train2 = new Train(412,2,-1);
+        schedule.addRoute(stations2, train2);
 
-        List<Station> stations2 = new ArrayList<>();
-        stations2.add(new Station("Minsk", "17.08.2019 05:40", "17.08.2019 06:00"));
-        stations2.add(new Station("Baranovichi", "17.08.2019 07:40", "17.08.2019 7:50"));
-        stations2.add(new Station("Ivatsevichi", "17.08.2019 08:35", "17.08.2019 08:45"));
-        stations2.add(new Station("Brest", "17.08.2019 09:00", "17.08.2019 09:20"));
+        ActionWithData.writeObject(schedule, fileName);
 
-        schedule.addNewTrain(412, 2, stations2);
+        newSchedule = (Schedule) ActionWithData.readObject(fileName);
+    }
 
-        WriterSchedule.saveData(schedule, fileName);
-
-        Schedule newSchedule = ReaderSchedule.readData(fileName);
-
+    @Test
+    public void checkWriteAndReadFile() {
         Assert.assertEquals(schedule, newSchedule);
+    }
+
+    @Test
+    public void checkWriteAndReadFileFalse() throws NonPositiveException {
+
+        List<Station> stations = new ArrayList<>(Arrays.asList(
+                new Station("Brest", "12.10.2019 18:00", "12.10.2019 18:05"),
+                new Station("Baranovichi", "12.10.2019 20:00", "12.10.2019 20:05"),
+                new Station("Minsk", "12.10.2019 22:00", "12.10.2019 22:05")));
+        Train train = new Train(134,4,10);
+        schedule.addRoute(stations, train);
+
+        Assert.assertNotEquals(schedule, newSchedule);
     }
 }

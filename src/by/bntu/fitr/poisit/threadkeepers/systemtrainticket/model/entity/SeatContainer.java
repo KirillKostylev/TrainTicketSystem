@@ -1,14 +1,11 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class SeatContainer implements Serializable {
-
     private List<List<Seat>> seatList;
 
     public SeatContainer() {
@@ -23,14 +20,14 @@ public class SeatContainer implements Serializable {
     }
 
     public void addCarriageInContainer(int carriageIndex, int seatsNumberInCarriage) {
-        seatList.add(carriageIndex, new ArrayList<>());
+        seatList.add(new ArrayList<>());
         for (int i = 0; i < seatsNumberInCarriage; i++) {
-            addSeatInCarriage(carriageIndex, i, new Seat(carriageIndex, i, null));
+            addSeatInCarriage(carriageIndex, new Seat());
         }
     }
 
-    private void addSeatInCarriage(int carriageIndex, int seatIndex, Seat seat) {
-        seatList.get(carriageIndex).add(seatIndex, seat);
+    private void addSeatInCarriage(int carriageIndex, Seat seat) {
+        seatList.get(carriageIndex).add(seat);
     }
 
     public int getCarriageCount() {

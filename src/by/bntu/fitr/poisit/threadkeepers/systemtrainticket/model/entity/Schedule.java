@@ -1,51 +1,66 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Schedule implements Serializable {
     public static final int DEFAULT_SIZE = 3;
 
-    private List<Train> trains;
-    private static int numberOfTrains;
+    private List<Route> routes;
+    private static int routesNumber;
 
     public Schedule() {
-        trains = new ArrayList<>();
-        numberOfTrains = 0;
+        routes = new ArrayList<>();
+        routesNumber = 0;
     }
 
-    public void addNewTrain(int trainNumber, int carriagesNumber, List<Station> listStation) throws NonPositiveException {
-        if (trainNumber < 0) {
-            throw new NonPositiveException("Train" + Train.WRONG_TRAIN_NUMBER);
-        }
-        if (carriagesNumber < 0 || carriagesNumber > 20){
-            throw new NonPositiveException("Carriages" + Train.WRONG_CARRIAGES_AMOUNT);
-        }
-        Train train = new Train(trainNumber, carriagesNumber, listStation);
-        trains.add(train);
-        numberOfTrains++;
+//
+//    public void addRoute(List<Station> stations, int trainNumber, int carriagesNumber, int seatsNumberInCarriage)
+//            throws NonPositiveException {
+//        if (trainNumber < 1) {
+//            throw new NonPositiveException("Train" + Train.WRONG_TRAIN_NUMBER);
+//        }
+//        if (carriagesNumber < 0 || carriagesNumber > 20) {
+//            throw new NonPositiveException("Carriages" + Train.WRONG_CARRIAGES_AMOUNT);
+//        }
+//        Train train = new Train(trainNumber, carriagesNumber, seatsNumberInCarriage);
+//        routes.add(new Route(stations, train));
+//        routesNumber++;
+//    }
+
+
+    public void addRoute(List<Station> stations, Train train){
+        routes.add(new Route(stations, train));
+        routesNumber++;
     }
 
-    public void setTrains(List<Train> trains) {
-        this.trains = trains;
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 
-    public int getNumberOfTrains() {
-        return numberOfTrains;
+    public List<Route> getRoutes(){
+        return routes;
     }
 
-    public List<Train> getTrains() {
-        return trains;
+    public int getRoutesNumber() {
+        return routesNumber;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Schedule schedule = (Schedule) o;
+        return Objects.equals(routes, schedule.routes);
     }
 
     @Override
-    public String toString() {
-        return "Schedule{" +
-                "trains=" + trains +
-                ", numberOfTrains=" + numberOfTrains +
-                '}';
+    public int hashCode() {
+        return Objects.hash(routes);
     }
 }
+

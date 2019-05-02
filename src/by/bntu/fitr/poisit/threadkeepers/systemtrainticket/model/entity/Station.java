@@ -1,8 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.WrongTitleException;
-
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Station implements Serializable {
     private String nameStation;
@@ -14,8 +13,8 @@ public class Station implements Serializable {
         this.arriveTime = arriveDate;
         this.departTime = departDate;
     }
-
-    public String getNameStation() {
+//сделать рейсы(поезд, станции)
+    public String getStationName() {
         return nameStation;
     }
 
@@ -46,5 +45,20 @@ public class Station implements Serializable {
                 ", arriveTime='" + arriveTime + '\'' +
                 ", departTime='" + departTime + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Station station = (Station) o;
+        return Objects.equals(nameStation, station.nameStation) &&
+                Objects.equals(arriveTime, station.arriveTime) &&
+                Objects.equals(departTime, station.departTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nameStation, arriveTime, departTime);
     }
 }

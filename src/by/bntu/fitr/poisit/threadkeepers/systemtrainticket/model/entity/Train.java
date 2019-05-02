@@ -5,41 +5,41 @@ import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NullE
 import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.Checker;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Objects;
 
 public class Train implements Serializable {
-    public final static int DEFAULT_SEAT_NUMBER_IN_CARRIAGE = 2;
+    public final static int DEFAULT_SEAT_NUMBER_IN_CARRIAGE = 20;
     public final static int DEFAULT_CARRIAGES_NUMBER = 5;
-    public static final String WRONG_TRAIN_NUMBER= "Wrong train number!";
+    public static final String WRONG_TRAIN_NUMBER = "Wrong train number!";
     public static final String WRONG_CARRIAGES_AMOUNT = "Wrong carriages amount!";
 
     private int trainNumber;
     private int carriagesNumber;
-    private List<Station> stationsInTransit;
+    private int seatsNumberInCarriage;
     private SeatContainer seatContainer;
 
 
-    public Train(int trainNumber, int carriagesNumber, List<Station> stationsInTransit)
-            throws NonPositiveException {
+    public Train(int trainNumber, int carriagesNumber, int seatsNumberInCarriage) {
         this.trainNumber = trainNumber;
-        this.stationsInTransit = stationsInTransit;
         if (carriagesNumber < 0) {
             this.carriagesNumber = DEFAULT_CARRIAGES_NUMBER;
         } else {
             this.carriagesNumber = carriagesNumber;
         }
+        if (seatsNumberInCarriage < 0) {
+            this.seatsNumberInCarriage = DEFAULT_SEAT_NUMBER_IN_CARRIAGE;
+        } else {
+            this.seatsNumberInCarriage = seatsNumberInCarriage;
+        }
         seatContainer = new SeatContainer();
         fillSeatContainer();
+        Seat.clearCounters();
     }
 
     private void fillSeatContainer() {
         for (int i = 0; i < carriagesNumber; i++) {
-            seatContainer.addCarriageInContainer(i, DEFAULT_SEAT_NUMBER_IN_CARRIAGE);
+            seatContainer.addCarriageInContainer(i, seatsNumberInCarriage);
         }
-    }
-
-    public List<Station> getStationsInTransit() {
-        return stationsInTransit;
     }
 
     public SeatContainer getSeatContainer() {
@@ -60,11 +60,6 @@ public class Train implements Serializable {
         this.trainNumber = trainNumber;
     }
 
-    public void setStationsInTransit(List<Station> stationsInTransit) throws NullException {
-        Checker.checkForNullWithException(stationsInTransit);
-        this.stationsInTransit = stationsInTransit;
-    }
-
     public int getCarriagesNumber() {
         return carriagesNumber;
     }
@@ -75,12 +70,28 @@ public class Train implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Train train = (Train) o;
+        return trainNumber == train.trainNumber &&
+                carriagesNumber == train.carriagesNumber &&
+                seatsNumberInCarriage == train.seatsNumberInCarriage &&
+                Objects.equals(seatContainer, train.seatContainer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(trainNumber, carriagesNumber, seatsNumberInCarriage, seatContainer);
+    }
+
+    @Override
     public String toString() {
-        return "\nTrain{" +
+        return "Train{" +
                 "trainNumber=" + trainNumber +
                 ", carriagesNumber=" + carriagesNumber +
-                ", stationsInTransit=" + stationsInTransit +
+                ", seatsNumberInCarriage=" + seatsNumberInCarriage +
                 ", seatContainer=" + seatContainer +
-                "}";
+                '}';
     }
 }

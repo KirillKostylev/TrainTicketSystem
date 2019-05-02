@@ -4,6 +4,7 @@ import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPo
 import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.Checker;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,18 +14,19 @@ public class Seat implements Serializable {
 
     private static int carriageCounter = 1;
     private static int seatCounter = 1;
+
     private int carriageNumber;
     private int seatNumber;
     private List<Station> busyStations;
 
-    public Seat(List<Station> busyStations) {
-        if(seatCounter > 30) {
+    public Seat() {
+        if (seatCounter > Train.DEFAULT_SEAT_NUMBER_IN_CARRIAGE) {
             carriageCounter++;
-            seatCounter = 0;
+            seatCounter = 1;
         }
         carriageNumber = carriageCounter;
         seatNumber = seatCounter;
-        this.busyStations = busyStations;
+        this.busyStations = new ArrayList<>();
         seatCounter++;
     }
 

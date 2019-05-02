@@ -9,16 +9,49 @@ public class TrainTest {
     @Test
     public void fillSeatContainer() {
         SeatContainer seatList = new SeatContainer();
-        seatList.getSeatList().add(new ArrayList<>());
-        seatList.getSeatList().add(new ArrayList<>());
-        seatList.getSeatList().get(0).add(new Seat(0,0,null));
-        seatList.getSeatList().get(0).add(new Seat(0,1,null));
-        seatList.getSeatList().get(1).add(new Seat(1,0,null));
-        seatList.getSeatList().get(1).add(new Seat(1,1,null));
 
-//        SeatContainer seatList1 = new SeatContainer(2);
-        ArrayList<Station> stationList1 = new ArrayList<>();
-        Train train = new Train(1, 2,stationList1);
+        for (int i = 0; i < 10; i++) {
+            seatList.getSeatList().add(new ArrayList<>());
+            for (int j = 0; j < 30; j++) {
+                seatList.getSeatList().get(i).add(new Seat());
+            }
+        }
+        Seat.clearCounters();
+
+        Train train = new Train(1, 10, 30);
+        Assert.assertEquals(seatList, train.getSeatContainer());
+    }
+
+    @Test
+    public void fillSeatContainerWrongValue() {
+        SeatContainer seatList = new SeatContainer();
+
+        for (int i = 0; i < Train.DEFAULT_CARRIAGES_NUMBER; i++) {
+            seatList.getSeatList().add(new ArrayList<>());
+            for (int j = 0; j < 30; j++) {
+                seatList.getSeatList().get(i).add(new Seat());
+            }
+        }
+        Seat.clearCounters();
+
+
+        Train train = new Train(1, -1, 30);
+        Assert.assertEquals(seatList, train.getSeatContainer());
+    }
+
+    @Test
+    public void fillSeatContainerWrongValue2() {
+        SeatContainer seatList = new SeatContainer();
+
+        for (int i = 0; i < 5; i++) {
+            seatList.getSeatList().add(new ArrayList<>());
+            for (int j = 0; j < Train.DEFAULT_SEAT_NUMBER_IN_CARRIAGE; j++) {
+                seatList.getSeatList().get(i).add(new Seat());
+            }
+        }
+        Seat.clearCounters();
+
+        Train train = new Train(1, 5, -1);
         Assert.assertEquals(seatList, train.getSeatContainer());
     }
 }
