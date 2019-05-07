@@ -1,4 +1,4 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.view;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.view;
 
 public class Printer {
     public static void print(String string) {

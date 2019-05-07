@@ -1,7 +1,7 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.Checker;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NonPositiveException;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.Checker;
 
 import java.io.Serializable;
 import java.util.ArrayList;

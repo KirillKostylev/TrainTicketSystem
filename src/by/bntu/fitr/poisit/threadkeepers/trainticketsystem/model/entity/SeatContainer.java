@@ -1,4 +1,4 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class SeatContainer implements Serializable {
+    public static final String NULL_SEAT_CONTAINER = "SeatContainer can't be null value";
     private List<List<Seat>> seatList;
 
     public SeatContainer() {

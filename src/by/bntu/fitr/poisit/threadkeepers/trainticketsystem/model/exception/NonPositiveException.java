@@ -1,4 +1,4 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception;
 
 public class NonPositiveException extends Exception{
 

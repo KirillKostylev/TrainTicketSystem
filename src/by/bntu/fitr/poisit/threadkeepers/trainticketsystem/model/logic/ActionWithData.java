@@ -1,4 +1,4 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic;
 
 import java.io.*;
 

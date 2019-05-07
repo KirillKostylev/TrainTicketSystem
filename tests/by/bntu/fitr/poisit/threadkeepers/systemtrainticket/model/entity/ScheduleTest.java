@@ -1,11 +1,15 @@
 package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.exception.NonPositiveException;
-import by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.ActionWithData;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Schedule;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Train;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NonPositiveException;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ActionWithData;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +19,7 @@ public class ScheduleTest {
     private static Schedule newSchedule;
 
     @BeforeClass
-    public static void addTrain() throws NonPositiveException {
+    public static void addTrain() throws NonPositiveException, ParseException {
 
         String fileName = "scheduleInfo.txt";
 
@@ -46,7 +50,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void checkWriteAndReadFileFalse() throws NonPositiveException {
+    public void checkWriteAndReadFileFalse() throws NonPositiveException, ParseException {
 
         List<Station> stations = new ArrayList<>(Arrays.asList(
                 new Station("Brest", "12.10.2019 18:00", "12.10.2019 18:05"),

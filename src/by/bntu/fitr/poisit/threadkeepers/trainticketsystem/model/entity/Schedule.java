@@ -1,22 +1,22 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 public class Schedule implements Serializable {
     public static final int DEFAULT_SIZE = 3;
+    public static final String NULL_SCHEDULE_EXCEPTION = "Null schedule";
 
     private List<Route> routes;
     private static int routesNumber;
 
     public Schedule() {
-        routes = new ArrayList<>();
+        routes = new LinkedList<>();
         routesNumber = 0;
     }
 
-//
 //    public void addRoute(List<Station> stations, int trainNumber, int carriagesNumber, int seatsNumberInCarriage)
 //            throws NonPositiveException {
 //        if (trainNumber < 1) {
@@ -41,6 +41,11 @@ public class Schedule implements Serializable {
         this.routes = routes;
     }
 
+    public List<Route> getSortedRoutes(){
+    //    routes.sort();
+        return null;
+    }
+
     public List<Route> getRoutes(){
         return routes;
     }
@@ -62,5 +67,6 @@ public class Schedule implements Serializable {
     public int hashCode() {
         return Objects.hash(routes);
     }
+
 }
 

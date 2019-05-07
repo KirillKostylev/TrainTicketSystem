@@ -1,11 +1,13 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Route implements Serializable {
+public class Route implements Serializable, Comparable<Route>{
+    public static final String EMPTY_FIELD_EXCEPTION = "One of the fields is empty";
+    public static final String NULL_INPUT_FIELD_EXCEPTION = "Value can't be null";
     private List<Station> stations;
     private Train train;
 
@@ -53,5 +55,10 @@ public class Route implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(stations, train);
+    }
+
+    @Override
+    public int compareTo(Route o) {
+        return this.getStations().get(0).getDepartTime().compareTo(o.stations.get(0).getDepartTime());
     }
 }

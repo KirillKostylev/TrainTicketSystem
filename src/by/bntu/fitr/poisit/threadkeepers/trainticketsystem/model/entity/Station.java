@@ -1,19 +1,26 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
 
 public class Station implements Serializable {
+    public static final String TIME_FORMAT = "dd.MM.yyyy HH:mm";
+    public static final String DATE_FORMAT = "dd.MM.yyyy";
     private String nameStation;
     private String arriveTime;
-    private String departTime;
+    private Calendar departTime;
 
-    public Station(String nameStation, String arriveDate, String departDate) {
+    public Station(String nameStation, String arriveDate, String departDate) throws ParseException {
         this.nameStation = nameStation;
         this.arriveTime = arriveDate;
-        this.departTime = departDate;
+        Calendar calendarDepartTime = Calendar.getInstance();
+        calendarDepartTime.setTime(new SimpleDateFormat(TIME_FORMAT).parse(departDate));
+        this.departTime = calendarDepartTime;
     }
-//сделать рейсы(поезд, станции)
+
     public String getStationName() {
         return nameStation;
     }
@@ -30,13 +37,17 @@ public class Station implements Serializable {
         this.arriveTime = arriveTime;
     }
 
-    public String getDepartTime() {
+    public Calendar getDepartTime() {
         return departTime;
     }
 
-    public void setDepartTime(String departTime) {
-        this.departTime = departTime;
-    }
+//    public void setDepartTime(String departTime) {
+//        try {
+//            this.departTime = new SimpleDateFormat(TIME_FORMAT).parse(departTime);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public String toString() {
