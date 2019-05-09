@@ -30,6 +30,7 @@ public class Route implements Serializable, Comparable<Route>{
         return stations;
     }
 
+
     public Station getStation(String field) {
         Station suitableStation = null;
         for (Station station : stations) {

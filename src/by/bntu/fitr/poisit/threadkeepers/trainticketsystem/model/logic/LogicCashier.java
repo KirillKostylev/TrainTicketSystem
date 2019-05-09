@@ -1,9 +1,6 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic;
 
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Route;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Schedule;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.SeatContainer;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.*;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
 
 import java.text.ParseException;
@@ -34,7 +31,6 @@ public class LogicCashier {
         }
 
 //        Checker.checkForSuitableRoute(route, departureStation,arriveStation,"as");
-
 
 
         seatContainer.getSeat(carriageNumber - 1, seatNumber - 1).addBusyStations(
@@ -75,6 +71,41 @@ public class LogicCashier {
         Comparator<Route> comparator = Comparator.comparing(obj -> obj.getStation(departureStation).getDepartTime());
         suitableRoutes.sort(comparator);
         return suitableRoutes;
+    }
+
+    public static List<Integer> findCarriagesNumberWithFreeSeats(
+            Route route, String departureStation, String arriveStation) throws NullException, EmptyFieldException {
+        List<Integer> carriagesNumberWithFreeSeats = new ArrayList<>();
+
+        Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
+        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
+        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
+
+        List<Station> suitableStations = getSuitableStations(route, departureStation, arriveStation);
+
+        SeatContainer seatContainer = route.getTrain().getSeatContainer();
+
+        for (int i = 0; i < seatContainer.getCarriageCount(); i++) {
+            for (int j = 0; j < seatContainer.getSeatCount(); j++) {
+                if (checkSeatForFree(seatContainer.getSeat(i, j), suitableStations)) {
+                    carriagesNumberWithFreeSeats.add(i + 1);
+                    break;
+                }
+            }
+        }
+
+
+        return carriagesNumberWithFreeSeats;
+    }
+
+    private static boolean checkSeatForFree(Seat seat, List<Station> suitableStations) {
+        boolean seatIsFree = true;
+        for (Station station : suitableStations) {
+            if (seat.getBusyStations().contains(station)) {
+                seatIsFree = false;
+            }
+        }
+        return seatIsFree;
     }
 
     private static boolean compareDate(Calendar calendar1, Calendar calendar2) {
