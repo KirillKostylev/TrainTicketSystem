@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Route implements Serializable, Comparable<Route>{
+    public static final String NULL_ROUTE_EXCEPTION = "Route can't be null";
     public static final String EMPTY_FIELD_EXCEPTION = "One of the fields is empty";
     public static final String NULL_INPUT_FIELD_EXCEPTION = "Value can't be null";
+
     private List<Station> stations;
     private Train train;
 

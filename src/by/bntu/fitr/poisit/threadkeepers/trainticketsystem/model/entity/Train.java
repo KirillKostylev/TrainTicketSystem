@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Train implements Serializable {
-    public final static int DEFAULT_SEAT_NUMBER_IN_CARRIAGE = 20;
+    public final static int DEFAULT_SEATS_NUMBER_IN_CARRIAGE = 20;
     public final static int DEFAULT_CARRIAGES_NUMBER = 5;
     public static final String WRONG_TRAIN_NUMBER = "Wrong train number!";
     public static final String WRONG_CARRIAGES_AMOUNT = "Wrong carriages amount!";
@@ -27,7 +27,7 @@ public class Train implements Serializable {
             this.carriagesNumber = carriagesNumber;
         }
         if (seatsNumberInCarriage < 0) {
-            this.seatsNumberInCarriage = DEFAULT_SEAT_NUMBER_IN_CARRIAGE;
+            this.seatsNumberInCarriage = DEFAULT_SEATS_NUMBER_IN_CARRIAGE;
         } else {
             this.seatsNumberInCarriage = seatsNumberInCarriage;
         }
@@ -56,7 +56,7 @@ public class Train implements Serializable {
     }
 
     public void setTrainNumber(int trainNumber) throws NonPositiveException {
-        Checker.checkForPositiveWithException(trainNumber);
+        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,trainNumber);
         this.trainNumber = trainNumber;
     }
 
@@ -65,7 +65,7 @@ public class Train implements Serializable {
     }
 
     public void setCarriagesNumber(int carriagesNumber) throws NonPositiveException {
-        Checker.checkForPositiveWithException(carriagesNumber);
+        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,carriagesNumber);
         this.carriagesNumber = carriagesNumber;
     }
 

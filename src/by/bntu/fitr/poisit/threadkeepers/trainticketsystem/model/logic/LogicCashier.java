@@ -1,12 +1,10 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic;
 
-//import by.bntu.fitr.poisit.threadkeepers.by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.logic.domain.*;
-
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Route;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Schedule;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.SeatContainer;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.EmptyFieldException;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NullException;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +13,32 @@ import java.util.*;
 public class LogicCashier {
 
 
-    public static void buyTicket(Route route, int carriageNuumber, int seatNumber) {
+    public static void buyTicket(Route route, int carriageNumber, int seatNumber, String departureStation,
+                                 String arriveStation)
+            throws NullException, NonPositiveException, WrongCarriageNumber, WrongSeatNumber, EmptyFieldException,
+            WrongStationInRouteException {
+
+        Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
+        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, seatNumber);
+        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, carriageNumber);
+        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
+        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
+
+        SeatContainer seatContainer = route.getTrain().getSeatContainer();
+
+        if (seatContainer.getCarriageCount() < carriageNumber) {
+            throw new WrongCarriageNumber(SeatContainer.WRONG_CARRIAGE_NUMBER);
+        }
+        if (seatContainer.getSeatCount() < seatNumber) {
+            throw new WrongSeatNumber(SeatContainer.WRONG_SEAT_NUMBER);
+        }
+
+//        Checker.checkForSuitableRoute(route, departureStation,arriveStation,"as");
+
+
+
+        seatContainer.getSeat(carriageNumber - 1, seatNumber - 1).addBusyStations(
+                getSuitableStations(route, departureStation, arriveStation));
 
     }
 
@@ -24,8 +47,8 @@ public class LogicCashier {
             EmptyFieldException, NullException {
 
         Checker.checkForNullWithException(Schedule.NULL_SCHEDULE_EXCEPTION, schedule);
-        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION,
-                departureStation, arriveStation, departureTime);
+        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation,
+                departureTime);
         Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation, departureTime);
 
         Calendar calendarDepartTime = Calendar.getInstance();
@@ -60,5 +83,37 @@ public class LogicCashier {
                         calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
                         calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
 
+    }
+
+    private static List<Station> getSuitableStations(Route route, String departureStation, String arriveStation) {
+
+        List<Station> suitableStations = new LinkedList<>();
+
+        boolean flag = false; //if flag == true we add station in suitableStations
+        for (Station station : route.getStations()) {
+            if (route.getStation(departureStation).equals(station)) {
+                flag = true;
+            }
+            if (flag) {
+                suitableStations.add(station);
+            }
+            if (route.getStation(arriveStation).equals(station)) {
+                flag = false;
+            }
+        }
+
+//        int tempCount = 0;
+//        for (Station station : route.getStations()) {
+//            if (route.getStation(departureStation).equals(station) || route.getStation(arriveStation).equals(station)) {
+//                tempCount++;
+//                suitableStations.add(station);
+//                continue;
+//            }
+//            if (tempCount == 1) {
+//                suitableStations.add(station);
+//            }
+//        }
+
+        return suitableStations;
     }
 }

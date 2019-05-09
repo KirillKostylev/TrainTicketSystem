@@ -36,15 +36,17 @@ public class Schedule implements Serializable {
         routesNumber++;
     }
 
-
+    public Route getRoute(int index){
+        return routes.get(index);
+    }
     public void setRoutes(List<Route> routes) {
         this.routes = routes;
     }
-
     public List<Route> getSortedRoutes(){
     //    routes.sort();
         return null;
     }
+
 
     public List<Route> getRoutes(){
         return routes;

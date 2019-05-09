@@ -7,6 +7,11 @@ import java.util.Objects;
 
 public class SeatContainer implements Serializable {
     public static final String NULL_SEAT_CONTAINER = "SeatContainer can't be null value";
+    public static final String INVALID_VALUE_EXCEPTION = "Value must be positive";
+    public static final String WRONG_CARRIAGE_NUMBER = "Such carriage number is not in the train";
+    public static final String WRONG_SEAT_NUMBER = "Such seat number is not in the carriage";
+
+
     private List<List<Seat>> seatList;
 
     public SeatContainer() {
@@ -23,7 +28,7 @@ public class SeatContainer implements Serializable {
     public void addCarriageInContainer(int carriageIndex, int seatsNumberInCarriage) {
         seatList.add(new ArrayList<>());
         for (int i = 0; i < seatsNumberInCarriage; i++) {
-            addSeatInCarriage(carriageIndex, new Seat());
+            addSeatInCarriage(carriageIndex, new Seat(seatsNumberInCarriage));
         }
     }
 
@@ -46,6 +51,7 @@ public class SeatContainer implements Serializable {
     public Seat getSeat(int carriageNumber, int seatNumber) {
         return seatList.get(carriageNumber).get(seatNumber);
     }
+
 
     @Override
     public boolean equals(Object o) {

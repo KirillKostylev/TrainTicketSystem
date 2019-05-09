@@ -19,8 +19,8 @@ public class Seat implements Serializable {
     private int seatNumber;
     private List<Station> busyStations;
 
-    public Seat() {
-        if (seatCounter > Train.DEFAULT_SEAT_NUMBER_IN_CARRIAGE) {
+    public Seat(int seatNumberInCarriage) {
+        if (seatCounter > seatNumberInCarriage) {
             carriageCounter++;
             seatCounter = 1;
         }
@@ -28,6 +28,10 @@ public class Seat implements Serializable {
         seatNumber = seatCounter;
         this.busyStations = new ArrayList<>();
         seatCounter++;
+    }
+
+    public Seat() {
+        this(Train.DEFAULT_SEATS_NUMBER_IN_CARRIAGE);
     }
 
     public int getCarriageNumber() {
@@ -46,7 +50,7 @@ public class Seat implements Serializable {
     }
 
     public void setSeatNumber(int seatNumber) throws NonPositiveException {
-        Checker.checkForPositiveWithException(seatNumber);
+        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,seatNumber);
         this.seatNumber = seatNumber;
     }
 
@@ -54,8 +58,9 @@ public class Seat implements Serializable {
         return busyStations;
     }
 
-    public void setBusyStations(List<Station> busyStations) {
-        this.busyStations = busyStations;
+    public void addBusyStations(List<Station> busyStations) {
+        this.busyStations.addAll(busyStations);
+
     }
 
     public static void clearCounters() {

@@ -1,8 +1,5 @@
-package by.bntu.fitr.poisit.threadkeepers.systemtrainticket.model.entity;
+package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Schedule;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Train;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NonPositiveException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ActionWithData;
 import org.junit.Assert;
