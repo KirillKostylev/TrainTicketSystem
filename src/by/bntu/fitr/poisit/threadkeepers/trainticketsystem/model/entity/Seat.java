@@ -59,6 +59,7 @@ public class Seat implements Serializable {
     }
 
     public void addBusyStations(List<Station> busyStations) {
+        busyStations.remove(busyStations.size()-1);
         this.busyStations.addAll(busyStations);
 
     }

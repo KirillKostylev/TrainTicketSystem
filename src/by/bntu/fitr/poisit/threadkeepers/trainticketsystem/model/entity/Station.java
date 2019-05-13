@@ -1,6 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,6 +40,16 @@ public class Station implements Serializable {
 
     public Calendar getDepartTime() {
         return departTime;
+    }
+
+    public String getStringDepartTime() {
+        String time = "";
+        DateFormat df = new SimpleDateFormat(Station.TIME_FORMAT);
+        time += df.format(departTime.getTime());
+//        time += departTime.get(Calendar.DAY_OF_MONTH) + "." + (departTime.get(Calendar.MONTH)+1)+ "." +
+//                departTime.get(Calendar.YEAR) + " " + departTime.get(Calendar.HOUR) + ":" +
+//                departTime.get(Calendar.MINUTE);
+        return time;
     }
 
 //    public void setDepartTime(String departTime) {
