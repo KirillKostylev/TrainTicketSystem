@@ -10,9 +10,10 @@ public class Ticket {
     private String arriveTime;
     private int seatNumber;
     private int carriageNumber;
+    private double cost;
 
     public Ticket(int trainNumber, String departureStation, String arriveStation, String departureTime,
-                  String arriveTime, int carriageNumber, int seatNumber) {
+                  String arriveTime, int carriageNumber, int seatNumber, double cost) {
         this.trainNumber = trainNumber;
         this.departureStation = departureStation;
         this.arriveStation = arriveStation;
@@ -20,6 +21,7 @@ public class Ticket {
         this.arriveTime = arriveTime;
         this.seatNumber = seatNumber;
         this.carriageNumber = carriageNumber;
+        this.cost = cost;
     }
 
     @Override
@@ -30,8 +32,9 @@ public class Ticket {
                 ", arriveStation='" + arriveStation + '\'' +
                 ", departureTime='" + departureTime + '\'' +
                 ", arriveTime='" + arriveTime + '\'' +
-                ", carriageNumber=" + carriageNumber +
                 ", seatNumber=" + seatNumber +
+                ", carriageNumber=" + carriageNumber +
+                ", cost=" + cost +
                 '}';
     }
 
@@ -43,6 +46,7 @@ public class Ticket {
         return trainNumber == ticket.trainNumber &&
                 seatNumber == ticket.seatNumber &&
                 carriageNumber == ticket.carriageNumber &&
+                Double.compare(ticket.cost, cost) == 0 &&
                 Objects.equals(departureStation, ticket.departureStation) &&
                 Objects.equals(arriveStation, ticket.arriveStation) &&
                 Objects.equals(departureTime, ticket.departureTime) &&
@@ -51,6 +55,7 @@ public class Ticket {
 
     @Override
     public int hashCode() {
-        return Objects.hash(trainNumber, departureStation, arriveStation, departureTime, arriveTime, seatNumber, carriageNumber);
+        return Objects.hash(trainNumber, departureStation, arriveStation, departureTime, arriveTime, seatNumber,
+                carriageNumber,cost);
     }
 }

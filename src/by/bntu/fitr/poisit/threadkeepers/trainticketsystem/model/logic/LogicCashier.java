@@ -8,12 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class LogicCashier {
-
+    public static final double COST_PER_KM = 0.03;
 
     public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, String departureStation,
                                    String arriveStation)
-            throws NullException, NonPositiveException, WrongCarriageNumber, WrongSeatNumber, EmptyFieldException,
-            WrongStationInRouteException {
+            throws NullException, NonPositiveException, WrongCarriageNumber, WrongSeatNumber, EmptyFieldException {
 
         Ticket ticket = null;
 
@@ -40,9 +39,11 @@ public class LogicCashier {
             seatContainer.getSeat(carriageNumber - 1, seatNumber - 1).addBusyStations(
                     getSuitableStations(route, departureStation, arriveStation));
             Train train = route.getTrain();
+
             ticket = new Ticket(train.getTrainNumber(), departureStation, arriveStation,
                     route.getStation(departureStation).getStringDepartTime(),
-                    route.getStation(arriveStation).getArriveTime(), carriageNumber, seatNumber);
+                    route.getStation(arriveStation).getArriveTime(), carriageNumber, seatNumber,
+                    calculateTicketCost(departureStation, arriveStation));
         }
         return ticket;
     }
@@ -162,19 +163,11 @@ public class LogicCashier {
                 flag = false;
             }
         }
-
-//        int tempCount = 0;
-//        for (Station station : route.getStations()) {
-//            if (route.getStation(departureStation).equals(station) || route.getStation(arriveStation).equals(station)) {
-//                tempCount++;
-//                suitableStations.add(station);
-//                continue;
-//            }
-//            if (tempCount == 1) {
-//                suitableStations.add(station);
-//            }
-//        }
-
         return suitableStations;
+    }
+
+    private static double calculateTicketCost(String departureStation, String arriveStation) {
+        return Math.round(COST_PER_KM *
+                DistanceCalculator.distanceCalculate(departureStation, arriveStation) * 100.0) / 100.0;
     }
 }
