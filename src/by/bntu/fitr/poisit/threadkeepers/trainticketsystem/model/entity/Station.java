@@ -1,5 +1,8 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,64 +11,66 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class Station implements Serializable {
-    public static final String TIME_FORMAT = "dd.MM.yyyy HH:mm";
     public static final String DATE_FORMAT = "dd.MM.yyyy";
-    private String nameStation;
-    private String arriveTime;
-    private Calendar departTime;
+    public static final String TIME_FORMAT = "dd.MM.yyyy HH:mm";
+    private StringProperty stationName;
+    private StringProperty arriveTime;
+    private StringProperty departureTime;
 
-    public Station(String nameStation, String departDate, String arriveDate) throws ParseException {
-        this.nameStation = nameStation;
-        this.arriveTime = arriveDate;
-        Calendar calendarDepartTime = Calendar.getInstance();
-        calendarDepartTime.setTime(new SimpleDateFormat(TIME_FORMAT).parse(departDate));
-        this.departTime = calendarDepartTime;
+    public Station(String stationName, String departureTime, String arriveTime) {
+        this.stationName = new SimpleStringProperty(stationName);
+        this.arriveTime = new SimpleStringProperty(arriveTime);
+        this.departureTime = new SimpleStringProperty(departureTime);
     }
 
     public String getStationName() {
-        return nameStation;
+        return stationName.get();
     }
 
-    public void setNameStation(String nameStation) {
-        this.nameStation = nameStation;
+    public StringProperty getStationNameProperty() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName.set(stationName);
     }
 
     public String getArriveTime() {
+        return arriveTime.get();
+    }
+
+    public StringProperty getArriveTimeProperty() {
         return arriveTime;
     }
 
     public void setArriveTime(String arriveTime) {
-        this.arriveTime = arriveTime;
+        this.arriveTime.set(arriveTime);
     }
 
-    public Calendar getDepartTime() {
-        return departTime;
+    public String getDepartureTime() {
+        return departureTime.get();
     }
 
-    public String getStringDepartTime() {
-        String time = "";
-        DateFormat df = new SimpleDateFormat(Station.TIME_FORMAT);
-        time += df.format(departTime.getTime());
-//        time += departTime.get(Calendar.DAY_OF_MONTH) + "." + (departTime.get(Calendar.MONTH)+1)+ "." +
-//                departTime.get(Calendar.YEAR) + " " + departTime.get(Calendar.HOUR) + ":" +
-//                departTime.get(Calendar.MINUTE);
-        return time;
+    public StringProperty getDepartureTimeProperty() {
+        return departureTime;
     }
 
-//    public void setDepartTime(String departTime) {
-//        try {
-//            this.departTime = new SimpleDateFormat(TIME_FORMAT).parse(departTime);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void setDepartureTime(String departureTime) {
+        this.departureTime.set(departureTime);
+    }
+
+    public Calendar getCalendarDepartureTime() throws ParseException {
+        Calendar calendarDepartTime = Calendar.getInstance();
+        calendarDepartTime.setTime(new SimpleDateFormat(TIME_FORMAT).parse(departureTime.get()));
+        return calendarDepartTime;
+    }
 
     @Override
     public String toString() {
         return "Station{" +
-                "nameStation='" + nameStation + '\'' +
+                "stationName='" + stationName + '\'' +
                 ", arriveTime='" + arriveTime + '\'' +
-                ", departTime='" + departTime + '\'' +
+                ", departTime='" + departureTime + '\'' +
                 '}';
     }
 
@@ -74,13 +79,13 @@ public class Station implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Station station = (Station) o;
-        return Objects.equals(nameStation, station.nameStation) &&
+        return Objects.equals(stationName, station.stationName) &&
                 Objects.equals(arriveTime, station.arriveTime) &&
-                Objects.equals(departTime, station.departTime);
+                Objects.equals(departureTime, station.departureTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameStation, arriveTime, departTime);
+        return Objects.hash(stationName, arriveTime, departureTime);
     }
 }

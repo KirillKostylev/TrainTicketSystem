@@ -34,10 +34,11 @@
                <children>
                   <TableView fx:id="routesTable" layoutY="6.0" prefHeight="798.0" prefWidth="704.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="numberColumn" prefWidth="66.0" text="№" />
-                      <TableColumn fx:id="routeColumn" prefWidth="358.0" text="Route" />
-                        <TableColumn fx:id="departureTimeColumn" prefWidth="138.0" text="Departure Time" />
-                        <TableColumn fx:id="arriveTimeColumn" prefWidth="141.0" text="Arrive TIme" />
+                      <TableColumn fx:id="numberColumn" editable="false" prefWidth="66.0" sortable="false" text="№" />
+                      <TableColumn fx:id="departureStationColumn" editable="false" prefWidth="148.0" sortable="false" text="Departure Station" />
+                        <TableColumn fx:id="arriveStationColumn" editable="false" prefWidth="165.0" sortable="false" text="Arrive Station" />
+                        <TableColumn fx:id="departureTimeColumn" editable="false" prefWidth="167.0" sortable="false" text="Departure Time" />
+                        <TableColumn fx:id="arriveTimeColumn" editable="false" prefWidth="157.0" sortable="false" text="Arrive TIme" />
                     </columns>
                   </TableView>
                </children>

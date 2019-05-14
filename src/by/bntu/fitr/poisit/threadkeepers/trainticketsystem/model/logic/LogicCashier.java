@@ -41,7 +41,7 @@ public class LogicCashier {
             Train train = route.getTrain();
 
             ticket = new Ticket(train.getTrainNumber(), departureStation, arriveStation,
-                    route.getStation(departureStation).getStringDepartTime(),
+                    route.getStation(departureStation).getDepartureTime(),
                     route.getStation(arriveStation).getArriveTime(), carriageNumber, seatNumber,
                     calculateTicketCost(departureStation, arriveStation));
         }
@@ -58,28 +58,35 @@ public class LogicCashier {
                 departureTime);
         Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation, departureTime);
 
-        Calendar calendarDepartTime = Calendar.getInstance();
-        Date newDepartureTime = new SimpleDateFormat(Station.DATE_FORMAT).parse(departureTime);
-        calendarDepartTime.setTime(newDepartureTime);
+        Calendar calendarDepartDate = Calendar.getInstance();
+        Date newDepartureDate = new SimpleDateFormat(Station.DATE_FORMAT).parse(departureTime);
+        calendarDepartDate.setTime(newDepartureDate);
 
         List<Route> suitableRoutes = new LinkedList<>();
         for (Route route : schedule.getRoutes()) {
             List<String> stationsName = route.getStationsName();
             Calendar date;
             if (stationsName.contains(departureStation) && stationsName.contains(arriveStation)) {
-                date = route.getStation(departureStation).getDepartTime();
+                date = route.getStation(departureStation).getCalendarDepartureTime();
             } else {
                 break;
             }
-            if (LogicCashier.compareDate(calendarDepartTime, date) &&
+            if (LogicCashier.compareDate(calendarDepartDate, date) &&
                     // compare departure time and customer departure time
                     stationsName.indexOf(departureStation) < stationsName.indexOf(arriveStation)) {
                 //checking the correct direction of the train
                 suitableRoutes.add(route);
             }
         }
-
-        Comparator<Route> comparator = Comparator.comparing(obj -> obj.getStation(departureStation).getDepartTime());
+        Comparator<Route> comparator = Comparator.comparing(obj ->
+        {
+            try {
+                return obj.getStation(departureStation).getCalendarDepartureTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
         suitableRoutes.sort(comparator);
         return suitableRoutes;
     }

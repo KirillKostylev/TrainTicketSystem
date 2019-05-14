@@ -3,6 +3,8 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NonPositiveException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NullException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.Checker;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,23 +15,27 @@ public class Train implements Serializable {
     public static final String WRONG_TRAIN_NUMBER = "Wrong train number!";
     public static final String WRONG_CARRIAGES_AMOUNT = "Wrong carriages amount!";
 
-    private int trainNumber;
-    private int carriagesNumber;
-    private int seatsNumberInCarriage;
+    private IntegerProperty trainNumber;
+    private IntegerProperty carriagesNumber;
+    private IntegerProperty seatsNumberInCarriage;
     private SeatContainer seatContainer;
 
 
     public Train(int trainNumber, int carriagesNumber, int seatsNumberInCarriage) {
-        this.trainNumber = trainNumber;
-        if (carriagesNumber < 0) {
-            this.carriagesNumber = DEFAULT_CARRIAGES_NUMBER;
+        if (trainNumber < 0) {
+            this.trainNumber = new SimpleIntegerProperty(-trainNumber);
         } else {
-            this.carriagesNumber = carriagesNumber;
+            this.trainNumber = new SimpleIntegerProperty(trainNumber);
+        }
+        if (carriagesNumber < 0) {
+            this.carriagesNumber = new SimpleIntegerProperty(DEFAULT_CARRIAGES_NUMBER);
+        } else {
+            this.carriagesNumber = new SimpleIntegerProperty(carriagesNumber);
         }
         if (seatsNumberInCarriage < 0) {
-            this.seatsNumberInCarriage = DEFAULT_SEATS_NUMBER_IN_CARRIAGE;
+            this.seatsNumberInCarriage = new SimpleIntegerProperty(DEFAULT_SEATS_NUMBER_IN_CARRIAGE);
         } else {
-            this.seatsNumberInCarriage = seatsNumberInCarriage;
+            this.seatsNumberInCarriage = new SimpleIntegerProperty(seatsNumberInCarriage);
         }
         seatContainer = new SeatContainer();
         fillSeatContainer();
@@ -37,8 +43,8 @@ public class Train implements Serializable {
     }
 
     private void fillSeatContainer() {
-        for (int i = 0; i < carriagesNumber; i++) {
-            seatContainer.addCarriageInContainer(i, seatsNumberInCarriage);
+        for (int i = 0; i < getCarriagesNumber(); i++) {
+            seatContainer.addCarriageInContainer(i, getSeatsNumberInCarriage());
         }
     }
 
@@ -52,21 +58,33 @@ public class Train implements Serializable {
     }
 
     public int getTrainNumber() {
+        return trainNumber.get();
+    }
+
+    public IntegerProperty getTrainNumberProperty() {
         return trainNumber;
     }
 
     public void setTrainNumber(int trainNumber) throws NonPositiveException {
         Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,trainNumber);
-        this.trainNumber = trainNumber;
+        this.trainNumber.set(trainNumber);
     }
 
     public int getCarriagesNumber() {
+        return carriagesNumber.get();
+    }
+
+    public IntegerProperty getCarriagesNumberProperty() {
         return carriagesNumber;
     }
 
     public void setCarriagesNumber(int carriagesNumber) throws NonPositiveException {
         Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,carriagesNumber);
-        this.carriagesNumber = carriagesNumber;
+        this.carriagesNumber.set(carriagesNumber);
+    }
+
+    public int getSeatsNumberInCarriage() {
+        return seatsNumberInCarriage.get();
     }
 
     @Override

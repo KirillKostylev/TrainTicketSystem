@@ -61,6 +61,6 @@ public class Route implements Serializable, Comparable<Route>{
 
     @Override
     public int compareTo(Route o) {
-        return this.getStations().get(0).getDepartTime().compareTo(o.stations.get(0).getDepartTime());
+        return this.getStations().get(0).getDepartureTime().compareTo(o.stations.get(0).getDepartureTime());
     }
 }
