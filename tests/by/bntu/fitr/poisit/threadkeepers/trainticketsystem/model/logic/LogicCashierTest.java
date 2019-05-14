@@ -22,7 +22,7 @@ public class LogicCashierTest {
     private static List<Station> stations7;
 
     @BeforeClass
-    public static void creatSchedule() throws ParseException {
+    public static void createSchedule() throws ParseException {
         schedule = new Schedule();
         stations = Arrays.asList(
                 new Station("Brest", "12.10.2019 18:00", "12.10.2019 18:05"),

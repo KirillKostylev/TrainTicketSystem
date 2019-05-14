@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller.AddRouteWindowController">
+   <children>
+      <Button layoutX="245.0" layoutY="560.0" mnemonicParsing="false" text="Add" />
+      <Button cancelButton="true" layoutX="556.0" layoutY="560.0" mnemonicParsing="false" text="Cancel" />
+      <Label layoutX="182.0" layoutY="54.0" text="Train Number: " />
+      <TextField layoutX="309.0" layoutY="49.0" />
+      <Label layoutX="181.0" layoutY="89.0" text="Carriages Number: " />
+      <Label layoutX="181.0" layoutY="122.0" text="Seats Number: " />
+      <Label layoutX="182.0" layoutY="14.0" text="Train info:  " />
+      <TextField layoutX="309.0" layoutY="84.0" />
+      <TextField layoutX="309.0" layoutY="117.0" />
+      <Label layoutX="181.0" layoutY="176.0" text="Route: " />
+      <ListView layoutX="181.0" layoutY="197.0" prefHeight="305.0" prefWidth="603.0" />
+   </children>
+</AnchorPane>
