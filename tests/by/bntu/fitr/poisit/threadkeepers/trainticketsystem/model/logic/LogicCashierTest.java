@@ -48,7 +48,7 @@ public class LogicCashierTest {
         schedule.addRoute(stations3, train3);
 
         stations4 = Arrays.asList(
-                new Station("Brest", "03.05.2019", "03.05.2019 18:58"),
+                new Station("Brest", "03.05.2019 18:30", "03.05.2019 18:58"),
                 new Station("Zhabinka", "03.05.2019 19:16", "03.05.2019 19:17"),
                 new Station("Ivatsevichi", "03.05.2019 20:23", "03.05.2019 20:24"),
                 new Station("Baranovichi", "03.05.2019 20:59", "03.05.2019 21:00"),
@@ -64,8 +64,8 @@ public class LogicCashierTest {
         schedule.addRoute(stations5, train5);
 
         stations6 = Arrays.asList(
-                new Station("Terespol", "03.05.2019", "03.05.2019 15:30"),
-                new Station("Brest", "03.05.2019 18.50", "03.05.2019 18:00"),
+                new Station("Terespol", "03.05.2019 15:00", "03.05.2019 15:30"),
+                new Station("Brest", "03.05.2019 18:50", "03.05.2019 18:00"),
                 new Station("Ivatsevichi", "03.05.2019 20:00", "03.05.2019 20:05"),
                 new Station("Baranovichi", "03.05.2019 21:00", "03.05.2019 21:05"),
                 new Station("Minsk", "03.05.2019 22:00", "03.05.2019 22:30"));
@@ -73,9 +73,9 @@ public class LogicCashierTest {
         schedule.addRoute(stations6, train6);
 
         stations7 = Arrays.asList(
-                new Station("Helsinki", "03.05.2019", "03.05.2019 18:44"),
-                new Station("Saint Petersburg", "04.05.2019 01.18", "04.05.2019 01:53"),
-                new Station("Tver", "04.05.2019 06.15", "04.05.2019 06:20"),
+                new Station("Helsinki", "03.05.2019 18:30", "03.05.2019 18:44"),
+                new Station("Saint Petersburg", "04.05.2019 01:18", "04.05.2019 01:53"),
+                new Station("Tver", "04.05.2019 06:15", "04.05.2019 06:20"),
                 new Station("Moscow", "04.05.2019 09:19", "04.05.2019 10:00"));
         Train train7 = new Train(132, 2, 2);
         schedule.addRoute(stations7, train7);
@@ -100,8 +100,8 @@ public class LogicCashierTest {
     public void findRoute2() throws ParseException, NullException, EmptyFieldException {
         List<Route> expectedRoutesList = Arrays.asList(
                 new Route(stations5, new Train(464, 10, 20)),
-                new Route(stations6, new Train(145, 10, 20)),
-                new Route(stations4, new Train(784, 10, 20)));
+                new Route(stations4, new Train(784, 10, 20)),
+                new Route(stations6, new Train(145, 10, 20)));
 
         Assert.assertEquals(expectedRoutesList,
                 LogicCashier.findRoute(schedule, "Brest", "Minsk",
@@ -234,7 +234,7 @@ public class LogicCashierTest {
         Route route = new Route(stations7, new Train(132, 2, 2));
         try {
             Ticket expectedTicket = new Ticket(132, "Helsinki", "Saint Petersburg",
-                    "03.05.2019 18:44", "04.05.2019 01.18", 2, 1,
+                    "03.05.2019 18:30", "04.05.2019 01:53", 2, 1,
                     Math.round(LogicCashier.COST_PER_KM *
                             DistanceCalculator.distanceCalculate("Helsinki",
                                     "Saint Petersburg") * 100.0) / 100.0);
@@ -254,7 +254,7 @@ public class LogicCashierTest {
                     "Helsinki", "Tver");
 
             Ticket expectedTicket = new Ticket(132, "Tver", "Moscow",
-                    "04.05.2019 06:20", "04.05.2019 09:19", 1, 1,
+                    "04.05.2019 06:15", "04.05.2019 10:00", 1, 1,
                     Math.round(LogicCashier.COST_PER_KM *
                             DistanceCalculator.distanceCalculate("Tver",
                                     "Moscow") * 100.0) / 100.0);

@@ -14,7 +14,7 @@ public class Station implements Serializable {
     private String arriveTime;
     private Calendar departTime;
 
-    public Station(String nameStation, String arriveDate, String departDate) throws ParseException {
+    public Station(String nameStation, String departDate, String arriveDate) throws ParseException {
         this.nameStation = nameStation;
         this.arriveTime = arriveDate;
         Calendar calendarDepartTime = Calendar.getInstance();

@@ -16,10 +16,10 @@ public class DistanceCalculator {
     public static final String COORDINATES_TAG_NAME = "lowerCorner";
     public static final int EARTH_RADIUS = 6371;
 
-//    public static void main(String[] args) {
-//        System.out.println(
+    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+        System.out.println(findCoordinate("Bobruysk"));
 //                distanceCalculate("Helsinki", "Tver"));
-//    }
+    }
 
     public static double distanceCalculate(String departureStation, String arriveStation) {
 
