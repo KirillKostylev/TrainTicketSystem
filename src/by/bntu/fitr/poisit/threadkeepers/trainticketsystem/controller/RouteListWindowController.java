@@ -4,8 +4,6 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Route;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Schedule;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Train;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
@@ -24,7 +21,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ScheduleDataWorker;
 
 public class RouteListWindowController {
 
@@ -69,6 +66,8 @@ public class RouteListWindowController {
     void initialize() {
         try {
             Schedule schedule = createSchedule();
+            ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
+            schedule = ScheduleDataWorker.readSchedule("schedule.json");
             List<Route> routesList = schedule.getRoutes();
             ObservableList<Route> routesObservableList = FXCollections.observableArrayList(routesList);
             numberColumn.setCellValueFactory(cellData ->
@@ -84,7 +83,7 @@ public class RouteListWindowController {
                     cellData.getValue().getStations().get(cellData.getValue().
                             getStations().size() - 1).getArriveTimeProperty());
             routesTable.setItems(routesObservableList);
-        } catch (ParseException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
     }
