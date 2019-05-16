@@ -2,11 +2,8 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class LoginWindowController {
 
@@ -18,14 +15,12 @@ public class LoginWindowController {
 
     @FXML
     void cancelAction(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        Util.closeWindow(event);
     }
 
     @FXML
     void loginAction(ActionEvent event) {
-
+        //TODO Сделать базу данных ников и паролей и метод для их проверки
     }
 
 }

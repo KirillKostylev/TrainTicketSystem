@@ -6,14 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../view/XMLForms/routeListWindow.fxml"));
-        primaryStage.setTitle("Routes");
-        primaryStage.setScene(new Scene(root, 1280, 800));
-        primaryStage.show();
+    public void start(Stage primaryStage){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("../view/XMLForms/routeListWindow.fxml"));
+            primaryStage.setTitle("Routes");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (IOException e) {
+            Util.showError("Loading resource Error!");
+            e.printStackTrace();
+        }
     }
 
 

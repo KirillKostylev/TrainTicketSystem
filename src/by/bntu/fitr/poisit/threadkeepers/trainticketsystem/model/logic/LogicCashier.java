@@ -49,8 +49,8 @@ public class LogicCashier {
     }
 
 
-    public static List<Route> findRoute(Schedule schedule, String departureStation, String arriveStation,
-                                        String departureTime) throws ParseException,
+    public static List<Route> findRoutes(Schedule schedule, String departureStation, String arriveStation,
+                                         String departureTime) throws ParseException,
             EmptyFieldException, NullException {
 
         Checker.checkForNullWithException(Schedule.NULL_SCHEDULE_EXCEPTION, schedule);

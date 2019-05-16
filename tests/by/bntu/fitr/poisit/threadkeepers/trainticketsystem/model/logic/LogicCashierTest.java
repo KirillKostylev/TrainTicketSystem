@@ -89,7 +89,7 @@ public class LogicCashierTest {
 
         try {
             Assert.assertEquals(expectedRoutesList,
-                    LogicCashier.findRoute(schedule, "Brest", "Baranovichi",
+                    LogicCashier.findRoutes(schedule, "Brest", "Baranovichi",
                             "17.08.2019"));
         } catch (EmptyFieldException | NullException e) {
             e.printStackTrace();
@@ -104,7 +104,7 @@ public class LogicCashierTest {
                 new Route(stations6, new Train(145, 10, 20)));
 
         Assert.assertEquals(expectedRoutesList,
-                LogicCashier.findRoute(schedule, "Brest", "Minsk",
+                LogicCashier.findRoutes(schedule, "Brest", "Minsk",
                         "03.05.2019"));
     }
 
@@ -117,7 +117,7 @@ public class LogicCashierTest {
 
         try {
             Assert.assertEquals(expectedRoutesList,
-                    LogicCashier.findRoute(schedule, "Baranovichi", "Minsk",
+                    LogicCashier.findRoutes(schedule, "Baranovichi", "Minsk",
                             "03.05.2019"));
         } catch (EmptyFieldException | NullException e) {
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class LogicCashierTest {
         List<Route> expectedRoutesList = new ArrayList<>();
         try {
             Assert.assertEquals(expectedRoutesList,
-                    LogicCashier.findRoute(schedule, "Mogilev", "Moscow", "03.05.2019"));
+                    LogicCashier.findRoutes(schedule, "Mogilev", "Moscow", "03.05.2019"));
         } catch (EmptyFieldException | NullException e) {
             e.printStackTrace();
         }
@@ -138,7 +138,7 @@ public class LogicCashierTest {
     @Test
     public void findRouteWithNullSchedule() throws ParseException {
         try {
-            LogicCashier.findRoute(null, "Brest", "Minsk", "03.05.2019");
+            LogicCashier.findRoutes(null, "Brest", "Minsk", "03.05.2019");
         } catch (EmptyFieldException | NullException e) {
             Assert.assertEquals(Schedule.NULL_SCHEDULE_EXCEPTION, e.getMessage());
         }
@@ -147,7 +147,7 @@ public class LogicCashierTest {
     @Test
     public void findRouteWithNullField() throws ParseException {
         try {
-            LogicCashier.findRoute(schedule, null, "Minsk", "03.05.2019");
+            LogicCashier.findRoutes(schedule, null, "Minsk", "03.05.2019");
         } catch (EmptyFieldException | NullException e) {
             Assert.assertEquals(Route.NULL_INPUT_FIELD_EXCEPTION, e.getMessage());
         }
@@ -157,7 +157,7 @@ public class LogicCashierTest {
     @Test
     public void findRouteWithEmptyInputField() throws ParseException {
         try {
-            LogicCashier.findRoute(schedule, "Minsk", "", "03.05.2019");
+            LogicCashier.findRoutes(schedule, "Minsk", "", "03.05.2019");
         } catch (EmptyFieldException | NullException e) {
             Assert.assertEquals(Route.EMPTY_FIELD_EXCEPTION, e.getMessage());
         }

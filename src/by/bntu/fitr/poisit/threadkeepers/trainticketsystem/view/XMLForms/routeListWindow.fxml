@@ -20,19 +20,21 @@
                      <children>
                         <Label layoutX="8.0" layoutY="47.0" text="Departure Station: " />
                         <Label layoutX="8.0" layoutY="107.0" text="Destination Station: " />
-                        <TextField layoutX="142.0" layoutY="42.0" prefHeight="31.0" prefWidth="134.0" />
-                        <TextField layoutX="142.0" layoutY="102.0" prefHeight="31.0" prefWidth="134.0" />
+                        <TextField fx:id="departureStation" layoutX="142.0" layoutY="42.0" prefHeight="31.0" prefWidth="134.0" />
+                        <TextField fx:id="arriveStation" layoutX="142.0" layoutY="102.0" prefHeight="31.0" prefWidth="134.0" />
                         <Label layoutX="101.0" layoutY="14.0" text="Search Train" />
-                        <DatePicker editable="false" layoutX="142.0" layoutY="140.0" prefHeight="31.0" prefWidth="134.0" />
+                        <DatePicker fx:id="departureDate" editable="false" layoutX="142.0" layoutY="140.0" prefHeight="31.0" prefWidth="134.0" />
                         <Label layoutX="8.0" layoutY="145.0" text="Departure Date: " />
-                        <Button layoutX="101.0" layoutY="183.0" mnemonicParsing="false" onAction="#searchAction" text="Search" />
+                        <Button layoutX="53.0" layoutY="185.0" mnemonicParsing="false" onAction="#searchAction" text="Search" />
+                        <Button layoutX="151.0" layoutY="185.0" mnemonicParsing="false" onAction="#resetTable" text="Reset" />
                      </children>
                   </AnchorPane>
+                  <Label fx:id="errorLabel" layoutX="10.0" layoutY="230.0" prefHeight="21.0" prefWidth="266.0" textFill="RED" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="routesTable" layoutY="6.0" prefHeight="798.0" prefWidth="704.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="routesTable" layoutY="6.0" onMouseClicked="#openDetails" prefHeight="798.0" prefWidth="704.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="numberColumn" editable="false" prefWidth="66.0" sortable="false" text="№" />
                       <TableColumn fx:id="departureStationColumn" editable="false" prefWidth="148.0" sortable="false" text="Departure Station" />
@@ -50,22 +52,22 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" disable="true" layoutX="19.0" layoutY="411.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="238.0" text="Delete Route">
+                  <Button fx:id="removeRouteBtn" alignment="CENTER" layoutX="19.0" layoutY="411.0" mnemonicParsing="false" onAction="#removeRoute" prefHeight="50.0" prefWidth="238.0" text="Remove Route">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" disable="true" layoutX="17.0" layoutY="361.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="238.0" text="Edit Route">
+                  <Button fx:id="editRouteBtn" alignment="CENTER" layoutX="17.0" layoutY="351.0" mnemonicParsing="false" onAction="#editRouteAction" prefHeight="60.0" prefWidth="238.0" text="Edit Route">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" disable="true" layoutX="16.0" layoutY="311.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="238.0" text="Add Route">
+                  <Button fx:id="addRouteBtn" alignment="CENTER" layoutX="17.0" layoutY="301.0" mnemonicParsing="false" onAction="#addRouteAction" prefHeight="50.0" prefWidth="238.0" text="Add Route">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button disable="true" layoutX="13.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="246.0" text="Log Out">
+                  <Button fx:id="logOutBtn" disable="true" layoutX="13.0" layoutY="60.0" mnemonicParsing="false" onAction="#logOut" prefHeight="60.0" prefWidth="246.0" text="Log Out">
                      <font>
                         <Font size="18.0" />
                      </font>
