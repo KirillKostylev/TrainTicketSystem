@@ -56,7 +56,6 @@ public class Schedule implements Serializable {
         return routesNumber;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,6 +68,5 @@ public class Schedule implements Serializable {
     public int hashCode() {
         return Objects.hash(routes);
     }
-
 }
 

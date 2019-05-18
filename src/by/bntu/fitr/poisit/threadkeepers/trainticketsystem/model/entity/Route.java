@@ -11,6 +11,7 @@ public class Route implements Serializable, Comparable<Route>{
     public static final String NULL_INPUT_FIELD_EXCEPTION = "Value can't be null";
 
     private List<Station> stations;
+
     private Train train;
 
     public Route(List<Station> stations, Train train) {
@@ -44,6 +45,7 @@ public class Route implements Serializable, Comparable<Route>{
     public Train getTrain() {
         return train;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -66,15 +66,6 @@ public class Station implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Station{" +
-                "stationName='" + stationName + '\'' +
-                ", arriveTime='" + arriveTime + '\'' +
-                ", departTime='" + departureTime + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -88,4 +79,14 @@ public class Station implements Serializable {
     public int hashCode() {
         return Objects.hash(stationName, arriveTime, departureTime);
     }
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "stationName='" + stationName + '\'' +
+                ", arriveTime='" + arriveTime + '\'' +
+                ", departTime='" + departureTime + '\'' +
+                '}';
+    }
+
 }

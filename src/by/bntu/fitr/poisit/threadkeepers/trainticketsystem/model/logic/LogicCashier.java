@@ -69,7 +69,7 @@ public class LogicCashier {
             if (stationsName.contains(departureStation) && stationsName.contains(arriveStation)) {
                 date = route.getStation(departureStation).getCalendarDepartureTime();
             } else {
-                break;
+                continue;
             }
             if (LogicCashier.compareDate(calendarDepartDate, date) &&
                     // compare departure time and customer departure time

@@ -30,4 +30,5 @@ public class ScheduleDataWorker {
         Gson fxGson = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         return fxGson.fromJson(jsonString.toString(), Schedule.class);
     }
+
 }
