@@ -58,24 +58,10 @@ public class AddStationWindowController {
 
     @FXML
     void initialize() {
-        ObservableList<String> hourList = FXCollections.observableArrayList();
-        ObservableList<String> minuteList = FXCollections.observableArrayList();
-        String number = "";
-        for (int i = 0; i < 61; i++) {
-            if (i < 10) {
-                number = "0" + i;
-            } else {
-                number = i + "";
-            }
-            if (i < 24) {
-                hourList.add(number);
-            }
-            minuteList.add(number);
-        }
-        departureHours.setItems(hourList);
-        departureMinutes.setItems(minuteList);
-        arriveHours.setItems(hourList);
-        arriveMinutes.setItems(minuteList);
+        departureHours.setItems(Util.getObservableListWithNumbers(0, 60));
+        departureMinutes.setItems(Util.getObservableListWithNumbers(0, 24));
+        arriveHours.setItems(Util.getObservableListWithNumbers(0, 24));
+        arriveMinutes.setItems(Util.getObservableListWithNumbers(0, 24));
     }
 
     void setParent(AddRouteWindowController addRouteWindowController) {

@@ -93,12 +93,7 @@ public class AddRouteWindowController {
     void initialize() {
         stationList = FXCollections.observableArrayList();
         isEdit = false;
-        stationNameColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getStationNameProperty());
-        departureTimeColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getDepartureTimeProperty());
-        arriveTimeColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getArriveTimeProperty());
+        Util.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
         stationTableView.setItems(stationList);
     }
 

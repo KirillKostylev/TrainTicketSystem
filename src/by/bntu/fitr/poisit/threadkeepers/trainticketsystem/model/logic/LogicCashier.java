@@ -12,6 +12,7 @@ public class LogicCashier {
 
     public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, String departureStation,
                                    String arriveStation)
+            //TODO Переделать станции под объект Station
             throws NullException, NonPositiveException, WrongCarriageNumber, WrongSeatNumber, EmptyFieldException {
 
         Ticket ticket = null;

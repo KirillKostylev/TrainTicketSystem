@@ -21,7 +21,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ScheduleDataWorker;
-import org.hildan.fxgson.FxGson;
 
 public class RouteListWindowController {
 
@@ -145,7 +144,8 @@ public class RouteListWindowController {
 
     @FXML
     void removeRoute(ActionEvent event) {
-        if(!isSmthSelectedInTable()){
+        if(!Util.isSelectedItemInTable(routesTable)){
+            Util.showError("Choose Route to edit!");
             return;
         }
         Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
@@ -160,7 +160,8 @@ public class RouteListWindowController {
 
     @FXML
     void editRouteAction(ActionEvent event) {
-        if (!isSmthSelectedInTable()){
+        if (!Util.isSelectedItemInTable(routesTable)){
+            Util.showError("Choose Route to edit!");
             return;
         }
         try {
@@ -180,6 +181,16 @@ public class RouteListWindowController {
     @FXML
     void openDetails(MouseEvent event) {
         if (event.getClickCount() == 2) {
+            try {
+                FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/routeInfoWindow.fxml");
+                Parent root = loader.load();
+                RouteInfoWindowController routeInfoWindowController = loader.getController();
+                routeInfoWindowController.init(routesTable.getSelectionModel().getSelectedItem());
+                Util.openWindow("Route Info", root, event);
+            } catch (IOException e) {
+                Util.showError("Loading resource Error!");
+                e.printStackTrace();
+            }
 
         }
     }
@@ -228,14 +239,6 @@ public class RouteListWindowController {
             e.printStackTrace();
         }
         routesTable.setItems(FXCollections.observableArrayList(schedule.getRoutes()));
-    }
-
-    private Boolean isSmthSelectedInTable(){
-        if (routesTable.getSelectionModel().getSelectedItem() == null) {
-           Util.showError("Choose Route to edit!");
-           return false;
-        }
-        return true;
     }
 
     void editRoute(Route route) {
