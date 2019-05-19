@@ -10,8 +10,8 @@ import java.util.*;
 public class LogicCashier {
     public static final double COST_PER_KM = 0.03;
 
-    public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, String departureStation,
-                                   String arriveStation)
+    public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, Station departureStation,
+                                   Station arriveStation)
             //TODO Переделать станции под объект Station
             throws NullException, NonPositiveException, WrongCarriageNumber, WrongSeatNumber, EmptyFieldException {
 
@@ -21,7 +21,7 @@ public class LogicCashier {
         Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, seatNumber);
         Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, carriageNumber);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
-        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
+//        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
 
         SeatContainer seatContainer = route.getTrain().getSeatContainer();
 
@@ -34,16 +34,16 @@ public class LogicCashier {
 
 //        Checker.checkForSuitableRoute(route, departureStation,arriveStation,"as");
 
-        if (checkSeatForFree(route.getTrain().getSeatContainer().getSeat(carriageNumber - 1,
+        if (checkSeatForFree(seatContainer.getSeat(carriageNumber - 1,
                 seatNumber - 1),
                 getSuitableStations(route, departureStation, arriveStation))) {
             seatContainer.getSeat(carriageNumber - 1, seatNumber - 1).addBusyStations(
                     getSuitableStations(route, departureStation, arriveStation));
             Train train = route.getTrain();
 
-            ticket = new Ticket(train.getTrainNumber(), departureStation, arriveStation,
-                    route.getStation(departureStation).getDepartureTime(),
-                    route.getStation(arriveStation).getArriveTime(), carriageNumber, seatNumber,
+            ticket = new Ticket(train.getTrainNumber(), departureStation.getStationName(), arriveStation.getStationName(),
+                    departureStation.getDepartureTime(),
+                    arriveStation.getArriveTime(), carriageNumber, seatNumber,
                     calculateTicketCost(departureStation, arriveStation));
         }
         return ticket;
@@ -93,12 +93,12 @@ public class LogicCashier {
     }
 
     public static List<Integer> findCarriagesNumberWithFreeSeats(
-            Route route, String departureStation, String arriveStation) throws NullException, EmptyFieldException {
+            Route route, Station departureStation, Station arriveStation) throws NullException, EmptyFieldException {
         List<Integer> carriagesNumberWithFreeSeats = new ArrayList<>();
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
-        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
+//        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
 
         List<Station> suitableStations = getSuitableStations(route, departureStation, arriveStation);
 
@@ -117,14 +117,14 @@ public class LogicCashier {
 
 
     public static List<Integer> findFreeSeatsInCarriage(
-            Route route, String departureStation, String arriveStation, int carriageNumber) throws NullException,
+            Route route, Station departureStation, Station arriveStation, int carriageNumber) throws NullException,
             EmptyFieldException {
 
         List<Integer> freeSeatNumbers = new ArrayList<>();
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
-        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
+//        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
 
         List<Station> suitableStations = getSuitableStations(route, departureStation, arriveStation);
         SeatContainer seatContainer = route.getTrain().getSeatContainer();
@@ -155,27 +155,28 @@ public class LogicCashier {
 
     }
 
-    private static List<Station> getSuitableStations(Route route, String departureStation, String arriveStation) {
+    private static List<Station> getSuitableStations(Route route, Station departureStation, Station arriveStation) {
 
         List<Station> suitableStations = new LinkedList<>();
 
         boolean flag = false; //if flag == true we add station in suitableStations
         for (Station station : route.getStations()) {
-            if (route.getStation(departureStation).equals(station)) {
+            if (departureStation.equals(station)) {
                 flag = true;
             }
             if (flag) {
                 suitableStations.add(station);
             }
-            if (route.getStation(arriveStation).equals(station)) {
+            if (arriveStation.equals(station)) {
                 flag = false;
             }
         }
         return suitableStations;
     }
 
-    private static double calculateTicketCost(String departureStation, String arriveStation) {
+    private static double calculateTicketCost(Station departureStation, Station arriveStation) {
         return Math.round(COST_PER_KM *
-                DistanceCalculator.distanceCalculate(departureStation, arriveStation) * 100.0) / 100.0;
+                DistanceCalculator.distanceCalculate(departureStation.getStationName(),
+                        arriveStation.getStationName()) * 100.0) / 100.0;
     }
 }

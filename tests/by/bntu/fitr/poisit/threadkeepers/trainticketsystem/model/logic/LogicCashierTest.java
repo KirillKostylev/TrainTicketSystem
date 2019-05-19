@@ -165,9 +165,12 @@ public class LogicCashierTest {
 
     @Test
     public void buyTicketCheckNegativeValue() {
+        Station departureStation = schedule.getRoute(0).getStation("Minsk");
+        Station arriveStation = schedule.getRoute(0).getStation("Brest");
+
         try {
-            LogicCashier.buyTicket(schedule.getRoute(0), -1, 1, "Minsk",
-                    "Brest");
+            LogicCashier.buyTicket(schedule.getRoute(0), -1, 1, departureStation,
+                    arriveStation);
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             Assert.assertEquals(SeatContainer.INVALID_VALUE_EXCEPTION, e.getMessage());
         }
@@ -175,8 +178,10 @@ public class LogicCashierTest {
 
     @Test
     public void buyTicketCheckNullRoute() {
+        Station departureStation = schedule.getRoute(0).getStation("Minsk");
+        Station arriveStation = schedule.getRoute(0).getStation("Brest");
         try {
-            LogicCashier.buyTicket(null, 2, 3, "Minsk", "Brest");
+            LogicCashier.buyTicket(null, 2, 3, departureStation, arriveStation);
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             Assert.assertEquals(Route.NULL_ROUTE_EXCEPTION, e.getMessage());
         }
@@ -184,9 +189,11 @@ public class LogicCashierTest {
 
     @Test
     public void buyTicketCheckWrongCarriageNumber() {
+        Station departureStation = schedule.getRoute(0).getStation("Minsk");
+        Station arriveStation = schedule.getRoute(0).getStation("Brest");
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), 20, 1,
-                    "Minsk", "Brest");
+                    departureStation, arriveStation);
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             Assert.assertEquals(SeatContainer.WRONG_CARRIAGE_NUMBER, e.getMessage());
         }
@@ -195,9 +202,11 @@ public class LogicCashierTest {
 
     @Test
     public void buyTicketCheckWrongSeatNumber() {
+        Station departureStation = schedule.getRoute(0).getStation("Brest");
+        Station arriveStation = schedule.getRoute(0).getStation("Minsk");
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), 1, 35,
-                    "Brest", "Minsk");
+                    departureStation, arriveStation);
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             Assert.assertEquals(SeatContainer.WRONG_SEAT_NUMBER, e.getMessage());
         }
@@ -205,9 +214,10 @@ public class LogicCashierTest {
 
     @Test
     public void buyTicketCheckNullValue() {
+        Station arriveStation = schedule.getRoute(0).getStation("Brest");
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), 1, 1,
-                    null, "Brest");
+                    null, arriveStation);
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             Assert.assertEquals(Route.NULL_INPUT_FIELD_EXCEPTION, e.getMessage());
         }
@@ -216,13 +226,22 @@ public class LogicCashierTest {
     @Test
     public void tryBuyTicketWithBusySeat() {
         Route route = new Route(stations7, new Train(132, 2, 2));
+
+        Station departureStation1 = route.getStation("Helsinki");
+        Station arriveStation1 = route.getStation("Saint Petersburg");
+
+        Station departureStation2 = route.getStation("Saint Petersburg");
+        Station arriveStation2 = route.getStation("Tver");
+
+        Station departureStation3 = route.getStation("Saint Petersburg");
+        Station arriveStation3 = route.getStation("Moscow");
         try {
             LogicCashier.buyTicket(route, 2, 1,
-                    "Helsinki", "Saint Petersburg");
+                    departureStation1, arriveStation1);
             LogicCashier.buyTicket(route, 2, 1,
-                    "Saint Petersburg", "Tver");
+                    departureStation2, arriveStation2);
             Assert.assertNull(LogicCashier.buyTicket(route, 2, 1,
-                    "Saint Petersburg", "Moscow"));
+                    departureStation1, arriveStation3));
 //            Assert.assertEquals(train, schedule.getRoute(6).getTrain());
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             e.getMessage();
@@ -232,6 +251,9 @@ public class LogicCashierTest {
     @Test
     public void buyTicket() {
         Route route = new Route(stations7, new Train(132, 2, 2));
+        Station departureStation = route.getStation("Helsinki");
+        Station arriveStation = route.getStation("Saint Petersburg");
+
         try {
             Ticket expectedTicket = new Ticket(132, "Helsinki", "Saint Petersburg",
                     "03.05.2019 18:30", "04.05.2019 01:53", 2, 1,
@@ -240,7 +262,7 @@ public class LogicCashierTest {
                                     "Saint Petersburg") * 100.0) / 100.0);
 
             Assert.assertEquals(expectedTicket, LogicCashier.buyTicket(route, 2,
-                    1, "Helsinki", "Saint Petersburg"));
+                    1, departureStation, arriveStation));
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             e.printStackTrace();
         }
@@ -249,9 +271,15 @@ public class LogicCashierTest {
     @Test
     public void buyTicket2() {
         Route route = new Route(stations7, new Train(132, 2, 2));
+        Station departureStation1 = route.getStation("Helsinki");
+        Station arriveStation1 = route.getStation("Tver");
+
+        Station departureStation2 = route.getStation("Tver");
+        Station arriveStation2 = route.getStation("Moscow");
+
         try {
             LogicCashier.buyTicket(route, 1, 1,
-                    "Helsinki", "Tver");
+                    departureStation1, arriveStation1);
 
             Ticket expectedTicket = new Ticket(132, "Tver", "Moscow",
                     "04.05.2019 06:15", "04.05.2019 10:00", 1, 1,
@@ -260,7 +288,7 @@ public class LogicCashierTest {
                                     "Moscow") * 100.0) / 100.0);
 
             Assert.assertEquals(expectedTicket, LogicCashier.buyTicket(route, 1,
-                    1, "Tver", "Moscow"));
+                    1, departureStation2, arriveStation2));
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             e.printStackTrace();
         }
@@ -269,12 +297,18 @@ public class LogicCashierTest {
     @Test
     public void tryBuyTicketWithBusySeat2() {
         Route route = new Route(stations7, new Train(132, 2, 2));
+        Station departureStation1 = route.getStation("Helsinki");
+        Station arriveStation1 = route.getStation("Tver");
+
+        Station departureStation2 = route.getStation("Saint Petersburg");
+        Station arriveStation2 = route.getStation("Moscow");
+
         try {
             LogicCashier.buyTicket(route, 1, 1,
-                    "Helsinki", "Tver");
+                    departureStation1, arriveStation1);
 
             Assert.assertNull(LogicCashier.buyTicket(route, 1,
-                    1, "Saint Petersburg", "Moscow"));
+                    1, departureStation2, arriveStation2));
         } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
             e.printStackTrace();
         }
@@ -285,13 +319,16 @@ public class LogicCashierTest {
         List<Integer> carriagesNumbers = Arrays.asList(1, 2);
 
         Route route = new Route(stations7, new Train(132, 2, 2));
-
+        Station departureStation1 = route.getStation("Helsinki");
+        Station arriveStation1 = route.getStation("Moscow");
+        Station departureStation2 = route.getStation("Helsinki");
+        Station arriveStation2 = route.getStation("Saint Petersburg");
         try {
             LogicCashier.buyTicket(route, 2, 2,
-                    "Helsinki", "Moscow");
+                    departureStation1, arriveStation1);
 
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
-                    route, "Helsinki", "Saint Petersburg"));
+                    route, departureStation2, arriveStation2));
 
         } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
             e.printStackTrace();
@@ -303,17 +340,23 @@ public class LogicCashierTest {
     public void findCarriagesNumberWithFreeSeats2() {
         List<Integer> carriagesNumbers = Arrays.asList(2);
         Route route = new Route(stations7, new Train(132, 2, 2));
+        Station departureStation1 = route.getStation("Helsinki");
+        Station arriveStation1 = route.getStation("Tver");
+
+
+        Station departureStation2 = route.getStation("Helsinki");
+        Station arriveStation2 = route.getStation("Moscow");
         try {
 //            LogicCashier.buyTicket(schedule.getRoute(6), 2, 2,
 //                    "Tver", "Moscow");
             LogicCashier.buyTicket(route, 1, 2,
-                    "Helsinki", "Tver");
+                    departureStation1, arriveStation1);
             LogicCashier.buyTicket(route, 1, 1,
-                    "Helsinki", "Tver");
+                    departureStation1, arriveStation1);
             LogicCashier.buyTicket(route, 2, 1,
-                    "Helsinki", "Tver");
+                    departureStation1, arriveStation1);
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
-                    route, "Helsinki", "Moscow"));
+                    route, departureStation2, arriveStation2));
 
         } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
             e.printStackTrace();
@@ -324,17 +367,26 @@ public class LogicCashierTest {
     public void findCarriagesNumberWithFreeSeatsExpectEmptyList() {
         List<Integer> carriagesNumbers = new ArrayList<>();
         Route route = new Route(stations7, new Train(132, 2, 2));
+
+        Station departureStation1 = route.getStation("Tver");
+        Station arriveStation1 = route.getStation("Moscow");
+
+        Station departureStation2 = route.getStation("Helsinki");
+        Station arriveStation2 = route.getStation("Moscow");
+
+        Station departureStation3 = route.getStation("Saint Petersburg");
+        Station arriveStation3 = route.getStation("Moscow");
         try {
             LogicCashier.buyTicket(route, 2, 1,
-                    "Tver", "Moscow");
+                    departureStation1, arriveStation1);
             LogicCashier.buyTicket(route, 2, 2,
-                    "Tver", "Moscow");
+                    departureStation1, arriveStation1);
             LogicCashier.buyTicket(route, 1, 2,
-                    "Helsinki", "Moscow");
+                    departureStation2, arriveStation2);
             LogicCashier.buyTicket(route, 1, 1,
-                    "Helsinki", "Moscow");
+                    departureStation2, arriveStation2);
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
-                    route, "Saint Petersburg", "Moscow"));
+                    route, departureStation3, arriveStation3));
 
 
         } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
@@ -346,12 +398,18 @@ public class LogicCashierTest {
     public void findFreeSeatsInCarriageFullList() {
         List<Integer> freeSeats = Arrays.asList(1, 2);
         Route route = new Route(stations7, new Train(132, 2, 2));
+
+        Station departureStation1 = route.getStation("Tver");
+        Station arriveStation1 = route.getStation("Moscow");
+
+        Station departureStation2 = route.getStation("Helsinki");
+        Station arriveStation2 = route.getStation("Moscow");
         try {
             LogicCashier.buyTicket(route, 2, 2,
-                    "Tver", "Moscow");
+                    departureStation1, arriveStation1);
             Assert.assertEquals(freeSeats,
-                    LogicCashier.findFreeSeatsInCarriage(route, "Helsinki",
-                            "Moscow", 1));
+                    LogicCashier.findFreeSeatsInCarriage(route, departureStation2,
+                            arriveStation2, 1));
         } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
             e.printStackTrace();
         }
@@ -361,14 +419,20 @@ public class LogicCashierTest {
     public void findFreeSeatsInCarriageEmptyList() {
         List<Integer> freeSeats = Arrays.asList(2);
         Route route = new Route(stations7, new Train(132, 2, 2));
+
+        Station tver = route.getStation("Tver");
+        Station moscow = route.getStation("Moscow");
+        Station piter = route.getStation("Saint Petersburg");
+        Station helsinki = route.getStation("Helsinki");
+
         try {
             LogicCashier.buyTicket(route, 1, 1,
-                    "Saint Petersburg", "Moscow");
+                    piter, moscow);
             LogicCashier.buyTicket(route, 1, 2,
-                    "Tver", "Moscow");
+                    tver, moscow);
             Assert.assertEquals(freeSeats,
-                    LogicCashier.findFreeSeatsInCarriage(route, "Helsinki",
-                            "Saint Petersburg", 1));
+                    LogicCashier.findFreeSeatsInCarriage(route, helsinki,
+                            piter, 1));
         } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
             e.printStackTrace();
         }
