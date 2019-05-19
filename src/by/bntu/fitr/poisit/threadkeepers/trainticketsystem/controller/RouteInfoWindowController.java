@@ -50,7 +50,6 @@ public class RouteInfoWindowController {
 
     @FXML
     void buyTicketAction(ActionEvent event) {
-        //TODO нужен метод для проверки наличия свободных мест в поезде
         //TODO Если будем делать возвращение билетов нужен будет список билетов в маршруте
         // и метод для их возвращения
         //TODO нужно чтобы метод buyTicket вносил изменения в Route
