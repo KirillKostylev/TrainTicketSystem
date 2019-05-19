@@ -89,7 +89,7 @@ public class LogicCashierTest {
 
         try {
             Assert.assertEquals(expectedRoutesList,
-                    LogicCashier.findRoutes(schedule, "Brest", "Baranovichi",
+                    LogicCashier.findRoutes(schedule, "Brest", "Ivatsevichi",
                             "17.08.2019"));
         } catch (EmptyFieldException | NullException e) {
             e.printStackTrace();

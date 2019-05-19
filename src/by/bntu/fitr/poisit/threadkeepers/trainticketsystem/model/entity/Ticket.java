@@ -55,7 +55,6 @@ public class Ticket {
 
     @Override
     public int hashCode() {
-        return Objects.hash(trainNumber, departureStation, arriveStation, departureTime, arriveTime, seatNumber,
-                carriageNumber,cost);
+        return Objects.hash(trainNumber, departureStation, arriveStation, departureTime, arriveTime, seatNumber, carriageNumber, cost);
     }
 }
