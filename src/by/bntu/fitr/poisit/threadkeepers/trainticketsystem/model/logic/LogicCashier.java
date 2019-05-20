@@ -5,6 +5,7 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class LogicCashier {
@@ -12,27 +13,25 @@ public class LogicCashier {
 
     public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, Station departureStation,
                                    Station arriveStation)
-            //TODO Переделать станции под объект Station
-            throws NullException {
+            throws NullException, NonPositiveException, WrongCarriageNumber, WrongSeatNumber {
 
         Ticket ticket = null;
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
-//        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, seatNumber);
-//        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, carriageNumber);
+        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, seatNumber);
+        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, carriageNumber);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
-//        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
+
 
         SeatContainer seatContainer = route.getTrain().getSeatContainer();
 
-        /*if (seatContainer.getCarriageCount() < carriageNumber) {
+        if (seatContainer.getCarriageCount() < carriageNumber) {
             throw new WrongCarriageNumber(SeatContainer.WRONG_CARRIAGE_NUMBER);
         }
         if (seatContainer.getSeatCount() < seatNumber) {
             throw new WrongSeatNumber(SeatContainer.WRONG_SEAT_NUMBER);
-        }*/
+        }
 
-//        Checker.checkForSuitableRoute(route, departureStation,arriveStation,"as");
 
         if (checkSeatForFree(seatContainer.getSeat(carriageNumber - 1,
                 seatNumber - 1),
@@ -59,20 +58,23 @@ public class LogicCashier {
                 departureTime);
         Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation, departureTime);
 
-        Calendar calendarDepartDate = Calendar.getInstance();
-        Date newDepartureDate = new SimpleDateFormat(Station.DATE_FORMAT).parse(departureTime);
-        calendarDepartDate.setTime(newDepartureDate);
+//        Date newDepartureDate = new SimpleDateFormat(Station.DATE_FORMAT).parse(departureTime);
+////        Calendar calendarDepartDate = Calendar.getInstance();
+////        calendarDepartDate.setTime(newDepartureDate);
+
+        Calendar calendarDepartDate= Calendar.getInstance();
+        calendarDepartDate.setTime(convertStringToDate(departureTime, Station.DATE_FORMAT));
 
         List<Route> suitableRoutes = new LinkedList<>();
         for (Route route : schedule.getRoutes()) {
             List<String> stationsName = route.getStationsName();
-            Calendar date;
+            Date date;
             if (stationsName.contains(departureStation) && stationsName.contains(arriveStation)) {
-                date = route.getStation(departureStation).getCalendarDepartureTime();
+                date = convertStringToDate(route.getStation(departureStation).getDepartureTime(), Station.DATE_FORMAT);
             } else {
                 continue;
             }
-            if (LogicCashier.compareDate(calendarDepartDate, date) &&
+            if (date.compareTo(convertStringToDate(departureTime,Station.DATE_FORMAT)) == 0 &&
                     // compare departure time and customer departure time
                     stationsName.indexOf(departureStation) < stationsName.indexOf(arriveStation)) {
                 //checking the correct direction of the train
@@ -82,7 +84,7 @@ public class LogicCashier {
         Comparator<Route> comparator = Comparator.comparing(obj ->
         {
             try {
-                return obj.getStation(departureStation).getCalendarDepartureTime();
+                return convertStringToDate(obj.getStation(departureStation).getDepartureTime(), Station.TIME_FORMAT);
             } catch (ParseException e) {
                 e.printStackTrace();
                 return null;
@@ -93,12 +95,11 @@ public class LogicCashier {
     }
 
     public static List<Integer> findCarriagesNumberWithFreeSeats(
-            Route route, Station departureStation, Station arriveStation) throws NullException {
+            Route route, Station departureStation, Station arriveStation) throws NullException, EmptyFieldException {
         List<Integer> carriagesNumberWithFreeSeats = new ArrayList<>();
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
-//        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
 
         List<Station> suitableStations = getSuitableStations(route, departureStation, arriveStation);
 
@@ -117,14 +118,12 @@ public class LogicCashier {
 
 
     public static List<Integer> findFreeSeatsInCarriage(
-            Route route, Station departureStation, Station arriveStation, int carriageNumber) throws NullException,
-            EmptyFieldException {
+            Route route, Station departureStation, Station arriveStation, int carriageNumber) throws NullException {
 
         List<Integer> freeSeatNumbers = new ArrayList<>();
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
-//        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
 
         List<Station> suitableStations = getSuitableStations(route, departureStation, arriveStation);
         SeatContainer seatContainer = route.getTrain().getSeatContainer();
@@ -137,6 +136,11 @@ public class LogicCashier {
         return freeSeatNumbers;
     }
 
+    public static Date convertStringToDate(String date, String formatDate) throws ParseException {
+        return new SimpleDateFormat(formatDate).parse(date);
+
+    }
+
     private static boolean checkSeatForFree(Seat seat, List<Station> suitableStations) {
         boolean seatIsFree = true;
         for (Station station : suitableStations) {
@@ -147,13 +151,12 @@ public class LogicCashier {
         return seatIsFree;
     }
 
-    private static boolean compareDate(Calendar calendar1, Calendar calendar2) {
-        return
-                calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH) &&
-                        calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
-                        calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
-
-    }
+//    private static boolean compareDate(Calendar calendar1, Calendar calendar2) {
+//        return
+//                calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH) &&
+//                        calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
+//                        calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
+//    }
 
     private static List<Station> getSuitableStations(Route route, Station departureStation, Station arriveStation) {
 
@@ -179,4 +182,6 @@ public class LogicCashier {
                 DistanceCalculator.distanceCalculate(departureStation.getStationName(),
                         arriveStation.getStationName()) * 100.0) / 100.0;
     }
+
+
 }
