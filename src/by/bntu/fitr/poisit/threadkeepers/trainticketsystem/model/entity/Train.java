@@ -102,9 +102,9 @@ public class Train implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Train train = (Train) o;
-        return Objects.equals(trainNumber, train.trainNumber) &&
-                Objects.equals(carriagesNumber, train.carriagesNumber) &&
-                Objects.equals(seatsNumberInCarriage, train.seatsNumberInCarriage) &&
+        return Objects.equals(trainNumber.get(), train.trainNumber.get()) &&
+                Objects.equals(carriagesNumber.get(), train.carriagesNumber.get()) &&
+                Objects.equals(seatsNumberInCarriage.get(), train.seatsNumberInCarriage.get()) &&
                 Objects.equals(seatContainer, train.seatContainer);
     }
 

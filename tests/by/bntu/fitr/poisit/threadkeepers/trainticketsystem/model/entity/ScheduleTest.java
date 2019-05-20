@@ -48,7 +48,7 @@ public class ScheduleTest {
 
     @Test
     public void checkWriteAndReadFile() {
-        Assert.assertEquals(schedule, newSchedule);
+        Assert.assertEquals(schedule.getRoutes().get(0).getStations(), newSchedule.getRoutes().get(0).getStations());
     }
 
     @Test

@@ -34,24 +34,25 @@ public class Schedule implements Serializable {
 //    }
 
 
-    public void addRoute(List<Station> stations, Train train){
+    public void addRoute(List<Station> stations, Train train) {
         routes.add(new Route(stations, train));
         routesNumber++;
     }
 
-    public Route getRoute(int index){
+    public Route getRoute(int index) {
         return routes.get(index);
     }
-//    public void setRoutes(List<Route> routes) {
+
+    //    public void setRoutes(List<Route> routes) {
 //        this.routes = routes;
 //    }
-    public List<Route> getSortedRoutes(){
-    //    routes.sort();
+    public List<Route> getSortedRoutes() {
+        //    routes.sort();
         return null;
     }
 
 
-    public ObservableList<Route> getRoutes(){
+    public ObservableList<Route> getRoutes() {
         return routes;
     }
 

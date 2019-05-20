@@ -71,9 +71,9 @@ public class Station implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Station station = (Station) o;
-        return Objects.equals(stationName, station.stationName) &&
-                Objects.equals(arriveTime, station.arriveTime) &&
-                Objects.equals(departureTime, station.departureTime);
+        return Objects.equals(stationName.get(), station.stationName.get()) &&
+                Objects.equals(arriveTime.get(), station.arriveTime.get()) &&
+                Objects.equals(departureTime.get(), station.departureTime.get());
     }
 
     @Override

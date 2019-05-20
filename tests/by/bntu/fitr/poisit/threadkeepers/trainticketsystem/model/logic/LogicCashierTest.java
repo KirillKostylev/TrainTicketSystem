@@ -90,6 +90,8 @@ public class LogicCashierTest {
         expectedRoutesList.add(new Route(stations3, new Train(124, 10, 20)));
 
         try {
+
+
             Assert.assertEquals(expectedRoutesList,
                     LogicCashier.findRoutes(schedule, "Brest", "Ivatsevichi",
                             "17.08.2019"));
