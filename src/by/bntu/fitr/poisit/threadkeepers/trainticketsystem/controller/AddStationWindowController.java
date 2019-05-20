@@ -82,7 +82,7 @@ public class AddStationWindowController {
         departureHours.setItems(Util.getObservableListWithNumbers(0, 60));
         departureMinutes.setItems(Util.getObservableListWithNumbers(0, 24));
         arriveHours.setItems(Util.getObservableListWithNumbers(0, 24));
-        arriveMinutes.setItems(Util.getObservableListWithNumbers(0, 24));
+        arriveMinutes.setItems(Util.getObservableListWithNumbers(0, 60в));
     }
 
     void setParent(AddRouteWindowController addRouteWindowController) {
