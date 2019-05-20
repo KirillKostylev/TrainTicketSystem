@@ -1,6 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,10 +10,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class AddStationWindowController {
 
@@ -40,22 +41,35 @@ public class AddStationWindowController {
     private ComboBox<String> arriveMinutes;
 
     @FXML
-    void addStation(ActionEvent event) {
+    void addStationAction(ActionEvent event) {
         if (isFieldsNotFilled()) {
             Util.showError("You must fill all fields!");
             return;
         }
-        String departureTime = departureDate.getValue().format(DateTimeFormatter.ofPattern("dd.MM.YYYY"))
+        String departureTime = departureDate.getValue().format(DateTimeFormatter
+                .ofPattern(Station.DATE_FORMAT))
                 + " " + departureHours.getValue() + ":"
                 + departureMinutes.getValue();
-        String arriveTime = arriveDate.getValue().format(DateTimeFormatter.ofPattern("dd.MM.YYYY"))
+        String arriveTime = arriveDate.getValue().format(DateTimeFormatter
+                .ofPattern(Station.DATE_FORMAT))
                 + " " + arriveHours.getValue()+ ":"
                 + arriveMinutes.getValue();
+        try {
+            Date departureDateTime = LogicCashier.convertStringToDate(departureTime,
+                    Station.DATE_FORMAT + " " + Station.TIME_FORMAT);
+            Date arriveDateTime = LogicCashier.convertStringToDate(arriveTime,
+                    Station.DATE_FORMAT + " " + Station.TIME_FORMAT);
+            if (departureDateTime.compareTo(arriveDateTime) > 0) {
+                Util.showError("Date and time of arrival more than departure!");
+                return;
+            }
+        } catch (ParseException e) {
+            Util.showError("Wrong data format!");
+            e.printStackTrace();
+        }
         Station station = new Station(stationName.getText(), departureTime, arriveTime);
         addRouteWindowController.addStation(station);
         Util.closeWindow(event);
-        //TODO сделать что нибудь чтобы нельзя было ввести дату отправления позже чем дату
-        // приезда тоже самое со временем (сделай методы сравнения дат и времени время в формате hh:mm)
     }
 
     @FXML

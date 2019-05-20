@@ -51,7 +51,7 @@ public class Schedule implements Serializable {
     }
 
 
-    public List<Route> getRoutes(){
+    public ObservableList<Route> getRoutes(){
         return routes;
     }
 

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -124,6 +125,13 @@ public class RouteInfoWindowController {
 
     private boolean isSeatSelected() {
         return carriageNumberComboBox.getValue() != null && seatNumberComboBox.getValue() != null;
+    }
+
+    @FXML
+    void showFreeSeatsAction(MouseEvent event) {
+        if (stationTableView.getSelectionModel().getSelectedItems().size() == 2) {
+            //carriageNumberComboBox.setItems();
+        }
     }
 
 }

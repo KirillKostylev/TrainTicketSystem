@@ -86,10 +86,9 @@ public class RouteListWindowController {
     void initialize() {
         try {
             schedule = ScheduleDataWorker.readSchedule("schedule.json");
-            fillScheduleTable(schedule.getRoutes());
+            fillScheduleTable();
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error loading data!");
-            alert.showAndWait();
+            Util.showError("Error loading data!");
             e.printStackTrace();
         }
     }
@@ -116,7 +115,7 @@ public class RouteListWindowController {
 
     @FXML
     void resetTable(ActionEvent event) {
-        fillScheduleTable(schedule.getRoutes());
+        fillScheduleTable();
     }
 
     @FXML
@@ -143,7 +142,7 @@ public class RouteListWindowController {
     }
 
     @FXML
-    void removeRoute(ActionEvent event) {
+    void removeRouteAction(ActionEvent event) {
         if(!Util.isSelectedItemInTable(routesTable)){
             Util.showError("Choose Route to edit!");
             return;
@@ -153,9 +152,10 @@ public class RouteListWindowController {
         try {
             ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
         } catch (IOException e) {
+            Util.showError("Error writing file!");
             e.printStackTrace();
         }
-        routesTable.setItems(FXCollections.observableArrayList(schedule.getRoutes()));
+        routesTable.setItems(schedule.getRoutes());
     }
 
     @FXML
@@ -195,8 +195,7 @@ public class RouteListWindowController {
         }
     }
 
-    private void fillScheduleTable(List<Route> routeList) {
-        ObservableList<Route> routeObservableList = FXCollections.observableArrayList(routeList);
+    private void fillScheduleTable() {
         numberColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getTrain().getTrainNumberProperty().asObject());
         departureStationColumn.setCellValueFactory(cellData ->
@@ -211,7 +210,7 @@ public class RouteListWindowController {
             List<Station> stationList = cellData.getValue().getStations();
             return stationList.get(stationList.size() - 1).getArriveTimeProperty();
         });
-        routesTable.setItems(routeObservableList);
+        routesTable.setItems(schedule.getRoutes());
     }
 
     private void fillFilteredScheduleTable(List<Route> routeList, String departureStation,
@@ -227,7 +226,7 @@ public class RouteListWindowController {
                 cellData.getValue().getStation(departureStation).getDepartureTimeProperty());
         arriveTimeColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getStation(arriveStation).getArriveTimeProperty());
-        routesTable.setItems(routeObservableList);
+        routesTable.setItems(schedule.getRoutes());
     }
 
     void addRoute(Route route) {
@@ -238,7 +237,7 @@ public class RouteListWindowController {
             Util.showError("Writing data error!");
             e.printStackTrace();
         }
-        routesTable.setItems(FXCollections.observableArrayList(schedule.getRoutes()));
+        routesTable.setItems(schedule.getRoutes());
     }
 
     void editRoute(Route route) {
@@ -251,6 +250,6 @@ public class RouteListWindowController {
             Util.showError("Error writing file!");
             e.printStackTrace();
         }
-        routesTable.setItems(FXCollections.observableArrayList(schedule.getRoutes()));
+        routesTable.setItems(schedule.getRoutes());
     }
 }

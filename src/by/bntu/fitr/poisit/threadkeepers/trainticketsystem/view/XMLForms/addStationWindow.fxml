@@ -21,7 +21,7 @@
       <ComboBox fx:id="departureMinutes" layoutX="305.0" layoutY="157.0" prefHeight="31.0" prefWidth="81.0" />
       <ComboBox fx:id="arriveHours" layoutX="211.0" layoutY="207.0" prefHeight="31.0" prefWidth="81.0" />
       <ComboBox fx:id="arriveMinutes" layoutX="305.0" layoutY="207.0" prefHeight="31.0" prefWidth="81.0" />
-      <Button layoutX="113.0" layoutY="250.0" mnemonicParsing="false" onAction="#addStation" text="Add" />
+      <Button layoutX="113.0" layoutY="250.0" mnemonicParsing="false" onAction="#addStationAction" text="Add" />
       <Button cancelButton="true" layoutX="260.0" layoutY="250.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
    </children>
 </AnchorPane>

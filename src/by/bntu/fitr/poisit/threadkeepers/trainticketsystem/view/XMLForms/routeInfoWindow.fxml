@@ -20,7 +20,7 @@
             <Tooltip fx:id="buyTicketBtnTip" />
          </tooltip></Button>
       <Button layoutX="411.0" layoutY="505.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
-      <TableView fx:id="stationTableView" layoutX="13.0" layoutY="207.0" prefHeight="227.0" prefWidth="575.0">
+      <TableView fx:id="stationTableView" layoutX="13.0" layoutY="207.0" onMouseClicked="#showFreeSeatsAction" prefHeight="227.0" prefWidth="575.0">
          <columns>
             <TableColumn fx:id="stationNameColumn" editable="false" prefWidth="166.0" sortable="false" text="Station Name" />
             <TableColumn fx:id="departureTimeColumn" editable="false" prefWidth="199.0" sortable="false" text="Departure Time" />

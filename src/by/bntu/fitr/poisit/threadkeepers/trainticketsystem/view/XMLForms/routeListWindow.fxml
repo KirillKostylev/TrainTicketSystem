@@ -52,7 +52,7 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="removeRouteBtn" alignment="CENTER" layoutX="19.0" layoutY="411.0" mnemonicParsing="false" onAction="#removeRoute" prefHeight="50.0" prefWidth="238.0" text="Remove Route">
+                  <Button fx:id="removeRouteBtn" alignment="CENTER" layoutX="19.0" layoutY="411.0" mnemonicParsing="false" onAction="#removeRouteAction" prefHeight="50.0" prefWidth="238.0" text="Remove Route">
                      <font>
                         <Font size="18.0" />
                      </font>
