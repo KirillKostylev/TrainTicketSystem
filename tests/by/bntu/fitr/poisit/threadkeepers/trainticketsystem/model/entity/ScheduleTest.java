@@ -18,7 +18,7 @@ public class ScheduleTest {
     private static Schedule newSchedule;
 
     @BeforeClass
-    public static void addTrain() throws NonPositiveException, ParseException {
+    public static void addTrain(){
 
         String fileName = "scheduleInfo.json";
 
