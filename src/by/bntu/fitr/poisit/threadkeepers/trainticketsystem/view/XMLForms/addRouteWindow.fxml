@@ -22,9 +22,9 @@
       <Button layoutX="286.0" layoutY="496.0" mnemonicParsing="false" onAction="#addStationAction" text="Add Station" />
       <TableView fx:id="stationTableView" layoutX="53.0" layoutY="197.0" prefHeight="283.0" prefWidth="794.0">
         <columns>
-          <TableColumn fx:id="stationNameColumn" prefWidth="258.0" text="Station Name" />
-            <TableColumn fx:id="departureTimeColumn" prefWidth="272.0" text="Departure Time" />
-            <TableColumn fx:id="arriveTimeColumn" prefWidth="236.0" text="Arrive Time" />
+          <TableColumn fx:id="stationNameColumn" editable="false" prefWidth="258.0" sortable="false" text="Station Name" />
+            <TableColumn fx:id="departureTimeColumn" editable="false" prefWidth="272.0" sortable="false" text="Departure Time" />
+            <TableColumn fx:id="arriveTimeColumn" editable="false" prefWidth="263.0" sortable="false" text="Arrive Time" />
         </columns>
       </TableView>
       <Button layoutX="484.0" layoutY="496.0" mnemonicParsing="false" onAction="#removeStation" text="Remove Station" />

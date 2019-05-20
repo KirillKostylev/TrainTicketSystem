@@ -59,6 +59,7 @@ public class AddRouteWindowController {
             }
             Util.closeWindow(event);
         } catch (Exception e) {
+            e.printStackTrace();
             Util.showError("Incorect Data!");
         }
 
@@ -71,7 +72,7 @@ public class AddRouteWindowController {
             Parent root = loader.load();
             AddStationWindowController addStationWindowController = loader.getController();
             addStationWindowController.setParent(this);
-            Util.openWindow("Add Station", root, event);
+            Util.openChildModalWindow("Add Station", root, event);
         } catch (IOException e) {
             Util.showError("Loading resource error!");
             e.printStackTrace();

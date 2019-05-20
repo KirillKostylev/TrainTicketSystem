@@ -34,7 +34,7 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="routesTable" layoutY="6.0" onMouseClicked="#openDetails" prefHeight="798.0" prefWidth="704.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="routesTable" layoutY="-2.0" onMouseClicked="#openDetails" prefHeight="798.0" prefWidth="704.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="numberColumn" editable="false" prefWidth="66.0" sortable="false" text="№" />
                       <TableColumn fx:id="departureStationColumn" editable="false" prefWidth="148.0" sortable="false" text="Departure Station" />
@@ -45,7 +45,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="798.0" prefWidth="253.0" SplitPane.resizableWithParent="false">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="798.0" prefWidth="272.0" SplitPane.resizableWithParent="false">
                <children>
                   <Button layoutX="13.0" mnemonicParsing="false" onAction="#enterAsAdmin" prefHeight="60.0" prefWidth="246.0" text="Enter as admin">
                      <font>

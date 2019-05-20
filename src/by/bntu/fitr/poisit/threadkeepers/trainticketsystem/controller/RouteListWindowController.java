@@ -73,7 +73,7 @@ public class RouteListWindowController {
     void enterAsAdmin(ActionEvent event) throws IOException {
         FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/loginWindow.fxml");
         Parent root = loader.load();
-        Util.openWindow("Log In", root, event);
+        Util.openChildModalWindow("Log In", root, event);
         LoginWindowController loginWindowController = loader.getController();
     }
 
@@ -134,7 +134,7 @@ public class RouteListWindowController {
             Parent root = loader.load();
             AddRouteWindowController addRouteWindowController = loader.getController();
             addRouteWindowController.setParent(this);
-            Util.openWindow("Add Route",root , event);
+            Util.openChildModalWindow("Add Route",root , event);
         } catch (IOException e) {
             Util.showError("Loading resource Error!");
             e.printStackTrace();
@@ -170,7 +170,7 @@ public class RouteListWindowController {
             AddRouteWindowController addRouteWindowController = loader.getController();
             addRouteWindowController.setParent(this);
             addRouteWindowController.editInit(routesTable.getSelectionModel().getSelectedItem());
-            Util.openWindow("Add Route", root, event);
+            Util.openChildModalWindow("Add Route", root, event);
         } catch (IOException e) {
             Util.showError("Loading resource Error!");
             e.printStackTrace();
@@ -186,7 +186,7 @@ public class RouteListWindowController {
                 Parent root = loader.load();
                 RouteInfoWindowController routeInfoWindowController = loader.getController();
                 routeInfoWindowController.init(routesTable.getSelectionModel().getSelectedItem());
-                Util.openWindow("Route Info", root, event);
+                Util.openChildModalWindow("Route Info", root, event);
             } catch (IOException e) {
                 Util.showError("Loading resource Error!");
                 e.printStackTrace();

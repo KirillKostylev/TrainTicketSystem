@@ -18,14 +18,24 @@ import java.io.IOException;
 
 public class Util {
 
-    static void openWindow(String windowName, Parent root, Event event) throws IOException {
-        Stage stage = new Stage();
-        stage.setTitle(windowName);
+    static void openChildModalWindow(String windowName, Parent root, Event event) throws IOException {
+        Stage stage = createStage(windowName, root);
         stage.initModality(Modality.WINDOW_MODAL);
         Node source = (Node) event.getSource();
         stage.initOwner(source.getScene().getWindow());
-        stage.setScene(new Scene(root));
         stage.showAndWait();
+    }
+
+    static void openWindow(String windowName, Parent root) {
+        Stage stage = createStage(windowName, root);
+        stage.show();
+    }
+
+    private static Stage createStage(String windowName, Parent root) {
+        Stage stage = new Stage();
+        stage.setTitle(windowName);
+        stage.setScene(new Scene(root));
+        return stage;
     }
 
     static void closeWindow(ActionEvent event) {

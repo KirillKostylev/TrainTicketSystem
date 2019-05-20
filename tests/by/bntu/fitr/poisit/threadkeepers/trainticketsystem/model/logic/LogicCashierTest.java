@@ -171,7 +171,7 @@ public class LogicCashierTest {
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), -1, 1, departureStation,
                     arriveStation);
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             Assert.assertEquals(SeatContainer.INVALID_VALUE_EXCEPTION, e.getMessage());
         }
     }
@@ -182,7 +182,7 @@ public class LogicCashierTest {
         Station arriveStation = schedule.getRoute(0).getStation("Brest");
         try {
             LogicCashier.buyTicket(null, 2, 3, departureStation, arriveStation);
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             Assert.assertEquals(Route.NULL_ROUTE_EXCEPTION, e.getMessage());
         }
     }
@@ -194,7 +194,7 @@ public class LogicCashierTest {
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), 20, 1,
                     departureStation, arriveStation);
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             Assert.assertEquals(SeatContainer.WRONG_CARRIAGE_NUMBER, e.getMessage());
         }
     }
@@ -207,7 +207,7 @@ public class LogicCashierTest {
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), 1, 35,
                     departureStation, arriveStation);
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             Assert.assertEquals(SeatContainer.WRONG_SEAT_NUMBER, e.getMessage());
         }
     }
@@ -218,7 +218,7 @@ public class LogicCashierTest {
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), 1, 1,
                     null, arriveStation);
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             Assert.assertEquals(Route.NULL_INPUT_FIELD_EXCEPTION, e.getMessage());
         }
     }
@@ -239,7 +239,7 @@ public class LogicCashierTest {
             Assert.assertNull(LogicCashier.buyTicket(route, 2, 1,
                     saintPetersburg, moscow));
 //            Assert.assertEquals(train, schedule.getRoute(6).getTrain());
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             e.getMessage();
         }
     }
@@ -259,7 +259,7 @@ public class LogicCashierTest {
 
             Assert.assertEquals(expectedTicket, LogicCashier.buyTicket(route, 2,
                     1, helsinki, saintPetersburg));
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             e.printStackTrace();
         }
     }
@@ -283,7 +283,7 @@ public class LogicCashierTest {
 
             Assert.assertEquals(expectedTicket, LogicCashier.buyTicket(route, 1,
                     1, tver, moscow));
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             e.printStackTrace();
         }
     }
@@ -303,7 +303,7 @@ public class LogicCashierTest {
 
             Assert.assertNull(LogicCashier.buyTicket(route, 1,
                     1, saintPetersburg, moscow));
-        } catch (NullException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber | EmptyFieldException e) {
+        } catch (NullException e) {
             e.printStackTrace();
         }
     }
@@ -323,7 +323,7 @@ public class LogicCashierTest {
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
                     route, helsinki, saintPetersburg));
 
-        } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
+        } catch (NullException e) {
             e.printStackTrace();
         }
 
@@ -348,7 +348,7 @@ public class LogicCashierTest {
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
                     route, helsinki, moscow));
 
-        } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
+        } catch (NullException e) {
             e.printStackTrace();
         }
     }
@@ -375,7 +375,7 @@ public class LogicCashierTest {
                     route, saintPetersburg, moscow));
 
 
-        } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
+        } catch (NullException e) {
             e.printStackTrace();
         }
     }
@@ -394,7 +394,7 @@ public class LogicCashierTest {
             Assert.assertEquals(freeSeats,
                     LogicCashier.findFreeSeatsInCarriage(route, helsinki,
                             moscow, 1));
-        } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
+        } catch (NullException | EmptyFieldException e) {
             e.printStackTrace();
         }
     }
@@ -417,7 +417,7 @@ public class LogicCashierTest {
             Assert.assertEquals(freeSeats,
                     LogicCashier.findFreeSeatsInCarriage(route, helsinki,
                             saintPetersburg, 1));
-        } catch (NullException | EmptyFieldException | NonPositiveException | WrongCarriageNumber | WrongSeatNumber e) {
+        } catch (NullException | EmptyFieldException e) {
             e.printStackTrace();
         }
     }

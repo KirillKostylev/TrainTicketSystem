@@ -9,7 +9,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddStationWindowController {
 
@@ -38,6 +41,10 @@ public class AddStationWindowController {
 
     @FXML
     void addStation(ActionEvent event) {
+        if (isFieldsNotFilled()) {
+            Util.showError("You must fill all fields!");
+            return;
+        }
         String departureTime = departureDate.getValue().format(DateTimeFormatter.ofPattern("dd.MM.YYYY"))
                 + " " + departureHours.getValue() + ":"
                 + departureMinutes.getValue();
@@ -66,6 +73,14 @@ public class AddStationWindowController {
 
     void setParent(AddRouteWindowController addRouteWindowController) {
         this.addRouteWindowController = addRouteWindowController;
+    }
+
+
+    private boolean isFieldsNotFilled() {
+        return departureDate.getValue() == null || departureHours.getValue() == null
+                || departureMinutes.getValue() == null || arriveDate.getValue() == null
+                || arriveHours.getValue() == null || arriveMinutes.getValue() == null
+                || stationName.getText().equals("");
     }
 
 }

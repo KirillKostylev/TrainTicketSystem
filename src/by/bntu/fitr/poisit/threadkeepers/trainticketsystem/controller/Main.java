@@ -13,10 +13,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../view/XMLForms/routeListWindow.fxml"));
-            primaryStage.setTitle("Routes");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.show();
+            Parent root = Util.getFXMLLoaderFromResource("../view/XMLForms/routeListWindow.fxml")
+                    .load();
+            Util.openWindow("Route List", root);
         } catch (IOException e) {
             Util.showError("Loading resource Error!");
             e.printStackTrace();

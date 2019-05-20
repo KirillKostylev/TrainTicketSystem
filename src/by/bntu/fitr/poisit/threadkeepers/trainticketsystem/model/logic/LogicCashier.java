@@ -13,24 +13,24 @@ public class LogicCashier {
     public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, Station departureStation,
                                    Station arriveStation)
             //TODO Переделать станции под объект Station
-            throws NullException, NonPositiveException, WrongCarriageNumber, WrongSeatNumber, EmptyFieldException {
+            throws NullException {
 
         Ticket ticket = null;
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
-        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, seatNumber);
-        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, carriageNumber);
+//        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, seatNumber);
+//        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, carriageNumber);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
 //        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation);
 
         SeatContainer seatContainer = route.getTrain().getSeatContainer();
 
-        if (seatContainer.getCarriageCount() < carriageNumber) {
+        /*if (seatContainer.getCarriageCount() < carriageNumber) {
             throw new WrongCarriageNumber(SeatContainer.WRONG_CARRIAGE_NUMBER);
         }
         if (seatContainer.getSeatCount() < seatNumber) {
             throw new WrongSeatNumber(SeatContainer.WRONG_SEAT_NUMBER);
-        }
+        }*/
 
 //        Checker.checkForSuitableRoute(route, departureStation,arriveStation,"as");
 
@@ -93,7 +93,7 @@ public class LogicCashier {
     }
 
     public static List<Integer> findCarriagesNumberWithFreeSeats(
-            Route route, Station departureStation, Station arriveStation) throws NullException, EmptyFieldException {
+            Route route, Station departureStation, Station arriveStation) throws NullException {
         List<Integer> carriagesNumberWithFreeSeats = new ArrayList<>();
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
