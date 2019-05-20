@@ -5,6 +5,7 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Ticket;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ScheduleDataWorker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.io.IOException;
 public class RouteInfoWindowController {
 
     private Route route;
+    private RouteListWindowController routeListWindowController;
 
     @FXML
     private Label trainNumberLabel;
@@ -68,8 +70,15 @@ public class RouteInfoWindowController {
             assert ticket != null;
             printTicketWindowController.init(ticket.toString());
             Util.openChildModalWindow("Print Ticket", root, event);
-
+            disableComboBoxes();
         } catch (IOException e) {
+            Util.showError("Error loading resource!");
+            e.printStackTrace();
+        }
+        try {
+            routeListWindowController.writeSchedule();
+        } catch (IOException e) {
+            Util.showError("Error writing data!");
             e.printStackTrace();
         }
     }
@@ -86,10 +95,6 @@ public class RouteInfoWindowController {
         Util.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
         stationTableView.setItems(stationList);
         stationTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        carriageNumberComboBox.setItems(Util.getObservableListWithNumbers(1,
-                route.getTrain().getCarriagesNumber()));
-        seatNumberComboBox.setItems(Util.getObservableListWithNumbers(1,
-                route.getTrain().getSeatsNumberInCarriage()));
     }
 
     private boolean isSeatSelected() {
@@ -97,9 +102,35 @@ public class RouteInfoWindowController {
     }
 
     @FXML
-    void showFreeSeatsAction(MouseEvent event) {
+    void showFreeCarriagesAction(MouseEvent event) {
         if (stationTableView.getSelectionModel().getSelectedItems().size() == 2) {
-            //carriageNumberComboBox.setItems();
+            carriageNumberComboBox.setDisable(false);
+            try {
+                carriageNumberComboBox.setItems(LogicCashier.findCarriagesNumberWithFreeSeats(
+                        route, getSelectedStations().get(0), getSelectedStations().get(1)
+                ));
+            } catch (NullException e) {
+                Util.showError("Null Exception Error!");
+                e.printStackTrace();
+            }
+            seatNumberComboBox.setItems(null);
+        } else {
+            disableComboBoxes();
+        }
+    }
+
+    @FXML
+    void showFreeSeatsAction(ActionEvent event) {
+        if (carriageNumberComboBox.getValue() != null ) {
+            seatNumberComboBox.setDisable(false);
+            try {
+                seatNumberComboBox.setItems(LogicCashier.findFreeSeatsInCarriage(
+                        route, getSelectedStations().get(0), getSelectedStations().get(1),
+                        Integer.parseInt(carriageNumberComboBox.getValue())));
+            } catch (NullException e) {
+                Util.showError("Null Exception Error!");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -129,8 +160,7 @@ public class RouteInfoWindowController {
     }
 
     private Ticket formTicket() {
-        ObservableList<Station> selectedStationList = stationTableView.getSelectionModel()
-                .getSelectedItems();
+        ObservableList<Station> selectedStationList = getSelectedStations();
         Ticket ticket = null;
         try {
             ticket = LogicCashier.buyTicket(route, Integer.parseInt(carriageNumberComboBox.getValue()),
@@ -145,6 +175,21 @@ public class RouteInfoWindowController {
             Util.showError("Ticket is not formed!");
         }
         return ticket;
+    }
+
+    private ObservableList<Station> getSelectedStations() {
+        return stationTableView.getSelectionModel().getSelectedItems();
+    }
+
+    private void disableComboBoxes() {
+        carriageNumberComboBox.setDisable(true);
+        seatNumberComboBox.setDisable(true);
+        carriageNumberComboBox.setValue(null);
+        seatNumberComboBox.setValue(null);
+    }
+
+    void setParent(RouteListWindowController routeListWindowController) {
+        this.routeListWindowController = routeListWindowController;
     }
 
 }

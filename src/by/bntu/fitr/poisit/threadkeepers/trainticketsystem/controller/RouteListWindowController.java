@@ -186,6 +186,7 @@ public class RouteListWindowController {
                 Parent root = loader.load();
                 RouteInfoWindowController routeInfoWindowController = loader.getController();
                 routeInfoWindowController.init(routesTable.getSelectionModel().getSelectedItem());
+                routeInfoWindowController.setParent(this);
                 Util.openChildModalWindow("Route Info", root, event);
             } catch (IOException e) {
                 Util.showError("Loading resource Error!");
@@ -213,9 +214,9 @@ public class RouteListWindowController {
         routesTable.setItems(schedule.getRoutes());
     }
 
-    private void fillFilteredScheduleTable(List<Route> routeList, String departureStation,
+    private void fillFilteredScheduleTable(List<Route> filteredRouteList, String departureStation,
                                            String arriveStation) {
-        ObservableList<Route> routeObservableList = FXCollections.observableArrayList(routeList);
+        ObservableList<Route> filteredRouteObservableList = FXCollections.observableArrayList(filteredRouteList);
         numberColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getTrain().getTrainNumberProperty().asObject());
         departureStationColumn.setCellValueFactory(cellData ->
@@ -226,13 +227,13 @@ public class RouteListWindowController {
                 cellData.getValue().getStation(departureStation).getDepartureTimeProperty());
         arriveTimeColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getStation(arriveStation).getArriveTimeProperty());
-        routesTable.setItems(schedule.getRoutes());
+        routesTable.setItems(filteredRouteObservableList);
     }
 
     void addRoute(Route route) {
         schedule.getRoutes().add(route);
         try {
-            ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
+            writeSchedule();
         } catch (IOException e) {
             Util.showError("Writing data error!");
             e.printStackTrace();
@@ -245,11 +246,15 @@ public class RouteListWindowController {
         schedule.getRoutes().remove(selectedRoute);
         schedule.getRoutes().add(route);
         try {
-            ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
+            writeSchedule();
         } catch (IOException e) {
             Util.showError("Error writing file!");
             e.printStackTrace();
         }
         routesTable.setItems(schedule.getRoutes());
+    }
+
+    void writeSchedule() throws IOException {
+        ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
     }
 }
