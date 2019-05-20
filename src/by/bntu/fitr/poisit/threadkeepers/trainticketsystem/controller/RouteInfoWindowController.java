@@ -57,41 +57,10 @@ public class RouteInfoWindowController {
 
     @FXML
     void buyTicketAction(ActionEvent event) {
-        ObservableList<Station> stationObservableList = stationTableView.getItems();
-        try {
-            if (LogicCashier.findCarriagesNumberWithFreeSeats(route,
-                    stationObservableList.get(0),
-                    stationObservableList.get(stationObservableList.size() - 1)).size() == 0) {
-                Util.showError("There are no vacancies in the train!");
-                return;
-            }
-        } catch (NullException e) {
-            Util.showError("Null Exception!");
-            e.printStackTrace();
-        }
-        if(!Util.isSelectedItemsInTable(stationTableView, 2)){
-            Util.showError("Select 2 Stations!");
+        if (checkBuyExceptions()) {
             return;
         }
-        if(!isSeatSelected()) {
-            Util.showError("Select seat!");
-            return;
-        }
-        ObservableList<Station> selectedStationList = stationTableView.getSelectionModel()
-                .getSelectedItems();
-        Ticket ticket = null;
-        try {
-            ticket = LogicCashier.buyTicket(route, Integer.parseInt(carriageNumberComboBox.getValue()),
-                    Integer.parseInt(seatNumberComboBox.getValue()),
-                    selectedStationList.get(0),
-                    selectedStationList.get(1));
-        } catch (NullException e) {
-            Util.showError("Null exception!");
-            e.printStackTrace();
-        }
-        if (ticket == null) {
-            Util.showError("Ticket is not formed!");
-        }
+        Ticket ticket = formTicket();
         try {
             FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/printTicketWindow.fxml");
             Parent root = loader.load();
@@ -132,6 +101,50 @@ public class RouteInfoWindowController {
         if (stationTableView.getSelectionModel().getSelectedItems().size() == 2) {
             //carriageNumberComboBox.setItems();
         }
+    }
+
+    private boolean checkBuyExceptions() {
+        ObservableList<Station> stationObservableList = stationTableView.getItems();
+        try {
+            if (LogicCashier.findCarriagesNumberWithFreeSeats(route,
+                    stationObservableList.get(0),
+                    stationObservableList.get(stationObservableList.size() - 1)).size() == 0) {
+                Util.showError("There are no vacancies in the train!");
+                return true;
+            }
+        } catch (NullException e) {
+            Util.showError("Null Exception!");
+            e.printStackTrace();
+            return true;
+        }
+        if(!Util.isSelectedItemsInTable(stationTableView, 2)){
+            Util.showError("Select 2 Stations!");
+            return true;
+        }
+        if(!isSeatSelected()) {
+            Util.showError("Select seat!");
+            return true;
+        }
+        return false;
+    }
+
+    private Ticket formTicket() {
+        ObservableList<Station> selectedStationList = stationTableView.getSelectionModel()
+                .getSelectedItems();
+        Ticket ticket = null;
+        try {
+            ticket = LogicCashier.buyTicket(route, Integer.parseInt(carriageNumberComboBox.getValue()),
+                    Integer.parseInt(seatNumberComboBox.getValue()),
+                    selectedStationList.get(0),
+                    selectedStationList.get(1));
+        } catch (NullException e) {
+            Util.showError("Null exception!");
+            e.printStackTrace();
+        }
+        if (ticket == null) {
+            Util.showError("Ticket is not formed!");
+        }
+        return ticket;
     }
 
 }
