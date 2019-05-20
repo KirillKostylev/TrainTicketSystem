@@ -48,7 +48,6 @@ public class Route implements Serializable, Comparable<Route>{
         return train;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

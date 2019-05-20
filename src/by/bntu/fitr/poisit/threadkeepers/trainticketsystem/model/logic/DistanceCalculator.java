@@ -29,6 +29,7 @@ public class DistanceCalculator {
             coordinate2 = findCoordinate(arriveStation);
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
+            return 0;
         }
         String[] latitudeAndLongitude1 = coordinate1.split("\\s");
         String[] latitudeAndLongitude2 = coordinate2.split("\\s");

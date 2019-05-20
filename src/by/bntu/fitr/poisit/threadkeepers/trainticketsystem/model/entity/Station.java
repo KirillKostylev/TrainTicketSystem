@@ -1,5 +1,6 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -59,11 +60,11 @@ public class Station implements Serializable {
         this.departureTime.set(departureTime);
     }
 
-    public Calendar getCalendarDepartureTime() throws ParseException {
-        Calendar calendarDepartTime = Calendar.getInstance();
-        calendarDepartTime.setTime(new SimpleDateFormat(TIME_FORMAT).parse(departureTime.get()));
-        return calendarDepartTime;
-    }
+//    public Calendar getCalendarDepartureTime() throws ParseException {
+//        Calendar calendarDepartTime = Calendar.getInstance();
+//        calendarDepartTime.setTime(LogicCashier.convertStringToDate(departureTime.get(), TIME_FORMAT));
+//        return calendarDepartTime;
+//    }
 
     @Override
     public boolean equals(Object o) {
