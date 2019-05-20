@@ -2,6 +2,7 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.*;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
+import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LogicCashierTest {
@@ -84,8 +86,8 @@ public class LogicCashierTest {
     @Test
     public void findRoute() throws ParseException {
 
-        List<Route> expectedRoutesList = Arrays.asList(
-                new Route(stations3, new Train(124, 10, 20)));
+        List<Route> expectedRoutesList = new LinkedList<>();
+        expectedRoutesList.add(new Route(stations3, new Train(124, 10, 20)));
 
         try {
             Assert.assertEquals(expectedRoutesList,
@@ -164,17 +166,7 @@ public class LogicCashierTest {
         }
     }
 
-    @Test
-    public void buyTicketCheckNegativeValue() {
-        Station departureStation = schedule.getRoute(0).getStation("Minsk");
-        Station arriveStation = schedule.getRoute(0).getStation("Brest");
-        try {
-            LogicCashier.buyTicket(schedule.getRoute(0), -1, 1, departureStation,
-                    arriveStation);
-        } catch (NullException e) {
-            Assert.assertEquals(SeatContainer.INVALID_VALUE_EXCEPTION, e.getMessage());
-        }
-    }
+
 
     @Test
     public void buyTicketCheckNullRoute() {
@@ -187,30 +179,6 @@ public class LogicCashierTest {
         }
     }
 
-    @Test
-    public void buyTicketCheckWrongCarriageNumber() {
-        Station departureStation = schedule.getRoute(0).getStation("Minsk");
-        Station arriveStation = schedule.getRoute(0).getStation("Brest");
-        try {
-            LogicCashier.buyTicket(schedule.getRoute(0), 20, 1,
-                    departureStation, arriveStation);
-        } catch (NullException e) {
-            Assert.assertEquals(SeatContainer.WRONG_CARRIAGE_NUMBER, e.getMessage());
-        }
-    }
-
-
-    @Test
-    public void buyTicketCheckWrongSeatNumber() {
-        Station departureStation = schedule.getRoute(0).getStation("Brest");
-        Station arriveStation = schedule.getRoute(0).getStation("Minsk");
-        try {
-            LogicCashier.buyTicket(schedule.getRoute(0), 1, 35,
-                    departureStation, arriveStation);
-        } catch (NullException e) {
-            Assert.assertEquals(SeatContainer.WRONG_SEAT_NUMBER, e.getMessage());
-        }
-    }
 
     @Test
     public void buyTicketCheckNullValue() {
@@ -310,7 +278,7 @@ public class LogicCashierTest {
 
     @Test
     public void findCarriagesNumberWithFreeSeats() {
-        List<Integer> carriagesNumbers = Arrays.asList(1, 2);
+        List<String> carriagesNumbers = Arrays.asList("1", "2");
 
         Route route = new Route(stations7, new Train(132, 2, 2));
         Station helsinki = route.getStation("Helsinki");
@@ -331,7 +299,7 @@ public class LogicCashierTest {
 
     @Test
     public void findCarriagesNumberWithFreeSeats2() {
-        List<Integer> carriagesNumbers = Arrays.asList(2);
+        List<String> carriagesNumbers = Arrays.asList("2");
         Route route = new Route(stations7, new Train(132, 2, 2));
         Station helsinki = route.getStation("Helsinki");
         Station tver = route.getStation("Tver");
@@ -382,7 +350,7 @@ public class LogicCashierTest {
 
     @Test
     public void findFreeSeatsInCarriageFullList() {
-        List<Integer> freeSeats = Arrays.asList(1, 2);
+        List<String> freeSeats = Arrays.asList("1", "2");
         Route route = new Route(stations7, new Train(132, 2, 2));
 
         Station tver = route.getStation("Tver");
@@ -401,7 +369,7 @@ public class LogicCashierTest {
 
     @Test
     public void findFreeSeatsInCarriageEmptyList() {
-        List<Integer> freeSeats = Arrays.asList(2);
+        List<String> freeSeats = Arrays.asList("2");
         Route route = new Route(stations7, new Train(132, 2, 2));
 
         Station tver = route.getStation("Tver");

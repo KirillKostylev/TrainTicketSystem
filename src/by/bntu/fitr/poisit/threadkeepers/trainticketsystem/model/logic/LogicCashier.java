@@ -2,6 +2,8 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.*;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,7 +64,7 @@ public class LogicCashier {
 ////        Calendar calendarDepartDate = Calendar.getInstance();
 ////        calendarDepartDate.setTime(newDepartureDate);
 
-        Calendar calendarDepartDate= Calendar.getInstance();
+        Calendar calendarDepartDate = Calendar.getInstance();
         calendarDepartDate.setTime(convertStringToDate(departureTime, Station.DATE_FORMAT));
 
         List<Route> suitableRoutes = new LinkedList<>();
@@ -74,7 +76,7 @@ public class LogicCashier {
             } else {
                 continue;
             }
-            if (date.compareTo(convertStringToDate(departureTime,Station.DATE_FORMAT)) == 0 &&
+            if (date.compareTo(convertStringToDate(departureTime, Station.DATE_FORMAT)) == 0 &&
                     // compare departure time and customer departure time
                     stationsName.indexOf(departureStation) < stationsName.indexOf(arriveStation)) {
                 //checking the correct direction of the train
@@ -94,9 +96,9 @@ public class LogicCashier {
         return suitableRoutes;
     }
 
-    public static List<Integer> findCarriagesNumberWithFreeSeats(
+    public static ObservableList<String> findCarriagesNumberWithFreeSeats(
             Route route, Station departureStation, Station arriveStation) throws NullException {
-        List<Integer> carriagesNumberWithFreeSeats = new ArrayList<>();
+        ObservableList<String> carriagesNumberWithFreeSeats = FXCollections.observableArrayList();
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
@@ -108,7 +110,7 @@ public class LogicCashier {
         for (int i = 0; i < seatContainer.getCarriageCount(); i++) {
             for (int j = 0; j < seatContainer.getSeatCount(); j++) {
                 if (checkSeatForFree(seatContainer.getSeat(i, j), suitableStations)) {
-                    carriagesNumberWithFreeSeats.add(i + 1);
+                    carriagesNumberWithFreeSeats.add(i + 1 + "");
                     break;
                 }
             }
@@ -117,10 +119,10 @@ public class LogicCashier {
     }
 
 
-    public static List<Integer> findFreeSeatsInCarriage(
+    public static ObservableList<String> findFreeSeatsInCarriage(
             Route route, Station departureStation, Station arriveStation, int carriageNumber) throws NullException {
 
-        List<Integer> freeSeatNumbers = new ArrayList<>();
+        ObservableList<String> freeSeatNumbers = FXCollections.observableArrayList();
 
         Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
         Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
@@ -130,7 +132,7 @@ public class LogicCashier {
 
         for (int j = 0; j < seatContainer.getSeatCount(); j++) {
             if (checkSeatForFree(seatContainer.getSeat(carriageNumber - 1, j), suitableStations)) {
-                freeSeatNumbers.add(j + 1);
+                freeSeatNumbers.add(j + 1 + "");
             }
         }
         return freeSeatNumbers;
