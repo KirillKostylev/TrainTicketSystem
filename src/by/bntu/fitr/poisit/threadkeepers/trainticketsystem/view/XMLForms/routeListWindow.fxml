@@ -47,7 +47,7 @@
             </AnchorPane>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="798.0" prefWidth="272.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Button layoutX="13.0" mnemonicParsing="false" onAction="#enterAsAdmin" prefHeight="60.0" prefWidth="246.0" text="Enter as admin">
+                  <Button layoutX="13.0" mnemonicParsing="false" onAction="#loginAsAdminAction" prefHeight="60.0" prefWidth="246.0" text="Enter as admin">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -67,7 +67,7 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logOutBtn" disable="true" layoutX="13.0" layoutY="60.0" mnemonicParsing="false" onAction="#logOut" prefHeight="60.0" prefWidth="246.0" text="Log Out">
+                  <Button fx:id="logOutBtn" disable="true" layoutX="13.0" layoutY="60.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="60.0" prefWidth="246.0" text="Log Out">
                      <font>
                         <Font size="18.0" />
                      </font>

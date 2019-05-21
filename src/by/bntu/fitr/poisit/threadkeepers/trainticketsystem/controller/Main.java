@@ -11,11 +11,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         try {
-            Parent root = Util.getFXMLLoaderFromResource("../view/XMLForms/routeListWindow.fxml")
+            Parent root = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/routeListWindow.fxml")
                     .load();
-            Util.openWindow("Route List", root);
+            ControllerUtil.openWindow("Route List", root);
         } catch (IOException e) {
-            Util.showError("Loading resource Error!");
+            ControllerUtil.showError("Loading resource Error!");
             e.printStackTrace();
         }
     }

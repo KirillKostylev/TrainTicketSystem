@@ -26,6 +26,7 @@ public class Ticket {
 
     @Override
     public String toString() {
+        //TODO Поменять отображение билета
         return "Ticket{" +
                 "trainNumber=" + trainNumber +
                 ", departureStation='" + departureStation + '\'' +

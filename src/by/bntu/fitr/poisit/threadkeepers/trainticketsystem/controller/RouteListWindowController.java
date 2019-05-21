@@ -70,11 +70,12 @@ public class RouteListWindowController {
 
 
     @FXML
-    void enterAsAdmin(ActionEvent event) throws IOException {
-        FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/loginWindow.fxml");
+    void loginAsAdminAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/loginWindow.fxml");
         Parent root = loader.load();
-        Util.openChildModalWindow("Log In", root, event);
+        ControllerUtil.openChildModalWindow("Log In", root, event);
         LoginWindowController loginWindowController = loader.getController();
+        loginWindowController.setParent(this);
     }
 
     @FXML
@@ -88,7 +89,7 @@ public class RouteListWindowController {
             schedule = ScheduleDataWorker.readSchedule("schedule.json");
             fillScheduleTable();
         } catch (IOException e) {
-            Util.showError("Error loading data!");
+            ControllerUtil.showError("Error loading data!");
             e.printStackTrace();
         }
     }
@@ -119,23 +120,34 @@ public class RouteListWindowController {
     }
 
     @FXML
-    void logOut(ActionEvent event) {
+    void logOutAction(ActionEvent event) {
+        logOut();
+    }
+
+    private void logOut() {
         logOutBtn.setDisable(true);
         addRouteBtn.setDisable(true);
         editRouteBtn.setDisable(true);
         removeRouteBtn.setDisable(true);
     }
 
+    void logIn() {
+        logOutBtn.setDisable(false);
+        addRouteBtn.setDisable(false);
+        editRouteBtn.setDisable(false);
+        removeRouteBtn.setDisable(false);
+    }
+
     @FXML
     void addRouteAction(ActionEvent event) {
         try {
-            FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/addRouteWindow.fxml");
+            FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/addRouteWindow.fxml");
             Parent root = loader.load();
             AddRouteWindowController addRouteWindowController = loader.getController();
             addRouteWindowController.setParent(this);
-            Util.openChildModalWindow("Add Route",root , event);
+            ControllerUtil.openChildModalWindow("Add Route",root , event);
         } catch (IOException e) {
-            Util.showError("Loading resource Error!");
+            ControllerUtil.showError("Loading resource Error!");
             e.printStackTrace();
         }
 
@@ -143,37 +155,36 @@ public class RouteListWindowController {
 
     @FXML
     void removeRouteAction(ActionEvent event) {
-        if(!Util.isSelectedItemInTable(routesTable)){
-            Util.showError("Choose Route to edit!");
-            return;
+        if(ControllerUtil.isSelectedItemInTable(routesTable)){
+            Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
+            removeRoute(selectedRoute);
+        } else {
+            ControllerUtil.showError("Choose Route to edit!");
         }
-        Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
-        schedule.getRoutes().remove(selectedRoute);
-        try {
-            ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
-        } catch (IOException e) {
-            Util.showError("Error writing file!");
-            e.printStackTrace();
-        }
-        routesTable.setItems(schedule.getRoutes());
+
+    }
+
+    private void removeRoute(Route route) {
+        schedule.getRoutes().remove(route);
+        writeSchedule();;
     }
 
     @FXML
     void editRouteAction(ActionEvent event) {
-        if (!Util.isSelectedItemInTable(routesTable)){
-            Util.showError("Choose Route to edit!");
-            return;
-        }
-        try {
-            FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/addRouteWindow.fxml");
-            Parent root = loader.load();
-            AddRouteWindowController addRouteWindowController = loader.getController();
-            addRouteWindowController.setParent(this);
-            addRouteWindowController.editInit(routesTable.getSelectionModel().getSelectedItem());
-            Util.openChildModalWindow("Add Route", root, event);
-        } catch (IOException e) {
-            Util.showError("Loading resource Error!");
-            e.printStackTrace();
+        if (ControllerUtil.isSelectedItemInTable(routesTable)){
+            try {
+                FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/addRouteWindow.fxml");
+                Parent root = loader.load();
+                AddRouteWindowController addRouteWindowController = loader.getController();
+                addRouteWindowController.setParent(this);
+                addRouteWindowController.editInit(routesTable.getSelectionModel().getSelectedItem());
+                ControllerUtil.openChildModalWindow("Add Route", root, event);
+            } catch (IOException e) {
+                ControllerUtil.showError("Loading resource Error!");
+                e.printStackTrace();
+            }
+        } else {
+            ControllerUtil.showError("Choose Route to edit!");
         }
 
     }
@@ -182,14 +193,14 @@ public class RouteListWindowController {
     void openDetails(MouseEvent event) {
         if (event.getClickCount() == 2) {
             try {
-                FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/routeInfoWindow.fxml");
+                FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/routeInfoWindow.fxml");
                 Parent root = loader.load();
                 RouteInfoWindowController routeInfoWindowController = loader.getController();
                 routeInfoWindowController.init(routesTable.getSelectionModel().getSelectedItem());
                 routeInfoWindowController.setParent(this);
-                Util.openChildModalWindow("Route Info", root, event);
+                ControllerUtil.openChildModalWindow("Route Info", root, event);
             } catch (IOException e) {
-                Util.showError("Loading resource Error!");
+                ControllerUtil.showError("Loading resource Error!");
                 e.printStackTrace();
             }
 
@@ -232,29 +243,21 @@ public class RouteListWindowController {
 
     void addRoute(Route route) {
         schedule.getRoutes().add(route);
-        try {
-            writeSchedule();
-        } catch (IOException e) {
-            Util.showError("Writing data error!");
-            e.printStackTrace();
-        }
-        routesTable.setItems(schedule.getRoutes());
+        writeSchedule();
     }
 
     void editRoute(Route route) {
         Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
-        schedule.getRoutes().remove(selectedRoute);
-        schedule.getRoutes().add(route);
-        try {
-            writeSchedule();
-        } catch (IOException e) {
-            Util.showError("Error writing file!");
-            e.printStackTrace();
-        }
-        routesTable.setItems(schedule.getRoutes());
+        schedule.getRoutes().set(schedule.getRoutes().indexOf(selectedRoute), route);
+        writeSchedule();
     }
 
-    void writeSchedule() throws IOException {
-        ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
+    void writeSchedule() {
+        try {
+            ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
+        } catch (IOException e) {
+            ControllerUtil.showError("Error writing file!");
+            e.printStackTrace();
+        }
     }
 }
