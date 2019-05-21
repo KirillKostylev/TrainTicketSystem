@@ -30,6 +30,6 @@
             <TableColumn fx:id="arriveTimeColumn1" editable="false" prefWidth="263.0" sortable="false" text="Arrive Time" />
         </columns>
       </TableView>
-      <Button layoutX="484.0" layoutY="496.0" mnemonicParsing="false" onAction="#removeStation" text="Remove Station" />
+      <Button layoutX="484.0" layoutY="496.0" mnemonicParsing="false" onAction="#removeStationAction" text="Remove Station" />
    </children>
 </AnchorPane>

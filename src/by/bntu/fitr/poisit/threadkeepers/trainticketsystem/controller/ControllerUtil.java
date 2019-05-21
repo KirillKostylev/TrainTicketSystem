@@ -9,16 +9,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
-public class Util {
+class ControllerUtil {
 
-    static void openChildModalWindow(String windowName, Parent root, Event event) throws IOException {
+    static void openChildModalWindow(String windowName, Parent root, Event event) {
         Stage stage = createStage(windowName, root);
         stage.initModality(Modality.WINDOW_MODAL);
         Node source = (Node) event.getSource();
@@ -50,7 +49,7 @@ public class Util {
     }
 
     static FXMLLoader getFXMLLoaderFromResource(String path) {
-        return new FXMLLoader(Util.class.getResource(path));
+        return new FXMLLoader(ControllerUtil.class.getResource(path));
     }
 
     static void setFactoryForStationTable(TableColumn<Station, String> stationNameColumn,
@@ -84,5 +83,13 @@ public class Util {
 
     static boolean isSelectedItemsInTable(TableView<?> tableView, int itemsNumber) {
         return tableView.getSelectionModel().getSelectedItems().size() == itemsNumber;
+    }
+
+    static String getDateTimeString(DatePicker datePicker, ComboBox hourComboBox,
+                             ComboBox minuteComboBox) {
+        return datePicker.getValue().format(DateTimeFormatter
+                .ofPattern(Station.DATE_FORMAT))
+                + " " + hourComboBox.getValue() + ":"
+                + minuteComboBox.getValue();
     }
 }

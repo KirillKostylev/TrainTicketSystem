@@ -5,7 +5,6 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Ticket;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ScheduleDataWorker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,32 +53,26 @@ public class RouteInfoWindowController {
 
     @FXML
     void backAction(ActionEvent event) {
-        Util.closeWindow(event);
+        ControllerUtil.closeWindow(event);
     }
 
     @FXML
     void buyTicketAction(ActionEvent event) {
-        if (checkBuyExceptions()) {
-            return;
-        }
-        Ticket ticket = formTicket();
-        try {
-            FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/printTicketWindow.fxml");
-            Parent root = loader.load();
-            PrintTicketWindowController printTicketWindowController = loader.getController();
-            assert ticket != null;
-            printTicketWindowController.init(ticket.toString());
-            Util.openChildModalWindow("Print Ticket", root, event);
-            disableComboBoxes();
-        } catch (IOException e) {
-            Util.showError("Error loading resource!");
-            e.printStackTrace();
-        }
-        try {
+        if (isBuySuccessful()) {
+            Ticket ticket = formTicket();
+            try {
+                FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/printTicketWindow.fxml");
+                Parent root = loader.load();
+                PrintTicketWindowController printTicketWindowController = loader.getController();
+                assert ticket != null;
+                printTicketWindowController.init(ticket.toString());
+                ControllerUtil.openChildModalWindow("Print Ticket", root, event);
+                disableComboBoxes();
+            } catch (IOException e) {
+                ControllerUtil.showError("Error loading resource!");
+                e.printStackTrace();
+            }
             routeListWindowController.writeSchedule();
-        } catch (IOException e) {
-            Util.showError("Error writing data!");
-            e.printStackTrace();
         }
     }
 
@@ -92,7 +85,7 @@ public class RouteInfoWindowController {
         carriagesNumber.setText(carriagesNumber.getText() + route.getTrain().getCarriagesNumber() + "");
         seatsNumberInCarriage.setText(seatsNumberInCarriage.getText()
                 + route.getTrain().getSeatsNumberInCarriage() + "");
-        Util.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
+        ControllerUtil.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
         stationTableView.setItems(stationList);
         stationTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
@@ -110,7 +103,7 @@ public class RouteInfoWindowController {
                         route, getSelectedStations().get(0), getSelectedStations().get(1)
                 ));
             } catch (NullException e) {
-                Util.showError("Null Exception Error!");
+                ControllerUtil.showError("Null Exception Error!");
                 e.printStackTrace();
             }
             seatNumberComboBox.setItems(null);
@@ -128,35 +121,36 @@ public class RouteInfoWindowController {
                         route, getSelectedStations().get(0), getSelectedStations().get(1),
                         Integer.parseInt(carriageNumberComboBox.getValue())));
             } catch (NullException e) {
-                Util.showError("Null Exception Error!");
+                ControllerUtil.showError("Null Exception Error!");
                 e.printStackTrace();
             }
         }
     }
 
-    private boolean checkBuyExceptions() {
+    private boolean isBuySuccessful() {
+        boolean isBuySuccessful = true;
         ObservableList<Station> stationObservableList = stationTableView.getItems();
-        try {
-            if (LogicCashier.findCarriagesNumberWithFreeSeats(route,
-                    stationObservableList.get(0),
-                    stationObservableList.get(stationObservableList.size() - 1)).size() == 0) {
-                Util.showError("There are no vacancies in the train!");
-                return true;
+        if(!ControllerUtil.isSelectedItemsInTable(stationTableView, 2)){
+            ControllerUtil.showError("Select 2 Stations!");
+            isBuySuccessful = false;
+        } else if (!isSeatSelected()) {
+            ControllerUtil.showError("Select seat!");
+            isBuySuccessful = false;
+        } else {
+            try {
+                if (LogicCashier.findCarriagesNumberWithFreeSeats(route,
+                        stationObservableList.get(0),
+                        stationObservableList.get(stationObservableList.size() - 1)).size() == 0) {
+                    ControllerUtil.showError("There are no vacancies in the train!");
+                    isBuySuccessful = false;
+                }
+            } catch (NullException e) {
+                ControllerUtil.showError("Null Exception!");
+                e.printStackTrace();
+                isBuySuccessful = false;
             }
-        } catch (NullException e) {
-            Util.showError("Null Exception!");
-            e.printStackTrace();
-            return true;
         }
-        if(!Util.isSelectedItemsInTable(stationTableView, 2)){
-            Util.showError("Select 2 Stations!");
-            return true;
-        }
-        if(!isSeatSelected()) {
-            Util.showError("Select seat!");
-            return true;
-        }
-        return false;
+        return isBuySuccessful;
     }
 
     private Ticket formTicket() {
@@ -168,11 +162,11 @@ public class RouteInfoWindowController {
                     selectedStationList.get(0),
                     selectedStationList.get(1));
         } catch (NullException e) {
-            Util.showError("Null exception!");
+            ControllerUtil.showError("Null exception!");
             e.printStackTrace();
         }
         if (ticket == null) {
-            Util.showError("Ticket is not formed!");
+            ControllerUtil.showError("Ticket is not formed!");
         }
         return ticket;
     }

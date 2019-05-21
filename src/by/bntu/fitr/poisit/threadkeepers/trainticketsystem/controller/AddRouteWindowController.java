@@ -44,7 +44,7 @@ public class AddRouteWindowController {
     void addRouteAction(ActionEvent event) {
         if (trainNumber.getText().equals("") || carriagesNumber.getText().equals("")
                 || seatsNumber.getText().equals("") || stationList.size() < 2) {
-            Util.showError("Fill All Fields! Route must have at least 2 stations.");
+            ControllerUtil.showError("Fill All Fields! Route must have at least 2 stations.");
             return;
         }
         try {
@@ -57,35 +57,36 @@ public class AddRouteWindowController {
             } else {
                 routeListWindowController.addRoute(route);
             }
-            Util.closeWindow(event);
+            ControllerUtil.closeWindow(event);
         } catch (Exception e) {
             e.printStackTrace();
-            Util.showError("Incorect Data!");
+            ControllerUtil.showError("Incorect Data!");
         }
+        //TODO Упростить метод
 
     }
 
     @FXML
     void addStationAction(ActionEvent event){
         try {
-            FXMLLoader loader = Util.getFXMLLoaderFromResource("../view/XMLForms/addStationWindow.fxml");
+            FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/addStationWindow.fxml");
             Parent root = loader.load();
             AddStationWindowController addStationWindowController = loader.getController();
             addStationWindowController.setParent(this);
-            Util.openChildModalWindow("Add Station", root, event);
+            ControllerUtil.openChildModalWindow("Add Station", root, event);
         } catch (IOException e) {
-            Util.showError("Loading resource error!");
+            ControllerUtil.showError("Loading resource error!");
             e.printStackTrace();
         }
     }
 
     @FXML
     void cancelAction(ActionEvent event) {
-        Util.closeWindow(event);
+        ControllerUtil.closeWindow(event);
     }
 
     @FXML
-    void removeStation(ActionEvent event) {
+    void removeStationAction(ActionEvent event) {
         Station selectedStation = stationTableView.getSelectionModel().getSelectedItem();
         stationList.remove(selectedStation);
     }
@@ -94,7 +95,7 @@ public class AddRouteWindowController {
     void initialize() {
         stationList = FXCollections.observableArrayList();
         isEdit = false;
-        Util.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
+        ControllerUtil.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
         stationTableView.setItems(stationList);
     }
 
@@ -112,5 +113,9 @@ public class AddRouteWindowController {
         carriagesNumber.setText(route.getTrain().getCarriagesNumber() + "");
         seatsNumber.setText(route.getTrain().getCarriagesNumber() + "");
         stationList.addAll(FXCollections.observableArrayList(route.getStations()));
+    }
+
+    Station getLastStation() {
+        return stationTableView.getItems().get(stationTableView.getItems().size() - 1);
     }
 }

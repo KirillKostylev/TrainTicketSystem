@@ -1,9 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,11 +11,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         try {
-            Parent root = Util.getFXMLLoaderFromResource("../view/XMLForms/routeListWindow.fxml")
+            Parent root = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/routeListWindow.fxml")
                     .load();
-            Util.openWindow("Route List", root);
+            ControllerUtil.openWindow("Route List", root);
         } catch (IOException e) {
-            Util.showError("Loading resource Error!");
+            ControllerUtil.showError("Loading resource Error!");
             e.printStackTrace();
         }
     }
