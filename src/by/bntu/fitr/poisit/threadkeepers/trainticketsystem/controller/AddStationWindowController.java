@@ -80,8 +80,8 @@ public class AddStationWindowController {
 
     @FXML
     void initialize() {
-        departureHours.setItems(Util.getObservableListWithNumbers(0, 60));
-        departureMinutes.setItems(Util.getObservableListWithNumbers(0, 24));
+        departureHours.setItems(Util.getObservableListWithNumbers(0, 24));
+        departureMinutes.setItems(Util.getObservableListWithNumbers(0, 60));
         arriveHours.setItems(Util.getObservableListWithNumbers(0, 24));
         arriveMinutes.setItems(Util.getObservableListWithNumbers(0, 60));
     }
