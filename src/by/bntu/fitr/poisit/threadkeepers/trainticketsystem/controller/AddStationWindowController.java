@@ -44,8 +44,6 @@ public class AddStationWindowController {
         }
         addStation();
         ControllerUtil.closeWindow(event);
-        //TODO Упростить метод
-        //TODO Сделать проверку на дату отправления и прибытия разных станций
     }
 
     private void addStation() {
@@ -57,12 +55,14 @@ public class AddStationWindowController {
         addRouteWindowController.addStation(station);
     }
 
-    private boolean isStationValid(String stationName, String departureTime, String arriveTime){
-
+    private boolean isValidData(String stationName, String departureTime, String arriveTime){
+        boolean isValidData = true;
         if(!isDatesValid(departureTime, arriveTime)) {
-            return false;
+            isValidData = false;
+        } else if(isDateValidWithPreviousStation(departureTime)) {
+            isValidData = false;
         }
-        return isDateValidWithPreviousStation(departureTime);
+        return isValidData;
     }
 
     private boolean isDatesValid(String departureTime, String arriveTime) {

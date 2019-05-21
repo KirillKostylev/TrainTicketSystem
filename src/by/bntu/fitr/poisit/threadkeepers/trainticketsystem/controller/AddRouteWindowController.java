@@ -42,28 +42,15 @@ public class AddRouteWindowController {
 
     @FXML
     void addRouteAction(ActionEvent event) {
-        if (trainNumber.getText().equals("") || carriagesNumber.getText().equals("")
-                || seatsNumber.getText().equals("") || stationList.size() < 2) {
-            ControllerUtil.showError("Fill All Fields! Route must have at least 2 stations.");
-            return;
-        }
-        try {
-            Train train = new Train(Integer.parseInt(trainNumber.getText()),
-                    Integer.parseInt(carriagesNumber.getText()),
-                    Integer.parseInt(seatsNumber.getText()));
-            Route route = new Route(stationList, train);
+        if(isValidData()) {
+            Route route = formRoute();
             if (isEdit) {
                 routeListWindowController.editRoute(route);
             } else {
                 routeListWindowController.addRoute(route);
             }
             ControllerUtil.closeWindow(event);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ControllerUtil.showError("Incorect Data!");
         }
-        //TODO Упростить метод
-
     }
 
     @FXML
@@ -117,5 +104,32 @@ public class AddRouteWindowController {
 
     Station getLastStation() {
         return stationTableView.getItems().get(stationTableView.getItems().size() - 1);
+    }
+
+    private boolean isValidData() {
+        //TODO сделать проверку на одинаковые номера поездов
+        boolean isValidData = true;
+        if (trainNumber.getText().equals("") || carriagesNumber.getText().equals("")
+                || seatsNumber.getText().equals("") || stationList.size() < 2) {
+            ControllerUtil.showError("Fill All Fields! Route must have at least 2 stations.");
+            isValidData = false;
+        } else if (Integer.parseInt(trainNumber.getText()) < 0) {
+            ControllerUtil.showError("Train number mus be positive number!");
+        }
+        return isValidData;
+    }
+
+    private Route formRoute() {
+        Route route = null;
+        try {
+            Train train = new Train(Integer.parseInt(trainNumber.getText()),
+                    Integer.parseInt(carriagesNumber.getText()),
+                    Integer.parseInt(seatsNumber.getText()));
+            route = new Route(stationList, train);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ControllerUtil.showError("Incorect Data!");
+        }
+        return route;
     }
 }
