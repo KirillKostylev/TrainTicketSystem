@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Admin {
-    public static final String EMTPTY_STRING_EXCEPTION = "Login and password can't be null";
+    public static final String EMPTY_STRING_EXCEPTION = "Login and password can't be null";
 
     private String login;
     private String password;
