@@ -11,7 +11,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -70,6 +69,8 @@ public class AddStationWindowController {
         Station station = new Station(stationName.getText(), departureTime, arriveTime);
         addRouteWindowController.addStation(station);
         Util.closeWindow(event);
+        //TODO Упростить метод
+        //TODO Сделать проверку на дату отправления и прибытия разных станций
     }
 
     @FXML
@@ -82,7 +83,7 @@ public class AddStationWindowController {
         departureHours.setItems(Util.getObservableListWithNumbers(0, 60));
         departureMinutes.setItems(Util.getObservableListWithNumbers(0, 24));
         arriveHours.setItems(Util.getObservableListWithNumbers(0, 24));
-        arriveMinutes.setItems(Util.getObservableListWithNumbers(0, 60в));
+        arriveMinutes.setItems(Util.getObservableListWithNumbers(0, 60));
     }
 
     void setParent(AddRouteWindowController addRouteWindowController) {

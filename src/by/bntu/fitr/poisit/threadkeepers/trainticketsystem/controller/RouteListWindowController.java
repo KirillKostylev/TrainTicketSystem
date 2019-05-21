@@ -243,8 +243,7 @@ public class RouteListWindowController {
 
     void editRoute(Route route) {
         Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
-        schedule.getRoutes().remove(selectedRoute);
-        schedule.getRoutes().add(route);
+        schedule.getRoutes().set(schedule.getRoutes().indexOf(selectedRoute), route);
         try {
             writeSchedule();
         } catch (IOException e) {
