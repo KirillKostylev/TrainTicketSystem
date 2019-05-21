@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SeatContainer implements Serializable {
+public class SeatContainer implements Serializable{
     public static final String NULL_SEAT_CONTAINER = "SeatContainer can't be null value";
     public static final String INVALID_VALUE_EXCEPTION = "Value must be positive";
     public static final String WRONG_CARRIAGE_NUMBER = "Such carriage number is not in the train";
@@ -67,6 +67,7 @@ public class SeatContainer implements Serializable {
         SeatContainer that = (SeatContainer) o;
         return Objects.equals(seatList, that.seatList);
     }
+
 
     @Override
     public int hashCode() {

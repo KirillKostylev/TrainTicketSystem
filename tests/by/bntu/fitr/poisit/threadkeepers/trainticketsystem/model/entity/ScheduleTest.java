@@ -1,7 +1,9 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NonPositiveException;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NullException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ActionWithData;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ScheduleDataWorker;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -18,7 +20,7 @@ public class ScheduleTest {
     private static Schedule newSchedule;
 
     @BeforeClass
-    public static void addTrain(){
+    public static void addTrain() {
 
         String fileName = "scheduleInfo.json";
 

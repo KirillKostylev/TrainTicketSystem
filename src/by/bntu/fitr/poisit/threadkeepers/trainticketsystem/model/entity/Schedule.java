@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +37,7 @@ public class Schedule implements Serializable {
         routes.add(new Route(stations, train));
         routesNumber++;
     }
+
 
     public Route getRoute(int index) {
         return routes.get(index);

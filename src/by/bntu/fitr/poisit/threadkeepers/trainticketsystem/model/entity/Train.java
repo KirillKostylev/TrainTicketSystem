@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Train implements Serializable {
+public class Train implements Serializable{
     public final static int DEFAULT_SEATS_NUMBER_IN_CARRIAGE = 20;
     public final static int DEFAULT_CARRIAGES_NUMBER = 5;
     public static final String WRONG_TRAIN_NUMBER = "Wrong train number!";
@@ -112,4 +112,5 @@ public class Train implements Serializable {
     public int hashCode() {
         return Objects.hash(trainNumber, carriagesNumber, seatsNumberInCarriage, seatContainer);
     }
+
 }

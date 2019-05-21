@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Route implements Serializable, Comparable<Route>{
+public class Route implements Serializable, Comparable<Route> {
     public static final String NULL_ROUTE_EXCEPTION = "Route can't be null";
     public static final String EMPTY_FIELD_EXCEPTION = "One of the fields is empty";
     public static final String NULL_INPUT_FIELD_EXCEPTION = "Value can't be null";
@@ -36,7 +36,7 @@ public class Route implements Serializable, Comparable<Route>{
     public Station getStation(String field) {
         Station suitableStation = null;
         for (Station station : stations) {
-            if (station.getStationName().equals(field)){
+            if (station.getStationName().equals(field)) {
                 suitableStation = station;
                 break;
             }
@@ -66,4 +66,5 @@ public class Route implements Serializable, Comparable<Route>{
     public int compareTo(Route o) {
         return this.getStations().get(0).getDepartureTime().compareTo(o.stations.get(0).getDepartureTime());
     }
+
 }

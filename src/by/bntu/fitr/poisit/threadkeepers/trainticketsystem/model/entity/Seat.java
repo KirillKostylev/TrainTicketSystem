@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Seat implements Serializable {
+public class Seat implements Serializable{
     public static final String WRONG_CARRIAGE_NUMBER = "Wrong Carriage number!";
     public static final String WRONG_SEAT_NUMBER = "Wrong Seat Number";
 
@@ -68,6 +68,7 @@ public class Seat implements Serializable {
         seatCounter = 1;
         carriageCounter = 1;
     }
+
 
     @Override
     public String toString() {

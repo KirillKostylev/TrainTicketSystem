@@ -16,6 +16,7 @@ public class ScheduleDataWorker {
         FileWriter fileWriter = new FileWriter(filename);
         fileWriter.write(jsonString);
         fileWriter.close();
+
     }
 
     public static Schedule readSchedule(String filename) throws IOException {
