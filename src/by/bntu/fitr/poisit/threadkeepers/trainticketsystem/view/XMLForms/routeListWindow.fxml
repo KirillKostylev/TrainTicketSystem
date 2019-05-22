@@ -47,22 +47,22 @@
             </AnchorPane>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="798.0" prefWidth="272.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Button layoutX="13.0" mnemonicParsing="false" onAction="#loginAsAdminAction" prefHeight="60.0" prefWidth="246.0" text="Enter as admin">
+                  <Button layoutX="13.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="60.0" prefWidth="246.0" text="Enter as admin">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="removeRouteBtn" alignment="CENTER" layoutX="19.0" layoutY="411.0" mnemonicParsing="false" onAction="#removeRouteAction" prefHeight="50.0" prefWidth="238.0" text="Remove Route">
+                  <Button fx:id="removeRouteBtn" alignment="CENTER" disable="true" layoutX="19.0" layoutY="411.0" mnemonicParsing="false" onAction="#removeRouteAction" prefHeight="50.0" prefWidth="238.0" text="Remove Route">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="editRouteBtn" alignment="CENTER" layoutX="17.0" layoutY="351.0" mnemonicParsing="false" onAction="#editRouteAction" prefHeight="60.0" prefWidth="238.0" text="Edit Route">
+                  <Button fx:id="editRouteBtn" alignment="CENTER" disable="true" layoutX="17.0" layoutY="351.0" mnemonicParsing="false" onAction="#editRouteAction" prefHeight="60.0" prefWidth="238.0" text="Edit Route">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="addRouteBtn" alignment="CENTER" layoutX="17.0" layoutY="301.0" mnemonicParsing="false" onAction="#addRouteAction" prefHeight="50.0" prefWidth="238.0" text="Add Route">
+                  <Button fx:id="addRouteBtn" alignment="CENTER" disable="true" layoutX="17.0" layoutY="301.0" mnemonicParsing="false" onAction="#addRouteAction" prefHeight="50.0" prefWidth="238.0" text="Add Route">
                      <font>
                         <Font size="18.0" />
                      </font>

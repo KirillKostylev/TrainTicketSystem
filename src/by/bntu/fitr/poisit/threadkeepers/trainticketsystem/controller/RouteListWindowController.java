@@ -70,12 +70,12 @@ public class RouteListWindowController {
 
 
     @FXML
-    void loginAsAdminAction(ActionEvent event) throws IOException {
+    void loginAction(ActionEvent event) throws IOException {
         FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/loginWindow.fxml");
         Parent root = loader.load();
-        ControllerUtil.openChildModalWindow("Log In", root, event);
         LoginWindowController loginWindowController = loader.getController();
         loginWindowController.setParent(this);
+        ControllerUtil.openChildModalWindow("Log In", root, event);
     }
 
     @FXML
@@ -178,7 +178,7 @@ public class RouteListWindowController {
                 AddRouteWindowController addRouteWindowController = loader.getController();
                 addRouteWindowController.setParent(this);
                 addRouteWindowController.editInit(routesTable.getSelectionModel().getSelectedItem());
-                ControllerUtil.openChildModalWindow("Add Route", root, event);
+                ControllerUtil.openChildModalWindow("Edit Route", root, event);
             } catch (IOException e) {
                 ControllerUtil.showError("Loading resource Error!");
                 e.printStackTrace();
