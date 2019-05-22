@@ -3,17 +3,17 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.apache.log4j.Logger;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Objects;
 
 public class Station implements Serializable{
     public static final String DATE_FORMAT = "dd.MM.yyyy";
     public static final String TIME_FORMAT = "dd.MM.yyyy HH:mm";
+
+    private static final Logger LOG = Logger.getLogger(Station.class);
+
     private StringProperty stationName;
     private StringProperty arriveTime;
     private StringProperty departureTime;
@@ -22,6 +22,7 @@ public class Station implements Serializable{
         this.stationName = new SimpleStringProperty(stationName);
         this.arriveTime = new SimpleStringProperty(arriveTime);
         this.departureTime = new SimpleStringProperty(departureTime);
+        LOG.trace("Station has been created");
     }
 
     public String getStationName() {
@@ -60,11 +61,6 @@ public class Station implements Serializable{
         this.departureTime.set(departureTime);
     }
 
-//    public Calendar getCalendarDepartureTime() throws ParseException {
-//        Calendar calendarDepartTime = Calendar.getInstance();
-//        calendarDepartTime.setTime(LogicCashier.convertStringToDate(departureTime.get(), TIME_FORMAT));
-//        return calendarDepartTime;
-//    }
 
     @Override
     public boolean equals(Object o) {

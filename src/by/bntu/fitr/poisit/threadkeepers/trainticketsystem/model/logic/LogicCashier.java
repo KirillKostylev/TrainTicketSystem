@@ -4,14 +4,16 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.*;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.log4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 public class LogicCashier {
     public static final double COST_PER_KM = 0.03;
+
+    private static final Logger LOG = Logger.getLogger(LogicCashier.class);
 
     public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, Station departureStation,
                                    Station arriveStation)
@@ -19,20 +21,10 @@ public class LogicCashier {
 
         Ticket ticket = null;
 
-        Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
-//        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, seatNumber);
-//        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION, carriageNumber);
-        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
-
+        Checker.checkForNullWithException(LOG, Route.NULL_ROUTE_EXCEPTION, route);
+        Checker.checkForNullWithException(LOG, Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
 
         SeatContainer seatContainer = route.getTrain().getSeatContainer();
-
-        /*if (seatContainer.getCarriageCount() < carriageNumber) {
-            throw new WrongCarriageNumber(SeatContainer.WRONG_CARRIAGE_NUMBER);
-        }
-        if (seatContainer.getSeatCount() < seatNumber) {
-            throw new WrongSeatNumber(SeatContainer.WRONG_SEAT_NUMBER);
-        }*/
 
 
         if (checkSeatForFree(seatContainer.getSeat(carriageNumber - 1,
@@ -47,6 +39,7 @@ public class LogicCashier {
                     arriveStation.getArriveTime(), carriageNumber, seatNumber,
                     calculateTicketCost(departureStation, arriveStation));
         }
+        LOG.debug("Ticket has been bought");
         return ticket;
     }
 
@@ -55,14 +48,11 @@ public class LogicCashier {
                                          String departureTime) throws ParseException,
             EmptyFieldException, NullException {
 
-        Checker.checkForNullWithException(Schedule.NULL_SCHEDULE_EXCEPTION, schedule);
-        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation,
+        Checker.checkForNullWithException(LOG, Schedule.NULL_SCHEDULE_EXCEPTION, schedule);
+        Checker.checkForNullWithException(LOG, Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation,
                 departureTime);
-        Checker.checkForEmptyFieldException(Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation, departureTime);
 
-//        Date newDepartureDate = new SimpleDateFormat(Station.DATE_FORMAT).parse(departureTime);
-////        Calendar calendarDepartDate = Calendar.getInstance();
-////        calendarDepartDate.setTime(newDepartureDate);
+        Checker.checkForEmptyFieldException(LOG, Route.EMPTY_FIELD_EXCEPTION, departureStation, arriveStation, departureTime);
 
         Calendar calendarDepartDate = Calendar.getInstance();
         calendarDepartDate.setTime(convertStringToDate(departureTime, Station.DATE_FORMAT));
@@ -93,6 +83,7 @@ public class LogicCashier {
             }
         });
         suitableRoutes.sort(comparator);
+        LOG.debug("Searching was finished");
         return suitableRoutes;
     }
 
@@ -100,8 +91,8 @@ public class LogicCashier {
             Route route, Station departureStation, Station arriveStation) throws NullException {
         ObservableList<String> carriagesNumberWithFreeSeats = FXCollections.observableArrayList();
 
-        Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
-        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
+        Checker.checkForNullWithException(LOG, Route.NULL_ROUTE_EXCEPTION, route);
+        Checker.checkForNullWithException(LOG, Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
 
         List<Station> suitableStations = getSuitableStations(route, departureStation, arriveStation);
 
@@ -115,6 +106,7 @@ public class LogicCashier {
                 }
             }
         }
+        LOG.debug("Searching carriages number with free seats was finished ");
         return carriagesNumberWithFreeSeats;
     }
 
@@ -124,8 +116,8 @@ public class LogicCashier {
 
         ObservableList<String> freeSeatNumbers = FXCollections.observableArrayList();
 
-        Checker.checkForNullWithException(Route.NULL_ROUTE_EXCEPTION, route);
-        Checker.checkForNullWithException(Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
+        Checker.checkForNullWithException(LOG, Route.NULL_ROUTE_EXCEPTION, route);
+        Checker.checkForNullWithException(LOG, Route.NULL_INPUT_FIELD_EXCEPTION, departureStation, arriveStation);
 
         List<Station> suitableStations = getSuitableStations(route, departureStation, arriveStation);
         SeatContainer seatContainer = route.getTrain().getSeatContainer();
@@ -135,11 +127,15 @@ public class LogicCashier {
                 freeSeatNumbers.add(j + 1 + "");
             }
         }
+        LOG.debug("Searching free seats number in carriage was finished");
         return freeSeatNumbers;
     }
 
     public static Date convertStringToDate(String date, String formatDate) throws ParseException {
-        return new SimpleDateFormat(formatDate).parse(date);
+        Date dt=  new SimpleDateFormat(formatDate).parse(date);
+        LOG.info("Convert string date to Date was finished");
+        return dt;
+
 
     }
 
@@ -150,15 +146,9 @@ public class LogicCashier {
                 seatIsFree = false;
             }
         }
+        LOG.debug("Seat has been checked for free");
         return seatIsFree;
     }
-
-//    private static boolean compareDate(Calendar calendar1, Calendar calendar2) {
-//        return
-//                calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH) &&
-//                        calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
-//                        calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
-//    }
 
     private static List<Station> getSuitableStations(Route route, Station departureStation, Station arriveStation) {
 
@@ -180,9 +170,11 @@ public class LogicCashier {
     }
 
     private static double calculateTicketCost(Station departureStation, Station arriveStation) {
-        return Math.round(COST_PER_KM *
+        double ans = Math.round(COST_PER_KM *
                 DistanceCalculator.distanceCalculate(departureStation.getStationName(),
                         arriveStation.getStationName()) * 100.0) / 100.0;
+        LOG.debug("Ticket cost was calculated");
+        return ans;
     }
 
 

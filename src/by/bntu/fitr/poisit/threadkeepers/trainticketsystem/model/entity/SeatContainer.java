@@ -1,5 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +13,13 @@ public class SeatContainer implements Serializable{
     public static final String WRONG_CARRIAGE_NUMBER = "Such carriage number is not in the train";
     public static final String WRONG_SEAT_NUMBER = "Such seat number is not in the carriage";
 
+    private static final Logger LOG = Logger.getLogger(SeatContainer.class);
 
     private List<List<Seat>> seatList;
 
     public SeatContainer() {
         seatList = new ArrayList<>();
+        LOG.trace("SeatContainer has been created");
     }
 
     public SeatContainer(List<List<Seat>> seatList) {
@@ -30,10 +34,12 @@ public class SeatContainer implements Serializable{
         for (int i = 0; i < seatsNumberInCarriage; i++) {
             addSeatInCarriage(carriageIndex, new Seat(seatsNumberInCarriage));
         }
+        LOG.debug("Carriage has been added in SeatContainer");
     }
 
     private void addSeatInCarriage(int carriageIndex, Seat seat) {
         seatList.get(carriageIndex).add(seat);
+        LOG.debug("Seat has been added in Carriage");
     }
 
     public int getCarriageCount() {

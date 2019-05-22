@@ -1,8 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
-import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.AdminLogic;
+import org.apache.log4j.Logger;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class Admin {
@@ -11,7 +10,7 @@ public class Admin {
     private String login;
     private String password;
 
-    public Admin(String login, String password){
+    public Admin(String login, String password) {
         this.login = login;
         this.password = password;
     }

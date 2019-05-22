@@ -1,6 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import javafx.collections.ObservableList;
+import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class Route implements Serializable, Comparable<Route> {
     public static final String EMPTY_FIELD_EXCEPTION = "One of the fields is empty";
     public static final String NULL_INPUT_FIELD_EXCEPTION = "Value can't be null";
 
+    private static final Logger LOG = Logger.getLogger(Route.class);
+
     private List<Station> stations;
 
     private Train train;
@@ -19,6 +22,7 @@ public class Route implements Serializable, Comparable<Route> {
     public Route(List<Station> stations, Train train) {
         this.stations = stations;
         this.train = train;
+        LOG.trace("Route has been create");
     }
 
     public List<String> getStationsName() {
