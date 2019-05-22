@@ -2,6 +2,7 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NonPositiveException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.Checker;
+import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,9 +12,10 @@ import java.util.Objects;
 public class Seat implements Serializable{
     public static final String WRONG_CARRIAGE_NUMBER = "Wrong Carriage number!";
     public static final String WRONG_SEAT_NUMBER = "Wrong Seat Number";
-
+    private static final Logger LOG = Logger.getLogger(Seat.class);
     private static int carriageCounter = 1;
     private static int seatCounter = 1;
+
 
     private int carriageNumber;
     private int seatNumber;
@@ -28,6 +30,7 @@ public class Seat implements Serializable{
         seatNumber = seatCounter;
         this.busyStations = new ArrayList<>();
         seatCounter++;
+        LOG.trace("Seat has been created");
     }
 
     public Seat() {
@@ -50,7 +53,7 @@ public class Seat implements Serializable{
     }
 
     public void setSeatNumber(int seatNumber) throws NonPositiveException {
-        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,seatNumber);
+        Checker.checkForPositiveWithException(LOG,SeatContainer.INVALID_VALUE_EXCEPTION,seatNumber);
         this.seatNumber = seatNumber;
     }
 
@@ -61,7 +64,7 @@ public class Seat implements Serializable{
     public void addBusyStations(List<Station> busyStations) {
         busyStations.remove(busyStations.size()-1);
         this.busyStations.addAll(busyStations);
-
+        LOG.debug("Busy stations has been added ");
     }
 
     public static void clearCounters() {

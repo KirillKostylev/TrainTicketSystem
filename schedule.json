@@ -4665,36 +4665,6 @@
     {
       "stations": [
         {
-          "stationName": "fdsf",
-          "arriveTime": "01.05.2019 02:00",
-          "departureTime": "01.05.2019 01:00"
-        },
-        {
-          "stationName": "fdsfds",
-          "arriveTime": "02.05.2019 03:00",
-          "departureTime": "02.05.2019 02:02"
-        }
-      ],
-      "train": {
-        "trainNumber": 105,
-        "carriagesNumber": 1,
-        "seatsNumberInCarriage": 1,
-        "seatContainer": {
-          "seatList": [
-            [
-              {
-                "carriageNumber": 65,
-                "seatNumber": 1,
-                "busyStations": []
-              }
-            ]
-          ]
-        }
-      }
-    },
-    {
-      "stations": [
-        {
           "stationName": "Brest",
           "arriveTime": "03.05.2019 18:58",
           "departureTime": "03.05.2019 18:30"
@@ -4811,6 +4781,545 @@
               {
                 "carriageNumber": 2,
                 "seatNumber": 2,
+                "busyStations": []
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "stations": [
+        {
+          "stationName": "Gomel",
+          "arriveTime": "03.05.2019 05:20",
+          "departureTime": "03.05.2019 05:00"
+        },
+        {
+          "stationName": "Minsk",
+          "arriveTime": "03.05.2019 08:20",
+          "departureTime": "03.05.2019 08:00"
+        }
+      ],
+      "train": {
+        "trainNumber": 555,
+        "carriagesNumber": 5,
+        "seatsNumberInCarriage": 20,
+        "seatContainer": {
+          "seatList": [
+            [
+              {
+                "carriageNumber": 45,
+                "seatNumber": 10,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 11,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 12,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 13,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 14,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 15,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 16,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 17,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 18,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 19,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 45,
+                "seatNumber": 20,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 1,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 2,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 3,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 4,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 5,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 6,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 7,
+                "busyStations": [
+                  {
+                    "stationName": "Gomel",
+                    "arriveTime": "03.05.2019 05:20",
+                    "departureTime": "03.05.2019 05:00"
+                  }
+                ]
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 8,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 9,
+                "busyStations": []
+              }
+            ],
+            [
+              {
+                "carriageNumber": 46,
+                "seatNumber": 10,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 11,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 12,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 13,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 14,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 15,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 16,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 17,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 18,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 19,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 46,
+                "seatNumber": 20,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 1,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 2,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 3,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 4,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 5,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 6,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 7,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 8,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 9,
+                "busyStations": []
+              }
+            ],
+            [
+              {
+                "carriageNumber": 47,
+                "seatNumber": 10,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 11,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 12,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 13,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 14,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 15,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 16,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 17,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 18,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 19,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 47,
+                "seatNumber": 20,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 1,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 2,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 3,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 4,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 5,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 6,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 7,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 8,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 9,
+                "busyStations": []
+              }
+            ],
+            [
+              {
+                "carriageNumber": 48,
+                "seatNumber": 10,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 11,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 12,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 13,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 14,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 15,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 16,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 17,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 18,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 19,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 48,
+                "seatNumber": 20,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 1,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 2,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 3,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 4,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 5,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 6,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 7,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 8,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 9,
+                "busyStations": []
+              }
+            ],
+            [
+              {
+                "carriageNumber": 49,
+                "seatNumber": 10,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 11,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 12,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 13,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 14,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 15,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 16,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 17,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 18,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 19,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 49,
+                "seatNumber": 20,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 1,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 2,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 3,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 4,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 5,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 6,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 7,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 8,
+                "busyStations": []
+              },
+              {
+                "carriageNumber": 50,
+                "seatNumber": 9,
                 "busyStations": []
               }
             ]

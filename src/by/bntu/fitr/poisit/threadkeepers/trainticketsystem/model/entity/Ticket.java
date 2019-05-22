@@ -1,8 +1,12 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity;
 
+import org.apache.log4j.Logger;
+
 import java.util.Objects;
 
 public class Ticket {
+    private static final Logger LOG = Logger.getLogger(Ticket.class);
+
     private int trainNumber;
     private String departureStation;
     private String arriveStation;
@@ -22,6 +26,7 @@ public class Ticket {
         this.seatNumber = seatNumber;
         this.carriageNumber = carriageNumber;
         this.cost = cost;
+        LOG.trace("Ticket has been created");
     }
 
     @Override

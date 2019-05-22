@@ -5,6 +5,7 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NullE
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.Checker;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,6 +15,8 @@ public class Train implements Serializable{
     public final static int DEFAULT_CARRIAGES_NUMBER = 5;
     public static final String WRONG_TRAIN_NUMBER = "Wrong train number!";
     public static final String WRONG_CARRIAGES_AMOUNT = "Wrong carriages amount!";
+
+    private static final Logger LOG = Logger.getLogger(Train.class);
 
     private IntegerProperty trainNumber;
     private IntegerProperty carriagesNumber;
@@ -40,11 +43,13 @@ public class Train implements Serializable{
         seatContainer = new SeatContainer();
         fillSeatContainer();
         Seat.clearCounters();
+        LOG.trace("Train has been created");
     }
 
     private void fillSeatContainer() {
         for (int i = 0; i < getCarriagesNumber(); i++) {
             seatContainer.addCarriageInContainer(i, getSeatsNumberInCarriage());
+            LOG.debug("SeatContainer in Train has been completely ");
         }
     }
 
@@ -53,7 +58,7 @@ public class Train implements Serializable{
     }
 
     public void setSeatContainer(SeatContainer seatContainer) throws NullException {
-        Checker.checkForNullWithException(SeatContainer.NULL_SEAT_CONTAINER, seatContainer);
+        Checker.checkForNullWithException(LOG, SeatContainer.NULL_SEAT_CONTAINER, seatContainer);
         this.seatContainer = seatContainer;
     }
 
@@ -66,7 +71,7 @@ public class Train implements Serializable{
     }
 
     public void setTrainNumber(int trainNumber) throws NonPositiveException {
-        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,trainNumber);
+        Checker.checkForPositiveWithException(LOG, SeatContainer.INVALID_VALUE_EXCEPTION,trainNumber);
         this.trainNumber.set(trainNumber);
     }
 
@@ -79,7 +84,7 @@ public class Train implements Serializable{
     }
 
     public void setCarriagesNumber(int carriagesNumber) throws NonPositiveException {
-        Checker.checkForPositiveWithException(SeatContainer.INVALID_VALUE_EXCEPTION,carriagesNumber);
+        Checker.checkForPositiveWithException(LOG, SeatContainer.INVALID_VALUE_EXCEPTION,carriagesNumber);
         this.carriagesNumber.set(carriagesNumber);
     }
 

@@ -1,5 +1,6 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -15,13 +16,10 @@ public class DistanceCalculator {
     public static final String URL = "https://geocode-maps.yandex.ru/1.x/?geocode=";
     public static final String COORDINATES_TAG_NAME = "lowerCorner";
     public static final int EARTH_RADIUS = 6371;
-
-//    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-//        System.out.println(findCoordinate("Bobruysk"));
-////                distanceCalculate("Helsinki", "Tver"));
-//    }
+    private static final Logger LOG = Logger.getLogger(DistanceCalculator.class);
 
     public static double distanceCalculate(String departureStation, String arriveStation) {
+
 
         String coordinate1 = "", coordinate2 = "";
         try {
@@ -29,6 +27,7 @@ public class DistanceCalculator {
             coordinate2 = findCoordinate(arriveStation);
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
+            LOG.error(e.getMessage());
             return 0;
         }
         String[] latitudeAndLongitude1 = coordinate1.split("\\s");
@@ -45,7 +44,7 @@ public class DistanceCalculator {
                         Math.sin(dLongitude / 2) * Math.sin(dLongitude / 2);
 
         double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
+        LOG.debug("Distance has been calculated");
         return EARTH_RADIUS * b;
     }
 
@@ -63,6 +62,7 @@ public class DistanceCalculator {
         String[] str = nl.getTextContent().split("\\s");
 
         coordinates += str[1] + " " + str[0];
+        LOG.debug("Coordinate has been found");
         return coordinates;
     }
 
