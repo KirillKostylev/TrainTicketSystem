@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class AddRouteWindowController {
 
@@ -113,23 +114,20 @@ public class AddRouteWindowController {
                 || seatsNumber.getText().equals("") || stationList.size() < 2) {
             ControllerUtil.showError("Fill All Fields! Route must have at least 2 stations.");
             isValidData = false;
+        } else if (Pattern.matches("\\D*", trainNumber.getText())) {
+            ControllerUtil.showError("Train number must be number!!!");
+            isValidData = false;
         } else if (Integer.parseInt(trainNumber.getText()) < 0) {
             ControllerUtil.showError("Train number mus be positive number!");
+            isValidData = false;
         }
         return isValidData;
     }
 
     private Route formRoute() {
-        Route route = null;
-        try {
-            Train train = new Train(Integer.parseInt(trainNumber.getText()),
-                    Integer.parseInt(carriagesNumber.getText()),
-                    Integer.parseInt(seatsNumber.getText()));
-            route = new Route(stationList, train);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ControllerUtil.showError("Incorect Data!");
-        }
-        return route;
+        Train train = new Train(Integer.parseInt(trainNumber.getText()),
+                Integer.parseInt(carriagesNumber.getText()),
+                Integer.parseInt(seatsNumber.getText()));
+        return new Route(stationList, train);
     }
 }
