@@ -21,13 +21,13 @@ public class AddRouteWindowController {
     private ObservableList<Station> stationList;
 
     @FXML
-    private TextField trainNumber;
+    private TextField trainNumberTextField;
 
     @FXML
-    private TextField carriagesNumber;
+    private TextField carriagesNumberTextField;
 
     @FXML
-    private TextField seatsNumber;
+    private TextField seatNumberTextField;
 
     @FXML
     private TableView<Station> stationTableView;
@@ -97,9 +97,9 @@ public class AddRouteWindowController {
 
     void editInit(Route route) {
         isEdit = true;
-        trainNumber.setText(route.getTrain().getTrainNumber() + "");
-        carriagesNumber.setText(route.getTrain().getCarriagesNumber() + "");
-        seatsNumber.setText(route.getTrain().getCarriagesNumber() + "");
+        trainNumberTextField.setText(route.getTrain().getTrainNumber() + "");
+        carriagesNumberTextField.setText(route.getTrain().getCarriagesNumber() + "");
+        seatNumberTextField.setText(route.getTrain().getCarriagesNumber() + "");
         stationList.addAll(FXCollections.observableArrayList(route.getStations()));
     }
 
@@ -110,14 +110,16 @@ public class AddRouteWindowController {
     private boolean isValidData() {
         //TODO сделать проверку на одинаковые номера поездов
         boolean isValidData = true;
-        if (trainNumber.getText().equals("") || carriagesNumber.getText().equals("")
-                || seatsNumber.getText().equals("") || stationList.size() < 2) {
+        if (trainNumberTextField.getText().equals("") || carriagesNumberTextField.getText().equals("")
+                || seatNumberTextField.getText().equals("") || stationList.size() < 2) {
             ControllerUtil.showError("Fill All Fields! Route must have at least 2 stations.");
             isValidData = false;
-        } else if (Pattern.matches("\\D*", trainNumber.getText())) {
-            ControllerUtil.showError("Train number must be number!!!");
+        } else if (Pattern.matches("\\D*", trainNumberTextField.getText())
+                && Pattern.matches("\\D*", carriagesNumberTextField.getText())
+                && Pattern.matches("\\D*", seatNumberTextField.getText())) {
+            ControllerUtil.showError("Number fields must be number!!!");
             isValidData = false;
-        } else if (Integer.parseInt(trainNumber.getText()) < 0) {
+        } else if (Integer.parseInt(trainNumberTextField.getText()) < 0) {
             ControllerUtil.showError("Train number mus be positive number!");
             isValidData = false;
         }
@@ -125,9 +127,9 @@ public class AddRouteWindowController {
     }
 
     private Route formRoute() {
-        Train train = new Train(Integer.parseInt(trainNumber.getText()),
-                Integer.parseInt(carriagesNumber.getText()),
-                Integer.parseInt(seatsNumber.getText()));
+        Train train = new Train(Integer.parseInt(trainNumberTextField.getText()),
+                Integer.parseInt(carriagesNumberTextField.getText()),
+                Integer.parseInt(seatNumberTextField.getText()));
         return new Route(stationList, train);
     }
 }

@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 
 import java.text.ParseException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class AddStationWindowController {
 
@@ -51,12 +52,18 @@ public class AddStationWindowController {
                 departureMinutesComboBox);
         String arriveTime = ControllerUtil.getDateTimeString(arriveDatePicker, arriveHoursComboBox,
                 arriveMinutesComboBox);
-        Station station = new Station(stationName.getText(), departureTime, arriveTime);
-        addRouteWindowController.addStation(station);
+        if (isValidData(departureTime, arriveTime)) {
+            Station station = new Station(stationName.getText(), departureTime, arriveTime);
+            addRouteWindowController.addStation(station);
+        }
     }
 
-    private boolean isValidData(String stationName, String departureTime, String arriveTime){
+    private boolean isValidData(String departureTime, String arriveTime){
         boolean isValidData = true;
+        if (Pattern.matches("\\W*", this.stationName.getText())) {
+            ControllerUtil.showError("Station name may contain only letters");
+            isValidData = false;
+        }
         if(!isDatesValid(departureTime, arriveTime)) {
             isValidData = false;
         } else if(isDateValidWithPreviousStation(departureTime)) {

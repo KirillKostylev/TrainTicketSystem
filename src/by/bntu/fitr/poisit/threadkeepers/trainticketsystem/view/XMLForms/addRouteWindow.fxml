@@ -12,12 +12,12 @@
       <Button layoutX="245.0" layoutY="560.0" mnemonicParsing="false" onAction="#addRouteAction" text="OK" />
       <Button cancelButton="true" layoutX="556.0" layoutY="560.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
       <Label layoutX="182.0" layoutY="54.0" text="Train Number: " />
-      <TextField fx:id="trainNumber" layoutX="309.0" layoutY="49.0" />
+      <TextField fx:id="trainNumberTextField" layoutX="309.0" layoutY="49.0" />
       <Label layoutX="181.0" layoutY="89.0" text="Carriages Number: " />
       <Label layoutX="181.0" layoutY="122.0" text="Seats Number: " />
       <Label layoutX="182.0" layoutY="14.0" text="Train info:  " />
-      <TextField fx:id="carriagesNumber" layoutX="309.0" layoutY="84.0" />
-      <TextField fx:id="seatsNumber" layoutX="309.0" layoutY="117.0" />
+      <TextField fx:id="carriagesNumberTextField" layoutX="309.0" layoutY="84.0" />
+      <TextField fx:id="seatNumberTextField" layoutX="309.0" layoutY="117.0" />
       <Label layoutX="181.0" layoutY="176.0" text="Stations: " />
       <Button layoutX="286.0" layoutY="496.0" mnemonicParsing="false" onAction="#addStationAction" text="Add Station" />
       <TableView fx:id="stationTableView" layoutX="53.0" layoutY="197.0" prefHeight="283.0" prefWidth="794.0">
