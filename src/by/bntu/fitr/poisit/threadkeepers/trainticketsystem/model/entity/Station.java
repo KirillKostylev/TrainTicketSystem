@@ -18,7 +18,7 @@ public class Station implements Serializable{
     private StringProperty arriveTime;
     private StringProperty departureTime;
 
-    public Station(String stationName, String departureTime, String arriveTime) {
+    public Station(String stationName, String arriveTime, String departureTime) {
         this.stationName = new SimpleStringProperty(stationName);
         this.arriveTime = new SimpleStringProperty(arriveTime);
         this.departureTime = new SimpleStringProperty(departureTime);

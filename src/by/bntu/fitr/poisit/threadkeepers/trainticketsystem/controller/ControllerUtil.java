@@ -64,8 +64,8 @@ class ControllerUtil {
     }
 
     static void setFactoryForStationTable(TableColumn<Station, String> stationNameColumn,
-                                         TableColumn<Station, String> departureTimeColumn,
-                                         TableColumn<Station, String> arriveTimeColumn) {
+                                         TableColumn<Station, String> arriveTimeColumn,
+                                         TableColumn<Station, String> departureTimeColumn) {
         stationNameColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getStationNameProperty());
         departureTimeColumn.setCellValueFactory(cellData ->

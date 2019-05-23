@@ -39,10 +39,10 @@ public class AddRouteWindowController {
     private TableColumn<Station, String> stationNameColumn;
 
     @FXML
-    private TableColumn<Station, String> departureTimeColumn;
+    private TableColumn<Station, String> arriveTimeColumn;
 
     @FXML
-    private TableColumn<Station, String> arriveTimeColumn;
+    private TableColumn<Station, String> departureTimeColumn;
 
     @FXML
     void addRouteAction(ActionEvent event) {
@@ -86,7 +86,7 @@ public class AddRouteWindowController {
     void initialize() {
         stationList = FXCollections.observableArrayList();
         isEdit = false;
-        ControllerUtil.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
+        ControllerUtil.setFactoryForStationTable(stationNameColumn, arriveTimeColumn, departureTimeColumn);
         stationTableView.setItems(stationList);
         ControllerUtil.setFocus(trainNumberTextField);
     }
