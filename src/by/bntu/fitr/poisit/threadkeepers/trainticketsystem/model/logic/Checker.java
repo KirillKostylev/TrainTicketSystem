@@ -60,10 +60,10 @@ public class Checker {
         return answer;
     }
 
-    public static boolean checkForRepeatedTrainNumber(List<Route> routes, int trainNamber) {
+    public static boolean checkForRepeatedTrainNumber(List<Route> routes, int trainNumber) {
         boolean answer = false;
         for (Route route : routes) {
-            if (route.getTrain().getTrainNumber() == trainNamber){
+            if (route.getTrain().getTrainNumber() == trainNumber){
                 answer = true;
             }
         }

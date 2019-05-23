@@ -16,7 +16,7 @@ public class LogicCashier {
     private static final Logger LOG = Logger.getLogger(LogicCashier.class);
 
     public static Ticket buyTicket(Route route, int carriageNumber, int seatNumber, Station departureStation,
-                                   Station arriveStation)
+                                   Station arriveStation, double costPerKm)
             throws NullException {
 
         Ticket ticket = null;
@@ -37,7 +37,7 @@ public class LogicCashier {
             ticket = new Ticket(train.getTrainNumber(), departureStation.getStationName(), arriveStation.getStationName(),
                     departureStation.getDepartureTime(),
                     arriveStation.getArriveTime(), carriageNumber, seatNumber,
-                    calculateTicketCost(departureStation, arriveStation));
+                    calculateTicketCost(departureStation, arriveStation, costPerKm));
         }
         LOG.debug("Ticket has been bought");
         return ticket;
@@ -169,8 +169,8 @@ public class LogicCashier {
         return suitableStations;
     }
 
-    private static double calculateTicketCost(Station departureStation, Station arriveStation) {
-        double ans = Math.round(COST_PER_KM *
+    private static double calculateTicketCost(Station departureStation, Station arriveStation, double costPerKm) {
+        double ans = Math.round(costPerKm *
                 DistanceCalculator.distanceCalculate(departureStation.getStationName(),
                         arriveStation.getStationName()) * 100.0) / 100.0;
         LOG.debug("Ticket cost was calculated");

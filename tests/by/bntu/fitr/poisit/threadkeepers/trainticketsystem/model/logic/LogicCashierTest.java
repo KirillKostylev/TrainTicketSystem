@@ -175,7 +175,8 @@ public class LogicCashierTest {
         Station departureStation = schedule.getRoute(0).getStation("Minsk");
         Station arriveStation = schedule.getRoute(0).getStation("Brest");
         try {
-            LogicCashier.buyTicket(null, 2, 3, departureStation, arriveStation);
+            LogicCashier.buyTicket(null, 2, 3, departureStation, arriveStation,
+                    0.03);
         } catch (NullException e) {
             Assert.assertEquals(Route.NULL_ROUTE_EXCEPTION, e.getMessage());
         }
@@ -187,7 +188,7 @@ public class LogicCashierTest {
         Station arriveStation = schedule.getRoute(0).getStation("Brest");
         try {
             LogicCashier.buyTicket(schedule.getRoute(0), 1, 1,
-                    null, arriveStation);
+                    null, arriveStation, 0.03);
         } catch (NullException e) {
             Assert.assertEquals(Route.NULL_INPUT_FIELD_EXCEPTION, e.getMessage());
         }
@@ -203,11 +204,11 @@ public class LogicCashierTest {
         Station moscow = route.getStation("Moscow");
         try {
             LogicCashier.buyTicket(route, 2, 1,
-                    helsinki, saintPetersburg);
+                    helsinki, saintPetersburg, 0.03);
             LogicCashier.buyTicket(route, 2, 1,
-                    saintPetersburg, tver);
+                    saintPetersburg, tver, 0.03);
             Assert.assertNull(LogicCashier.buyTicket(route, 2, 1,
-                    saintPetersburg, moscow));
+                    saintPetersburg, moscow, 0.03));
 //            Assert.assertEquals(train, schedule.getRoute(6).getTrain());
         } catch (NullException e) {
             e.getMessage();
@@ -228,7 +229,7 @@ public class LogicCashierTest {
                                     "Saint Petersburg") * 100.0) / 100.0);
 
             Assert.assertEquals(expectedTicket, LogicCashier.buyTicket(route, 2,
-                    1, helsinki, saintPetersburg));
+                    1, helsinki, saintPetersburg, 0.03));
         } catch (NullException e) {
             e.printStackTrace();
         }
@@ -243,7 +244,7 @@ public class LogicCashierTest {
 
         try {
             LogicCashier.buyTicket(route, 1, 1,
-                    helsinki, tver);
+                    helsinki, tver, 0.03);
 
             Ticket expectedTicket = new Ticket(132, "Tver", "Moscow",
                     "04.05.2019 06:15", "04.05.2019 10:00", 1, 1,
@@ -252,7 +253,7 @@ public class LogicCashierTest {
                                     "Moscow") * 100.0) / 100.0);
 
             Assert.assertEquals(expectedTicket, LogicCashier.buyTicket(route, 1,
-                    1, tver, moscow));
+                    1, tver, moscow, 0.03));
         } catch (NullException e) {
             e.printStackTrace();
         }
@@ -269,10 +270,10 @@ public class LogicCashierTest {
 
         try {
             LogicCashier.buyTicket(route, 1, 1,
-                    helsinki, tver);
+                    helsinki, tver, 0.03);
 
             Assert.assertNull(LogicCashier.buyTicket(route, 1,
-                    1, saintPetersburg, moscow));
+                    1, saintPetersburg, moscow, 0.03));
         } catch (NullException e) {
             e.printStackTrace();
         }
@@ -288,7 +289,7 @@ public class LogicCashierTest {
         Station saintPetersburg = route.getStation("Saint Petersburg");
         try {
             LogicCashier.buyTicket(route, 2, 2,
-                    helsinki, moscow);
+                    helsinki, moscow, 0.03);
 
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
                     route, helsinki, saintPetersburg));
@@ -310,11 +311,11 @@ public class LogicCashierTest {
 //            LogicCashier.buyTicket(schedule.getRoute(6), 2, 2,
 //                    "Tver", "Moscow");
             LogicCashier.buyTicket(route, 1, 2,
-                    helsinki, tver);
+                    helsinki, tver, 0.03);
             LogicCashier.buyTicket(route, 1, 1,
-                    helsinki, tver);
+                    helsinki, tver, 0.03);
             LogicCashier.buyTicket(route, 2, 1,
-                    helsinki, tver);
+                    helsinki, tver, 0.03);
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
                     route, helsinki, moscow));
 
@@ -334,13 +335,13 @@ public class LogicCashierTest {
         Station saintPetersburg = route.getStation("Saint Petersburg");
         try {
             LogicCashier.buyTicket(route, 2, 1,
-                    tver, moscow);
+                    tver, moscow, 0.03);
             LogicCashier.buyTicket(route, 2, 2,
-                    tver, moscow);
+                    tver, moscow, 0.03);
             LogicCashier.buyTicket(route, 1, 2,
-                    helsinki, moscow);
+                    helsinki, moscow, 0.03);
             LogicCashier.buyTicket(route, 1, 1,
-                    helsinki, moscow);
+                    helsinki, moscow, 0.03);
             Assert.assertEquals(carriagesNumbers, LogicCashier.findCarriagesNumberWithFreeSeats(
                     route, saintPetersburg, moscow));
 
@@ -360,7 +361,7 @@ public class LogicCashierTest {
         Station helsinki = route.getStation("Helsinki");
         try {
             LogicCashier.buyTicket(route, 2, 2,
-                    tver, moscow);
+                    tver, moscow, 0.03);
             Assert.assertEquals(freeSeats,
                     LogicCashier.findFreeSeatsInCarriage(route, helsinki,
                             moscow, 1));
@@ -381,9 +382,9 @@ public class LogicCashierTest {
 
         try {
             LogicCashier.buyTicket(route, 1, 1,
-                    saintPetersburg, moscow);
+                    saintPetersburg, moscow, 0.03);
             LogicCashier.buyTicket(route, 1, 2,
-                    tver, moscow);
+                    tver, moscow, 0.03);
             Assert.assertEquals(freeSeats,
                     LogicCashier.findFreeSeatsInCarriage(route, helsinki,
                             saintPetersburg, 1));
