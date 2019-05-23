@@ -109,7 +109,11 @@ public class AddRouteWindowController {
     }
 
     Station getLastStation() {
-        return stationTableView.getItems().get(stationTableView.getItems().size() - 1);
+        if (stationTableView.getItems().size() != 0) {
+            return stationTableView.getItems().get(stationTableView.getItems().size() - 1);
+        } else {
+            return null;
+        }
     }
 
     private boolean isValidData() {

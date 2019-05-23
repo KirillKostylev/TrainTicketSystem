@@ -68,8 +68,10 @@ public class AddStationWindowController {
         }
         if(!isDatesValid(departureTime, arriveTime)) {
             isValidData = false;
-        } else if(isDateValidWithPreviousStation(departureTime)) {
-            isValidData = false;
+        } else if(addRouteWindowController.getLastStation() != null) {
+            if(isDateValidWithPreviousStation(departureTime)) {
+                isValidData = false;
+            }
         } else if (Checker.isRepeatedNameStation(addRouteWindowController.getStationList(),
                 stationName.getText())) {
             ControllerUtil.showError("Already have station with this name");
