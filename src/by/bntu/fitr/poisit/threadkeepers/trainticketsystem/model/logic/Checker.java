@@ -9,8 +9,11 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.Wrong
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Checker {
+
+    private static final Logger LOG = Logger.getLogger(Checker.class);
 
     public static void checkForPositiveWithException(Logger log, String msg, int... values) throws NonPositiveException {
         for (int value : values) {
@@ -50,23 +53,75 @@ public class Checker {
         }
     }
 
-    public static boolean checkForRepeatedNameStation(List<Station> stations, String checkedStationName) {
-        boolean answer = false;
+    public static boolean isRepeatedNameStation(List<Station> stations, String checkedStationName) {
         for (Station station : stations) {
             if (station.getStationName().equals(checkedStationName)) {
-                answer = true;
+                return true;
             }
         }
-        return answer;
+        return false;
     }
 
-    public static boolean checkForRepeatedTrainNumber(List<Route> routes, int trainNumber) {
-        boolean answer = false;
+    public static boolean isRepeatedTrainNumber(List<Route> routes, int trainNumber) {
         for (Route route : routes) {
             if (route.getTrain().getTrainNumber() == trainNumber){
-                answer = true;
+                return true;
             }
         }
-        return answer;
+        return false;
+    }
+
+    public static boolean isEmptyString(String ... strings) {
+        for(String string: strings) {
+            if(string.equals("")) {
+                LOG.warn("Empty String!");
+                return true;
+            }
+        }
+        LOG.trace("Not empty String!");
+        return false;
+    }
+
+    public static boolean isIntegerString(String ... strings) {
+        for (String string: strings) {
+            if(Pattern.matches("\\d*", string)) {
+                LOG.trace("String is integer!");
+                return true;
+            }
+        }
+        LOG.warn("String is not integer!");
+        return false;
+    }
+
+    public static boolean isDoubleString(String ... strings) {
+        for (String string: strings) {
+            if(Pattern.matches("\\d*.\\d*", string) || isIntegerString(string)) {
+                LOG.trace("String is double!");
+                return true;
+            }
+        }
+        LOG.warn("String is nod double!");
+        return false;
+    }
+
+    public static boolean isPositiveNumberString(String ... numbers) {
+        for (String number: numbers) {
+            if(Double.parseDouble(number) > 0) {
+                LOG.trace("Number is positive!");
+                return true;
+            }
+        }
+        LOG.warn("Number is not positive!");
+        return false;
+    }
+
+    public static boolean isPositiveIntString(String ... strings) {
+        return !isEmptyString(strings) && isIntegerString(strings)
+                && isPositiveNumberString(strings);
+    }
+
+    public static boolean isPositiveDoubleString(String ... strings) {
+        return !isEmptyString(strings) && isDoubleString(strings)
+                && isPositiveNumberString(strings);
     }
 }

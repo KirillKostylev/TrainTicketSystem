@@ -66,7 +66,7 @@ public class RouteInfoWindowController {
                 PrintTicketWindowController printTicketWindowController = loader.getController();
                 assert ticket != null;
                 printTicketWindowController.init(ticket.toString());
-                ControllerUtil.openChildModalWindow("Print Ticket", root, event);
+                ControllerUtil.openModalWindow("Print Ticket", root, event);
                 disableComboBoxes();
             } catch (IOException e) {
                 ControllerUtil.showError("Error loading resource!");
@@ -160,7 +160,8 @@ public class RouteInfoWindowController {
             ticket = LogicCashier.buyTicket(route, Integer.parseInt(carriageNumberComboBox.getValue()),
                     Integer.parseInt(seatNumberComboBox.getValue()),
                     selectedStationList.get(0),
-                    selectedStationList.get(1));
+                    selectedStationList.get(1),
+                    routeListWindowController.getCostForKm());
         } catch (NullException e) {
             ControllerUtil.showError("Null exception!");
             e.printStackTrace();

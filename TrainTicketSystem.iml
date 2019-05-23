@@ -39,6 +39,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="org.hildan.fxgson:fx-gson:3.1.2" level="project" />
-    <orderEntry type="library" name="apache-logging-log4j" level="project" />
+    <orderEntry type="library" name="apache-logging-log4j1" level="project" />
   </component>
 </module>

@@ -3,6 +3,7 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Route;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Train;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.Checker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,12 +11,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 public class AddRouteWindowController {
 
+    private static final Logger LOG = Logger.getLogger(AddRouteWindowController.class);
     private boolean isEdit;
     private RouteListWindowController routeListWindowController;
     private ObservableList<Station> stationList;
@@ -61,7 +64,7 @@ public class AddRouteWindowController {
             Parent root = loader.load();
             AddStationWindowController addStationWindowController = loader.getController();
             addStationWindowController.setParent(this);
-            ControllerUtil.openChildModalWindow("Add Station", root, event);
+            ControllerUtil.openModalWindow("Add Station", root, event);
         } catch (IOException e) {
             ControllerUtil.showError("Loading resource error!");
             e.printStackTrace();
@@ -85,9 +88,11 @@ public class AddRouteWindowController {
         isEdit = false;
         ControllerUtil.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
         stationTableView.setItems(stationList);
+        ControllerUtil.setFocus(trainNumberTextField);
     }
 
     void addStation(Station station) {
+        LOG.trace("Station " + station.getStationName() + " added");
         stationList.add(station);
     }
 
@@ -108,19 +113,15 @@ public class AddRouteWindowController {
     }
 
     private boolean isValidData() {
-        //TODO сделать проверку на одинаковые номера поездов
         boolean isValidData = true;
-        if (trainNumberTextField.getText().equals("") || carriagesNumberTextField.getText().equals("")
-                || seatNumberTextField.getText().equals("") || stationList.size() < 2) {
-            ControllerUtil.showError("Fill All Fields! Route must have at least 2 stations.");
+        if(!Checker.isPositiveIntString(trainNumberTextField.getText() ,
+                carriagesNumberTextField.getText(),
+                seatNumberTextField.getText())) {
+            ControllerUtil.showError("Number fields must be positive integer numbers!");
             isValidData = false;
-        } else if (Pattern.matches("\\D*", trainNumberTextField.getText())
-                && Pattern.matches("\\D*", carriagesNumberTextField.getText())
-                && Pattern.matches("\\D*", seatNumberTextField.getText())) {
-            ControllerUtil.showError("Number fields must be number!!!");
-            isValidData = false;
-        } else if (Integer.parseInt(trainNumberTextField.getText()) < 0) {
-            ControllerUtil.showError("Train number mus be positive number!");
+        } else if (Checker.isRepeatedTrainNumber(
+                routeListWindowController.getRouteList(), Integer.parseInt(trainNumberTextField.getText()))) {
+            ControllerUtil.showError("Already have route with this number");
             isValidData = false;
         }
         return isValidData;
@@ -131,5 +132,9 @@ public class AddRouteWindowController {
                 Integer.parseInt(carriagesNumberTextField.getText()),
                 Integer.parseInt(seatNumberTextField.getText()));
         return new Route(stationList, train);
+    }
+
+    ObservableList<Station> getStationList() {
+        return stationTableView.getItems();
     }
 }

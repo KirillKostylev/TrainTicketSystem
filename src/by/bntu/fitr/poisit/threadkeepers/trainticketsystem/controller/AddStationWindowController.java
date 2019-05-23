@@ -1,7 +1,9 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.Checker;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -60,13 +62,17 @@ public class AddStationWindowController {
 
     private boolean isValidData(String departureTime, String arriveTime){
         boolean isValidData = true;
-        if (Pattern.matches("\\W*", this.stationName.getText())) {
+        if (Pattern.matches("\\W*", stationName.getText())) {
             ControllerUtil.showError("Station name may contain only letters");
             isValidData = false;
         }
         if(!isDatesValid(departureTime, arriveTime)) {
             isValidData = false;
         } else if(isDateValidWithPreviousStation(departureTime)) {
+            isValidData = false;
+        } else if (Checker.isRepeatedNameStation(addRouteWindowController.getStationList(),
+                stationName.getText())) {
+            ControllerUtil.showError("Already have station with this name");
             isValidData = false;
         }
         return isValidData;
@@ -106,6 +112,7 @@ public class AddStationWindowController {
         departureMinutesComboBox.setItems(ControllerUtil.getObservableListWithNumbers(0, 60));
         arriveHoursComboBox.setItems(ControllerUtil.getObservableListWithNumbers(0, 24));
         arriveMinutesComboBox.setItems(ControllerUtil.getObservableListWithNumbers(0, 60));
+        ControllerUtil.setFocus(stationName);
     }
 
     void setParent(AddRouteWindowController addRouteWindowController) {

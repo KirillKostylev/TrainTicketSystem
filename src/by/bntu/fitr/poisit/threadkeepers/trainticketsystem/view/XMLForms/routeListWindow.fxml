@@ -72,6 +72,9 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <TextField fx:id="costTextField" disable="true" layoutX="115.0" layoutY="476.0" prefHeight="31.0" prefWidth="125.0" text="0.03" />
+                  <Label fx:id="costLabel" disable="true" layoutX="19.0" layoutY="481.0" text="Cost for 1 km" />
+                  <Button fx:id="setCostBtn" disable="true" layoutX="104.0" layoutY="520.0" mnemonicParsing="false" onAction="#setCostAction" text="Set Cost" />
                </children>
             </AnchorPane>
          </items>

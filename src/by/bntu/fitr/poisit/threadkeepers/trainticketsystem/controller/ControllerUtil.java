@@ -1,6 +1,7 @@
 package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,21 +13,28 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 class ControllerUtil {
 
-    static void openChildModalWindow(String windowName, Parent root, Event event) {
+    private static final Logger LOG = Logger.getLogger(ControllerUtil.class);
+
+    static void openModalWindow(String windowName, Parent root, Event event) {
         Stage stage = createStage(windowName, root);
         stage.initModality(Modality.WINDOW_MODAL);
         Node source = (Node) event.getSource();
         stage.initOwner(source.getScene().getWindow());
+        LOG.trace("Opened modal window \"" + stage.getTitle() +  "\"!");
         stage.showAndWait();
     }
 
     static void openWindow(String windowName, Parent root) {
         Stage stage = createStage(windowName, root);
+        LOG.trace("Opened window \"" + stage.getTitle() + "\"!");
         stage.show();
     }
 
@@ -34,6 +42,7 @@ class ControllerUtil {
         Stage stage = new Stage();
         stage.setTitle(windowName);
         stage.setScene(new Scene(root));
+        LOG.trace("Stage created!");
         return stage;
     }
 
@@ -41,11 +50,13 @@ class ControllerUtil {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
+        LOG.trace("Window \""+ stage.getTitle() +  "\" closed!");
     }
 
     static void showError(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR, msg);
         alert.showAndWait();
+        LOG.error(msg);
     }
 
     static FXMLLoader getFXMLLoaderFromResource(String path) {
@@ -61,6 +72,7 @@ class ControllerUtil {
                 cellData.getValue().getDepartureTimeProperty());
         arriveTimeColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getArriveTimeProperty());
+        LOG.trace("Formed station table!");
     }
 
     static ObservableList<String> getObservableListWithNumbers(int firstNumber, int lastNumber) {
@@ -91,5 +103,10 @@ class ControllerUtil {
                 .ofPattern(Station.DATE_FORMAT))
                 + " " + hourComboBox.getValue() + ":"
                 + minuteComboBox.getValue();
+    }
+
+    static void setFocus(Node node) {
+        Platform.runLater(node::requestFocus);
+        LOG.trace("focus given to " + node.getId());
     }
 }

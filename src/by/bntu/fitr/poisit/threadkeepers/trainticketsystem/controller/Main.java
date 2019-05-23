@@ -3,8 +3,11 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.controller;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
+
+
 
 public class Main extends Application {
 

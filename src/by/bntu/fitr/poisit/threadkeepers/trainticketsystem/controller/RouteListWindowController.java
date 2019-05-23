@@ -5,6 +5,7 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Schedule
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.Station;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.EmptyFieldException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NullException;
+import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.Checker;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.LogicCashier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -21,10 +25,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic.ScheduleDataWorker;
+import org.apache.log4j.Logger;
 
 public class RouteListWindowController {
 
+    private static final Logger LOG = Logger.getLogger(RouteListWindowController.class);
+
     private Schedule schedule;
+    private double costForKm = 0.03;
 
     @FXML
     private Label errorLabel;
@@ -68,6 +76,15 @@ public class RouteListWindowController {
     @FXML
     private Button logOutBtn;
 
+    @FXML
+    private TextField costTextField;
+
+    @FXML
+    private Label costLabel;
+
+    @FXML
+    private Button setCostBtn;
+
 
     @FXML
     void loginAction(ActionEvent event) throws IOException {
@@ -75,7 +92,7 @@ public class RouteListWindowController {
         Parent root = loader.load();
         LoginWindowController loginWindowController = loader.getController();
         loginWindowController.setParent(this);
-        ControllerUtil.openChildModalWindow("Log In", root, event);
+        ControllerUtil.openModalWindow("Log In", root, event);
     }
 
     @FXML
@@ -129,6 +146,10 @@ public class RouteListWindowController {
         addRouteBtn.setDisable(true);
         editRouteBtn.setDisable(true);
         removeRouteBtn.setDisable(true);
+        costTextField.setDisable(true);
+        costLabel.setDisable(true);
+        setCostBtn.setDisable(true);
+        LOG.trace("Admin logged out!");
     }
 
     void logIn() {
@@ -136,6 +157,9 @@ public class RouteListWindowController {
         addRouteBtn.setDisable(false);
         editRouteBtn.setDisable(false);
         removeRouteBtn.setDisable(false);
+        costTextField.setDisable(false);
+        costLabel.setDisable(false);
+        setCostBtn.setDisable(false);
     }
 
     @FXML
@@ -145,7 +169,7 @@ public class RouteListWindowController {
             Parent root = loader.load();
             AddRouteWindowController addRouteWindowController = loader.getController();
             addRouteWindowController.setParent(this);
-            ControllerUtil.openChildModalWindow("Add Route",root , event);
+            ControllerUtil.openModalWindow("Add Route",root , event);
         } catch (IOException e) {
             ControllerUtil.showError("Loading resource Error!");
             e.printStackTrace();
@@ -166,7 +190,8 @@ public class RouteListWindowController {
 
     private void removeRoute(Route route) {
         schedule.getRoutes().remove(route);
-        writeSchedule();;
+        writeSchedule();
+        LOG.trace("Route number " + route.getTrain().getTrainNumber() + " removed");
     }
 
     @FXML
@@ -178,7 +203,7 @@ public class RouteListWindowController {
                 AddRouteWindowController addRouteWindowController = loader.getController();
                 addRouteWindowController.setParent(this);
                 addRouteWindowController.editInit(routesTable.getSelectionModel().getSelectedItem());
-                ControllerUtil.openChildModalWindow("Edit Route", root, event);
+                ControllerUtil.openModalWindow("Edit Route", root, event);
             } catch (IOException e) {
                 ControllerUtil.showError("Loading resource Error!");
                 e.printStackTrace();
@@ -198,12 +223,22 @@ public class RouteListWindowController {
                 RouteInfoWindowController routeInfoWindowController = loader.getController();
                 routeInfoWindowController.init(routesTable.getSelectionModel().getSelectedItem());
                 routeInfoWindowController.setParent(this);
-                ControllerUtil.openChildModalWindow("Route Info", root, event);
+                ControllerUtil.openModalWindow("Route Info", root, event);
             } catch (IOException e) {
                 ControllerUtil.showError("Loading resource Error!");
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    @FXML
+    void setCostAction(ActionEvent event) {
+        if (Checker.isPositiveDoubleString(costTextField.getText())) {
+            costForKm = Double.parseDouble(costTextField.getText());
+            LOG.trace("Changed cost per Km");
+        } else {
+            ControllerUtil.showError("Cost must be positive double number!");
         }
     }
 
@@ -223,6 +258,7 @@ public class RouteListWindowController {
             return stationList.get(stationList.size() - 1).getArriveTimeProperty();
         });
         routesTable.setItems(schedule.getRoutes());
+        LOG.trace("Default route table formed");
     }
 
     private void fillFilteredScheduleTable(List<Route> filteredRouteList, String departureStation,
@@ -239,25 +275,37 @@ public class RouteListWindowController {
         arriveTimeColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getStation(arriveStation).getArriveTimeProperty());
         routesTable.setItems(filteredRouteObservableList);
+        LOG.trace("Filtered route table formed");
     }
 
     void addRoute(Route route) {
         schedule.getRoutes().add(route);
         writeSchedule();
+        LOG.trace("Route number " + route.getTrain().getTrainNumber() + " added!");
     }
 
     void editRoute(Route route) {
         Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
         schedule.getRoutes().set(schedule.getRoutes().indexOf(selectedRoute), route);
         writeSchedule();
+        LOG.trace("Route number " + route.getTrain().getTrainNumber() + " edited!");
     }
 
     void writeSchedule() {
         try {
             ScheduleDataWorker.writeSchedule(schedule, "schedule.json");
+            LOG.trace("Schedule wrote!");
         } catch (IOException e) {
             ControllerUtil.showError("Error writing file!");
             e.printStackTrace();
         }
+    }
+
+    ObservableList<Route> getRouteList() {
+        return schedule.getRoutes();
+    }
+
+    double  getCostForKm() {
+        return costForKm;
     }
 }
