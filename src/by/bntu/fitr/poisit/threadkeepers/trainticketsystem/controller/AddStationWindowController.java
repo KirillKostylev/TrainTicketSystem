@@ -41,15 +41,12 @@ public class AddStationWindowController {
 
     @FXML
     void addStationAction(ActionEvent event) {
-        if (isFieldsNotFilled()) {
-            ControllerUtil.showError("You must fill all fields!");
-            return;
+        if (addStation()) {
+            ControllerUtil.closeWindow(event);
         }
-        addStation();
-        ControllerUtil.closeWindow(event);
     }
 
-    private void addStation() {
+    private boolean addStation() {
         String departureTime = ControllerUtil.getDateTimeString(departureDatePicker, departureHoursComboBox,
                 departureMinutesComboBox);
         String arriveTime = ControllerUtil.getDateTimeString(arriveDatePicker, arriveHoursComboBox,
@@ -57,7 +54,9 @@ public class AddStationWindowController {
         if (isValidData(departureTime, arriveTime)) {
             Station station = new Station(stationName.getText(), departureTime, arriveTime);
             addRouteWindowController.addStation(station);
+            return true;
         }
+        return false;
     }
 
     private boolean isValidData(String departureTime, String arriveTime){
@@ -65,11 +64,10 @@ public class AddStationWindowController {
         if (Pattern.matches("\\W*", stationName.getText())) {
             ControllerUtil.showError("Station name may contain only letters");
             isValidData = false;
-        }
-        if(!isDatesValid(departureTime, arriveTime)) {
+        } else if(!isDatesValid(departureTime, arriveTime)) {
             isValidData = false;
         } else if(addRouteWindowController.getLastStation() != null) {
-            if(isDateValidWithPreviousStation(departureTime)) {
+            if(!isDateValidWithPreviousStation(departureTime)) {
                 isValidData = false;
             }
         } else if (Checker.isRepeatedNameStation(addRouteWindowController.getStationList(),
@@ -84,7 +82,7 @@ public class AddStationWindowController {
         try {
             Date departureDateTime = LogicCashier.convertStringToDate(departureTime, Station.TIME_FORMAT);
             Date arriveDateTime = LogicCashier.convertStringToDate(arriveTime, Station.TIME_FORMAT);
-            if (departureDateTime.compareTo(arriveDateTime) < 0) {
+            if (departureDateTime.compareTo(arriveDateTime) > 0) {
                 ControllerUtil.showError("Date and time of arrival more than departure!" +
                         " (Maybe problem in previous station)");
                 return false;
@@ -100,7 +98,7 @@ public class AddStationWindowController {
     private boolean isDateValidWithPreviousStation(String departureTime) {
         Station lastStation = addRouteWindowController.getLastStation();
         String arriveTime = lastStation.getArriveTime();
-        return isDatesValid(departureTime, arriveTime);
+        return isDatesValid(arriveTime, departureTime);
     }
 
     @FXML

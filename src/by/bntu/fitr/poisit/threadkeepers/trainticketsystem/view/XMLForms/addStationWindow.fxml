@@ -15,8 +15,8 @@
       <Label layoutX="35.0" layoutY="118.0" text="Arrive Date" />
       <Label layoutX="35.0" layoutY="212.0" prefHeight="21.0" prefWidth="81.0" text="Arrive Time" />
       <TextField fx:id="stationName" layoutX="211.0" layoutY="37.0" />
-      <DatePicker fx:id="arriveDatePicker" editable="false" layoutX="211.0" layoutY="77.0" prefHeight="31.0" prefWidth="187.0" />
-      <DatePicker fx:id="departureDatePicker" editable="false" layoutX="211.0" layoutY="113.0" prefHeight="31.0" prefWidth="187.0" />
+      <DatePicker fx:id="arriveDatePicker" editable="false" layoutX="211.0" layoutY="113.0" prefHeight="31.0" prefWidth="187.0" />
+      <DatePicker fx:id="departureDatePicker" editable="false" layoutX="211.0" layoutY="77.0" prefHeight="31.0" prefWidth="187.0" />
       <ComboBox fx:id="departureHoursComboBox" layoutX="211.0" layoutY="157.0" prefHeight="31.0" prefWidth="81.0" />
       <ComboBox fx:id="departureMinutesComboBox" layoutX="305.0" layoutY="157.0" prefHeight="31.0" prefWidth="81.0" />
       <ComboBox fx:id="arriveHoursComboBox" layoutX="211.0" layoutY="207.0" prefHeight="31.0" prefWidth="81.0" />
