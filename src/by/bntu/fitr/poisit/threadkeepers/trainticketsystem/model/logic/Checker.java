@@ -8,6 +8,8 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NullE
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.WrongStationInRouteException;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 public class Checker {
 
     public static void checkForPositiveWithException(Logger log, String msg, int... values) throws NonPositiveException {
@@ -20,7 +22,7 @@ public class Checker {
 
     }
 
-    public static void checkForNullWithException(Logger log,String msg, Object... objects) throws NullException {
+    public static void checkForNullWithException(Logger log, String msg, Object... objects) throws NullException {
         for (Object o : objects) {
             if (o == null) {
                 log.error(msg);
@@ -29,7 +31,7 @@ public class Checker {
         }
     }
 
-    public static void checkForEmptyFieldException(Logger log,String msg, String... fields) throws EmptyFieldException {
+    public static void checkForEmptyFieldException(Logger log, String msg, String... fields) throws EmptyFieldException {
         for (String field : fields) {
             if (field.equals("")) {
                 log.error(msg);
@@ -38,7 +40,7 @@ public class Checker {
         }
     }
 
-    public static void checkForSuitableRoute(Logger log,Route route, String departureStation, String arriveStation, String msg)
+    public static void checkForSuitableRoute(Logger log, Route route, String departureStation, String arriveStation, String msg)
             throws WrongStationInRouteException {
         for (Station station : route.getStations()) {
             if (route.getStation(departureStation).equals(station) || route.getStation(arriveStation).equals(station)) {
@@ -46,5 +48,25 @@ public class Checker {
                 throw new WrongStationInRouteException(msg);
             }
         }
+    }
+
+    public static boolean checkForRepeatedNameStation(List<Station> stations, String checkedStationName) {
+        boolean answer = false;
+        for (Station station : stations) {
+            if (station.getStationName().equals(checkedStationName)) {
+                answer = true;
+            }
+        }
+        return answer;
+    }
+
+    public static boolean checkForRepeatedTrainNumber(List<Route> routes, int trainNamber) {
+        boolean answer = false;
+        for (Route route : routes) {
+            if (route.getTrain().getTrainNumber() == trainNamber){
+                answer = true;
+            }
+        }
+        return answer;
     }
 }
