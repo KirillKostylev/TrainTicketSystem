@@ -124,7 +124,8 @@ public class AddRouteWindowController {
             ControllerUtil.showError("Number fields must be positive integer numbers!");
             isValidData = false;
         } else if (Checker.isRepeatedTrainNumber(
-                routeListWindowController.getRouteList(), Integer.parseInt(trainNumberTextField.getText()))) {
+                routeListWindowController.getRouteList(), Integer.parseInt(trainNumberTextField.getText()))
+            && !isEdit) {
             ControllerUtil.showError("Already have route with this number");
             isValidData = false;
         }
