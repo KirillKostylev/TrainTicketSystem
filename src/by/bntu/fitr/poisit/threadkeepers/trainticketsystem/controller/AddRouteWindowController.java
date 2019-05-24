@@ -118,16 +118,25 @@ public class AddRouteWindowController {
 
     private boolean isValidData() {
         boolean isValidData = true;
+        ObservableList<Route> routeObservableList = FXCollections
+                .observableArrayList(routeListWindowController.getRouteList());
         if(!Checker.isPositiveIntString(trainNumberTextField.getText() ,
                 carriagesNumberTextField.getText(),
                 seatNumberTextField.getText())) {
             ControllerUtil.showError("Number fields must be positive integer numbers!");
             isValidData = false;
         } else if (Checker.isRepeatedTrainNumber(
-                routeListWindowController.getRouteList(), Integer.parseInt(trainNumberTextField.getText()))
+                routeObservableList, Integer.parseInt(trainNumberTextField.getText()))
             && !isEdit) {
             ControllerUtil.showError("Already have route with this number");
             isValidData = false;
+        } else if (isEdit){
+            routeObservableList.remove(routeListWindowController.getSelectedRoute());
+            if(Checker.isRepeatedTrainNumber(
+                    routeObservableList, Integer.parseInt(trainNumberTextField.getText()))) {
+                ControllerUtil.showError("Already have route with this number");
+                isValidData = false;
+            }
         }
         return isValidData;
     }

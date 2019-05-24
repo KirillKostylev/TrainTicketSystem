@@ -180,7 +180,7 @@ public class RouteListWindowController {
     @FXML
     void removeRouteAction(ActionEvent event) {
         if(ControllerUtil.isSelectedItemInTable(routesTable)){
-            Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
+            Route selectedRoute = getSelectedRoute();
             removeRoute(selectedRoute);
         } else {
             ControllerUtil.showError("Choose Route to edit!");
@@ -202,7 +202,7 @@ public class RouteListWindowController {
                 Parent root = loader.load();
                 AddRouteWindowController addRouteWindowController = loader.getController();
                 addRouteWindowController.setParent(this);
-                addRouteWindowController.editInit(routesTable.getSelectionModel().getSelectedItem());
+                addRouteWindowController.editInit(getSelectedRoute());
                 ControllerUtil.openModalWindow("Edit Route", root, event);
             } catch (IOException e) {
                 ControllerUtil.showError("Loading resource Error!");
@@ -221,7 +221,7 @@ public class RouteListWindowController {
                 FXMLLoader loader = ControllerUtil.getFXMLLoaderFromResource("../view/XMLForms/routeInfoWindow.fxml");
                 Parent root = loader.load();
                 RouteInfoWindowController routeInfoWindowController = loader.getController();
-                routeInfoWindowController.init(routesTable.getSelectionModel().getSelectedItem());
+                routeInfoWindowController.init(getSelectedRoute());
                 routeInfoWindowController.setParent(this);
                 ControllerUtil.openModalWindow("Route Info", root, event);
             } catch (IOException e) {
@@ -285,7 +285,7 @@ public class RouteListWindowController {
     }
 
     void editRoute(Route route) {
-        Route selectedRoute = routesTable.getSelectionModel().getSelectedItem();
+        Route selectedRoute = getSelectedRoute();
         schedule.getRoutes().set(schedule.getRoutes().indexOf(selectedRoute), route);
         writeSchedule();
         LOG.trace("Route number " + route.getTrain().getTrainNumber() + " edited!");
@@ -307,5 +307,9 @@ public class RouteListWindowController {
 
     double  getCostForKm() {
         return costForKm;
+    }
+
+    Route getSelectedRoute() {
+        return routesTable.getSelectionModel().getSelectedItem();
     }
 }
