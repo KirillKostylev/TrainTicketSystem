@@ -2453,7 +2453,18 @@
               {
                 "carriageNumber": 62,
                 "seatNumber": 12,
-                "busyStations": []
+                "busyStations": [
+                  {
+                    "stationName": "Vitebsk",
+                    "arriveTime": "18.05.2019 15:20",
+                    "departureTime": "18.05.2019 15:00"
+                  },
+                  {
+                    "stationName": "Orsha",
+                    "arriveTime": "18.05.2019 17:10",
+                    "departureTime": "18.05.2019 17:02"
+                  }
+                ]
               },
               {
                 "carriageNumber": 62,

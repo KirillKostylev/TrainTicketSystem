@@ -23,8 +23,8 @@
       <TableView fx:id="stationTableView" layoutX="13.0" layoutY="207.0" onMouseClicked="#showFreeCarriagesAction" prefHeight="227.0" prefWidth="575.0">
          <columns>
             <TableColumn fx:id="stationNameColumn" editable="false" prefWidth="166.0" sortable="false" text="Station Name" />
-            <TableColumn fx:id="departureTimeColumn" editable="false" prefWidth="199.0" sortable="false" text="Departure Time" />
-            <TableColumn fx:id="arriveTimeColumn" editable="false" prefWidth="209.0" sortable="false" text="Arrive Time" />
+            <TableColumn fx:id="arriveTimeColumn" editable="false" prefWidth="199.0" sortable="false" text="Arrive Time" />
+            <TableColumn fx:id="departureTimeColumn" editable="false" prefWidth="209.0" sortable="false" text="Departure Time" />
          </columns>
       </TableView>
       <Label layoutX="68.0" layoutY="455.0" text="Carriage: " />

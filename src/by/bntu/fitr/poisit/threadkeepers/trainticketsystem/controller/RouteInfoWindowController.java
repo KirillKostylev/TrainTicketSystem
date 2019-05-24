@@ -85,7 +85,7 @@ public class RouteInfoWindowController {
         carriagesNumber.setText(carriagesNumber.getText() + route.getTrain().getCarriagesNumber() + "");
         seatsNumberInCarriage.setText(seatsNumberInCarriage.getText()
                 + route.getTrain().getSeatsNumberInCarriage() + "");
-        ControllerUtil.setFactoryForStationTable(stationNameColumn, departureTimeColumn, arriveTimeColumn);
+        ControllerUtil.setFactoryForStationTable(stationNameColumn, arriveTimeColumn, departureTimeColumn);
         stationTableView.setItems(stationList);
         stationTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
