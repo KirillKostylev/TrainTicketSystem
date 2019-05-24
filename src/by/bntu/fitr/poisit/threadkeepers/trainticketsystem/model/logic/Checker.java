@@ -6,6 +6,7 @@ import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.Empty
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NonPositiveException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.NullException;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.WrongStationInRouteException;
+import javafx.collections.ObservableList;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class Checker {
         }
     }
 
-    public static boolean isRepeatedNameStation(List<Station> stations, String checkedStationName) {
+    public static boolean isRepeatedNameStation(ObservableList<Station> stations, String checkedStationName) {
         for (Station station : stations) {
             if (station.getStationName().equals(checkedStationName)) {
                 return true;
@@ -62,7 +63,7 @@ public class Checker {
         return false;
     }
 
-    public static boolean isRepeatedTrainNumber(List<Route> routes, int trainNumber) {
+    public static boolean isRepeatedTrainNumber(ObservableList<Route> routes, int trainNumber) {
         for (Route route : routes) {
             if (route.getTrain().getTrainNumber() == trainNumber){
                 return true;
