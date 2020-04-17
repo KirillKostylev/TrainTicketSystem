@@ -2,11 +2,13 @@ package by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.logic;
 
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.entity.*;
 import by.bntu.fitr.poisit.threadkeepers.trainticketsystem.model.exception.*;
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -352,7 +354,7 @@ public class LogicCashierTest {
     }
 
     @Test
-    public void findFreeSeatsInCarriageFullList() {
+    public void findFreeSeatsInCarriageTest_FreeSeats() {
         List<String> freeSeats = Arrays.asList("1", "2");
         Route route = new Route(stations7, new Train(132, 2, 2));
 
@@ -371,7 +373,33 @@ public class LogicCashierTest {
     }
 
     @Test
-    public void findFreeSeatsInCarriageEmptyList() {
+    public void findFreeSeatsInCarriageTest_NoFreeSeats() {
+        List<String> freeSeats = Arrays.asList();
+        Train train = new Train(132, 2, 2);
+        Route route = new Route(stations7, train);
+
+        Station tver = route.getStation("Tver");
+        Station moscow = route.getStation("Moscow");
+        Station helsinki = route.getStation("Helsinki");
+        List<List<Seat>> seats = train.getSeatContainer().getSeatList();
+        for (List<Seat> seatList: seats) {
+            for (Seat seat: seatList) {
+                seat.addBusyStations(new ArrayList<>(Arrays.asList(helsinki, moscow)));
+            }
+        }
+        try {
+            LogicCashier.buyTicket(route, 2, 2,
+                    tver, moscow, 0.03);
+            Assert.assertEquals(freeSeats,
+                    LogicCashier.findFreeSeatsInCarriage(route, helsinki,
+                            moscow, 1));
+        } catch (NullException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findFreeSeatsInCarriageTest_EmptyList() {
         List<String> freeSeats = Arrays.asList("2");
         Route route = new Route(stations7, new Train(132, 2, 2));
 
@@ -391,5 +419,33 @@ public class LogicCashierTest {
         } catch (NullException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void checkSeatForFreeTest_Busy() {
+        List<Station> stations = new ArrayList<>(Arrays.asList(
+                new Station("Brest", "03.05.2019 18:30", "03.05.2019 18:58"),
+                new Station("Zhabinka", "03.05.2019 19:16", "03.05.2019 19:17"),
+                new Station("Ivatsevichi", "03.05.2019 20:23", "03.05.2019 20:24")));
+        Seat seat = new Seat(4);
+        seat.addBusyStations(stations);
+        Assert.assertEquals(false, LogicCashier.checkSeatForFree(seat, stations));
+    }
+
+    @Test
+    public void checkSeatForFreeTest_Free() {
+        List<Station> stations = new ArrayList<>(Arrays.asList(
+                new Station("Brest", "03.05.2019 18:30", "03.05.2019 18:58"),
+                new Station("Zhabinka", "03.05.2019 19:16", "03.05.2019 19:17"),
+                new Station("Ivatsevichi", "03.05.2019 20:23", "03.05.2019 20:24")));
+        Seat seat = new Seat(4);
+        Assert.assertEquals(true, LogicCashier.checkSeatForFree(seat, stations));
+    }
+
+    @Test
+    public void checkSeatForFreeTest_EmptyStationsArray() {
+        List<Station> stations = new ArrayList<>();
+        Seat seat = new Seat(4);
+        Assert.assertEquals(false, LogicCashier.checkSeatForFree(seat, stations));
     }
 }

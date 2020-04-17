@@ -23,27 +23,27 @@ public class AdminLogicTest {
             Assert.fail();
         }
     }
-    @Test(expected = NullException.class)
-    public void checkLoginAndPasswordWithNullParameter() throws FileNotFoundException, NullException{
-       AdminLogic.checkLoginAndPassword(null, "asd");
+    @Test
+    public void checkLoginAndPasswordTest_SuccessLogin() throws FileNotFoundException, NullException{
+       Assert.assertTrue(AdminLogic.checkLoginAndPassword("qwe", "asd"));
 
 }
 
     @Test
-    public void checkLoginAndPassword() throws FileNotFoundException {
+    public void checkLoginAndPasswordTest_UnsuccessLogin() throws FileNotFoundException {
         try {
-            Assert.assertTrue(AdminLogic.checkLoginAndPassword("qwe", "asd"));
-        } catch ( NullException e) {
+            Assert.assertFalse(AdminLogic.checkLoginAndPassword("qw", "asd"));
+        } catch (FileNotFoundException | NullException e) {
             e.printStackTrace();
         }
     }
 
-    @Test
+    /*@Test
     public void failCheckLoginAndPassword() throws FileNotFoundException {
         try {
             Assert.assertFalse(AdminLogic.checkLoginAndPassword("qwe", "asdd"));
         } catch ( NullException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

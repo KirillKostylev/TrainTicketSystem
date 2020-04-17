@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -139,11 +140,12 @@ public class LogicCashier {
 
     }
 
-    private static boolean checkSeatForFree(Seat seat, List<Station> suitableStations) {
-        boolean seatIsFree = true;
+    public static boolean checkSeatForFree(Seat seat, List<Station> suitableStations) {
+        boolean seatIsFree = false;
         for (Station station : suitableStations) {
-            if (seat.getBusyStations().contains(station)) {
-                seatIsFree = false;
+            if (!seat.getBusyStations().contains(station)) {
+                seatIsFree = true;
+                break;
             }
         }
         LOG.debug("Seat has been checked for free");
